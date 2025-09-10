@@ -1,5 +1,6 @@
-import { cn } from "@/lib/utils/class";
-import { Icon } from "@iconify/react/dist/iconify.js";
+import Icon from "@/components/common/Icon";
+import { cn } from "@/lib/utils";
+
 import React, { ButtonHTMLAttributes, FC } from "react";
 
 export const IconButton: FC<
