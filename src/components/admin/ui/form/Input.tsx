@@ -1,5 +1,9 @@
-import React from "react";
+import { cn } from "@/lib/utils";
+import React, { FC, InputHTMLAttributes } from "react";
 
-export const Input = () => {
-    return <div>Input</div>;
+export const Input: FC<InputHTMLAttributes<HTMLInputElement>> = ({
+  className = "",
+  ...props
+}) => {
+  return <input className={cn("input", className)} {...props} />;
 };

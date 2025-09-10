@@ -1,7 +1,11 @@
 @import "tailwindcss";
 
 @plugin "daisyui" {
-    themes: light --default, dark --prefersdark;
+  themes: light --default, dark --prefersdark;
 }
 
 @custom-variant dark (&:where(.dark, .dark *,[data-theme=dark], [data-theme=dark] *));
+
+button {
+  @apply cursor-pointer;
+}

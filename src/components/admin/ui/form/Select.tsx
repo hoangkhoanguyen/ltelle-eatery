@@ -1,5 +1,9 @@
-import React from "react";
+import { cn } from "@/lib/utils";
+import React, { FC, SelectHTMLAttributes } from "react";
 
-export const Select = () => {
-    return <div>Select</div>;
+export const Select: FC<SelectHTMLAttributes<HTMLSelectElement>> = ({
+  className = "",
+  ...props
+}) => {
+  return <select className={cn("select", className)} {...props} />;
 };
