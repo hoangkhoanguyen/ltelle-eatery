@@ -20,22 +20,30 @@ const buttonVariants = cva("btn", {
       warning: "btn-warning",
       error: "btn-error",
     },
+    size: {
+      xs: "btn-xs",
+      sm: "btn-sm",
+      md: "btn-md",
+      lg: "btn-lg",
+    },
   },
   defaultVariants: {
     variant: "default",
     color: "default",
+    size: "md",
   },
 });
 
 export const Button: FC<
   ButtonHTMLAttributes<HTMLButtonElement> & VariantProps<typeof buttonVariants>
-> = ({ variant, color, className = "", ...props }) => {
+> = ({ variant, color, size, className = "", ...props }) => {
   return (
     <button
       className={cn(
         buttonVariants({
           color,
           variant,
+          size,
         }),
         className,
       )}
