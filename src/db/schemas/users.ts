@@ -1,7 +1,7 @@
 import { serial, varchar, text, timestamp, boolean } from "drizzle-orm/pg-core";
 import { dbSchema } from "../schema";
 import { relations } from "drizzle-orm";
-import { refreshTokens } from "./refresh-token";
+import { refreshTokens } from "./refresh-tokens";
 
 // User table schema
 export const users = dbSchema.table("users", {
