@@ -11,8 +11,8 @@
     "start": "next start",
     "lint": "eslint",
     "db:generate": "npm run clean && drizzle-kit generate",
-    "db:migrate": "drizzle-kit generate",
-    "db:push": "drizzle-kit push"
+    "db:migrate": "drizzle-kit migrate",
+    "db:pull": "drizzle-kit pull"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.7",

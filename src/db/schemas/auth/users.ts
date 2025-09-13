@@ -1,5 +1,5 @@
 import { serial, varchar, text, timestamp, boolean } from "drizzle-orm/pg-core";
-import { dbSchema } from "../schema";
+import { dbSchema } from "../../schema";
 import { relations } from "drizzle-orm";
 import { refreshTokens } from "./refresh-tokens";
 

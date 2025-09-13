@@ -1,5 +1,5 @@
 import { boolean, integer, serial, text, timestamp } from "drizzle-orm/pg-core";
-import { dbSchema } from "../schema";
+import { dbSchema } from "../../schema";
 import { relations } from "drizzle-orm";
 import { users } from "./users";
 

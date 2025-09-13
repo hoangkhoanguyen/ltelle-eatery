@@ -1,16 +1,19 @@
 import { relations } from "drizzle-orm";
-import { dbSchema } from "../schema";
 import {
-  text,
-  real,
   boolean,
+  integer,
+  json,
+  jsonb,
+  real,
   serial,
+  text,
   timestamp,
   varchar,
-  integer,
 } from "drizzle-orm/pg-core";
-import { productImages } from "./product-images";
+import { dbSchema } from "../../schema";
 import { productAddons } from "./product-addons";
+import { productImages } from "./product-images";
+import { productCategories } from "./product-categories";
 
 export const products = dbSchema.table("products", {
   id: serial("id").primaryKey(),
@@ -22,16 +25,25 @@ export const products = dbSchema.table("products", {
   title: varchar("title", {
     length: 255,
   }).notNull(),
+  categoryId: integer("category_id").notNull(),
   allergenInfo: text("allergen_info"),
   subDescription: text("sub_description"),
   description: text("description"),
   price: real("price").default(0),
+  relatedProductId: jsonb("related_product_id")
+    .$type<number[]>()
+    .notNull()
+    .default([]),
   isActive: boolean("is_active").notNull().default(false),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
-export const productsRelations = relations(products, ({ many }) => ({
+export const productsRelations = relations(products, ({ many, one }) => ({
   images: many(productImages),
   addons: many(productAddons),
+  category: one(productCategories, {
+    fields: [products.categoryId],
+    references: [productCategories.id],
+  }),
 }));

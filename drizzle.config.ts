@@ -13,6 +13,9 @@ export default defineConfig({
     database: process.env.DB_NAME || "postgres",
     ssl: false,
   },
+  migrations: {
+    schema: "dev",
+  },
   verbose: true,
   strict: true,
 });

@@ -1,7 +1,9 @@
 import { Pool } from "pg";
-import { drizzle } from "drizzle-orm/node-postgres";
+import { drizzle, NodePgQueryResultHKT } from "drizzle-orm/node-postgres";
 import * as schema from "./schemas";
 import { env } from "@/lib/env";
+import { PgTransaction } from "drizzle-orm/pg-core";
+import { ExtractTablesWithRelations } from "drizzle-orm";
 
 const pool = new Pool({
   host: env.DB_HOST,
@@ -15,3 +17,17 @@ const pool = new Pool({
 });
 
 export const db = drizzle(pool, { schema });
+
+// export type DB = ReturnType<typeof drizzle>;
+
+// export type TransactionType = Parameters<Parameters<DB["transaction"]>[0]>[0];
+
+type Schema = typeof schema;
+
+export type TransactionType = PgTransaction<
+  NodePgQueryResultHKT,
+  Schema,
+  ExtractTablesWithRelations<Schema>
+>;
+
+export type DB = typeof db | TransactionType;
