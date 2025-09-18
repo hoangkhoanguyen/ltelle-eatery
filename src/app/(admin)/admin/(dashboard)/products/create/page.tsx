@@ -4,10 +4,10 @@ import useAddProduct from "@/hooks/admin/features/products/useAddProduct";
 import React from "react";
 
 const CreateProductPage = () => {
-  const { isPending, action } = useAddProduct();
+  const { isPending, mutate } = useAddProduct();
 
   const onSubmit = () => {
-    action({
+    mutate({
       title: "New Product 2",
       categoryId: 1,
       slug: "new-product-2",

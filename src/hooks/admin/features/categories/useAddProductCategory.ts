@@ -1,6 +1,13 @@
 import { addProductCategoryAction } from "@/actions/admin/category";
-import useCustomActionState from "@/hooks/common/useCustomActionState";
+import { useMutation } from "@tanstack/react-query";
+import { useCategorySuccess } from "./useFetchAllCategories";
 
 export default function useAddProductCategory() {
-  return useCustomActionState(addProductCategoryAction);
+  const { onAddSuccess } = useCategorySuccess();
+  return useMutation({
+    mutationFn: addProductCategoryAction,
+    onSuccess(data) {
+      onAddSuccess(data.newCategory);
+    },
+  });
 }

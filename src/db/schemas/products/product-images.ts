@@ -12,7 +12,7 @@ import { products } from "./products";
 export const productImages = dbSchema.table("product_images", {
   id: serial("id").primaryKey(),
   url: varchar("url", { length: 512 }).notNull(),
-  altText: varchar("alt_text", { length: 255 }),
+  altText: varchar("alt_text", { length: 255 }).notNull(),
   productId: integer("product_id").notNull(),
   isPrimary: boolean("is_primary").notNull().default(false),
   sortOrder: integer("sort_order").notNull().default(0),

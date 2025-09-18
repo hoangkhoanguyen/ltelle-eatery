@@ -15,7 +15,7 @@ import {
   UpdateProductAddOnDB,
   UpdateProductImageDB,
 } from "@/types/products";
-import { eq } from "drizzle-orm";
+import { eq, inArray, notInArray } from "drizzle-orm";
 
 export async function addProductCategory(categoryData: NewProductCategoryDB) {
   const [newCategory] = await db
@@ -26,6 +26,10 @@ export async function addProductCategory(categoryData: NewProductCategoryDB) {
     .returning();
 
   return newCategory;
+}
+
+export async function getAllProductCategories() {
+  return await db.select().from(productCategories);
 }
 
 export async function createProduct(productData: NewProductDB) {
@@ -82,6 +86,32 @@ export async function getAdminProductById(id: number) {
       images: true,
     },
   });
+}
+
+export async function getAdminRelatedProductsByIds(ids: number[]) {
+  return await db.query.products.findMany({
+    where: inArray(products.id, ids),
+    columns: {
+      id: true,
+      title: true,
+      isActive: true,
+    },
+  });
+}
+
+export async function getAdminProductDetailsById(id: number) {
+  const product = await getAdminProductById(id);
+
+  if (!product) return undefined;
+
+  const relatedProducts = await getAdminRelatedProductsByIds(
+    product.relatedProductIds,
+  );
+
+  return {
+    ...product,
+    relatedProducts,
+  };
 }
 
 export async function addProductAddons(data: NewProductAddOnDB[], tx?: DB) {
@@ -152,6 +182,16 @@ export async function addProductImages(
   });
 }
 
+export async function getAllProducts() {
+  return await db.query.products.findMany({
+    columns: {
+      id: true,
+      title: true,
+      isActive: true,
+    },
+  });
+}
+
 export async function updateProductImage(
   id: number,
   data: UpdateProductImageDB,
@@ -171,6 +211,34 @@ export async function deleteProductImage(id: number) {
     .where(eq(productImages.id, id))
     .returning();
   return deletedImage;
+}
+
+export async function deleteProductImages(ids: number[]) {
+  // // handle primary
+  // const primaryImage = await db.query.productImages.findFirst({
+  //   where: inArray(productImages.id, ids) && eq(productImages.isPrimary, true),
+  // });
+  // // check xem có primary image ko
+  // // nếu có thì gắn primary cho image có sort nhỏ nhất
+  // if (primaryImage) {
+  //   // tìm image của product đó mà ko nằm trong ds định xóa và có sort order nhỏ nhất
+  //   const minSortOrderImage = await db.query.productImages.findFirst({
+  //     where:
+  //       eq(productImages.productId, primaryImage.productId) &&
+  //       notInArray(productImages.id, ids),
+  //     orderBy: [productImages.sortOrder],
+  //   });
+
+  // update image đó thành primary
+  //   if (minSortOrderImage) {
+  //     await db
+  //       .update(productImages)
+  //       .set({ isPrimary: true })
+  //       .where(eq(productImages.id, minSortOrderImage.id));
+  //   }
+  // }
+
+  return await db.delete(productImages).where(inArray(productImages.id, ids));
 }
 
 export async function updateProductImages(
@@ -252,4 +320,15 @@ export async function updateProductById({
 
     return updatedProduct;
   });
+}
+
+export async function isExistingSlug(slug: string) {
+  const product = await db.query.products.findFirst({
+    where: eq(products.slug, slug),
+    columns: {
+      id: true,
+    },
+  });
+
+  return !!product;
 }

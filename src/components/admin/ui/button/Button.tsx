@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { cva, VariantProps } from "class-variance-authority";
 import React, { ButtonHTMLAttributes, FC } from "react";
 
-const buttonVariants = cva("btn", {
+const buttonVariants = cva("btn rounded-xl", {
   variants: {
     variant: {
       default: "",
@@ -30,7 +30,7 @@ const buttonVariants = cva("btn", {
   defaultVariants: {
     variant: "default",
     color: "default",
-    size: "md",
+    size: "sm",
   },
 });
 

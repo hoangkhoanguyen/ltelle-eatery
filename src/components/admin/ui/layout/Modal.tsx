@@ -15,6 +15,7 @@ export const Modal: FC<
       open={isOpen}
       onClose={onClose}
       transition
+      data-theme="light"
       className="fixed inset-0 z-50 p-5 flex w-screen items-center justify-center bg-black/30 transition duration-200 ease-out data-closed:opacity-0"
     >
       <DialogPanel

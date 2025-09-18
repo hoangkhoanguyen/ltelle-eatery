@@ -1,6 +1,9 @@
 import { updateProductAction } from "@/actions/admin/product";
-import useCustomActionState from "@/hooks/common/useCustomActionState";
+
+import { useMutation } from "@tanstack/react-query";
 
 export default function useUpdateProduct() {
-  return useCustomActionState(updateProductAction);
+  return useMutation({
+    mutationFn: updateProductAction,
+  });
 }

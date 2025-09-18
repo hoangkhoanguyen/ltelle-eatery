@@ -5,5 +5,5 @@ export const Input: FC<InputHTMLAttributes<HTMLInputElement>> = ({
   className = "",
   ...props
 }) => {
-  return <input className={cn("input", className)} {...props} />;
+  return <input className={cn("input w-full", className)} {...props} />;
 };

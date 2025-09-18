@@ -4,7 +4,11 @@ import {
   productImages,
   products,
 } from "@/db/schemas";
-import { createProductSchema } from "@/validations/product";
+import {
+  createProductSchema,
+  productCategorySchema,
+  updateProductSchema,
+} from "@/validations/product";
 import { z } from "zod";
 
 export type ProductDB = typeof products.$inferSelect;
@@ -38,11 +42,9 @@ export type UpdateProductImageDB = Omit<
 export interface AdminProductTable {
   id: number;
   title: string;
-  price: number;
+  price: number | null;
   category: string;
   imageUrl?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
 }
 
 export interface AdminProductAddons {
@@ -56,32 +58,36 @@ export interface AdminProductCategory {
   id: number;
   name: string;
   isActive: boolean;
-  description?: string;
+  description: string | null;
 }
 
 export interface AdminProductImage {
   id: number;
   url: string;
-  altText?: string;
+  altText: string;
   isPrimary: boolean;
   sortOrder: number;
 }
 
-export type AdminRelatedProduct = Pick<
-  AdminProductTable,
-  "id" | "title" | "imageUrl"
->;
+export type AdminRelatedProduct = Pick<AdminProductTable, "id" | "title">;
 
 export interface AdminProductDetails
   extends Omit<AdminProductTable, "category" | "imageUrl"> {
   images: AdminProductImage[];
   addons: AdminProductAddons[];
   category: AdminProductCategory;
-  allergenInfo?: string;
-  subDescription?: string;
-  description?: string;
+  slug: string;
+  allergenInfo: string | null;
+  subDescription: string | null;
+  description: string | null;
   relatedProducts: AdminRelatedProduct[];
   isActive: boolean;
 }
 
 export type AdminCreateProductForm = z.infer<typeof createProductSchema>;
+
+export type AdminCreateProductCategoryForm = z.infer<
+  typeof productCategorySchema
+>;
+
+export type AdminEditProductForm = z.infer<typeof updateProductSchema>;

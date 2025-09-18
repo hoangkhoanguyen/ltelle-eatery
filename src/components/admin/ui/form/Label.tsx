@@ -12,7 +12,7 @@ export const Label: FC<LabelProps> = ({ htmlFor, children, className }) => {
     <label
       htmlFor={htmlFor}
       className={cn(
-        "mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400",
+        "mb-1.5 block italic text-sm font-medium text-gray-700 dark:text-gray-400",
         className,
       )}
     >

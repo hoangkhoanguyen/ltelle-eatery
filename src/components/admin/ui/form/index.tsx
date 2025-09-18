@@ -5,3 +5,4 @@ export * from "./PasswordInput";
 export * from "./Select";
 export * from "./Switch";
 export * from "./Textarea";
+export * from "./InputWithStatus";

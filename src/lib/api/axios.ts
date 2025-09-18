@@ -1,70 +1,76 @@
-// import axios, { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from "axios";
+import { adminRoutes } from "@/constants/route";
+import axios, {
+  AxiosError,
+  AxiosInstance,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+} from "axios";
 
-// type Interceptor<T> = {
-//     onFulfilled?: (value: T) => T | Promise<T>;
-//     onRejected?: (error: unknown) => unknown;
-// };
+let refreshTokenPromise: any;
 
-// type AxiosInterceptors = {
-//     request?: Interceptor<InternalAxiosRequestConfig>;
-//     response?: Interceptor<AxiosResponse>;
-// };
+class HttpClient {
+  instance: AxiosInstance;
 
-// function createAxiosInstance(interceptors?: AxiosInterceptors): AxiosInstance {
-//     const instance = axios.create({});
+  constructor(
+    baseURL: string,
+    onError: (ins: AxiosInstance) => (error: unknown) => void,
+  ) {
+    const newAxios = axios.create({
+      baseURL,
+      timeout: 10000,
+    });
 
-//     // request interceptors
-//     if (interceptors?.request?.onFulfilled) {
-//         instance.interceptors.request.use(interceptors.request.onFulfilled, interceptors.request.onRejected);
-//     }
+    // Request interceptor
+    newAxios.interceptors.request.use(
+      (config: InternalAxiosRequestConfig) => {
+        return config;
+      },
+      (error) => Promise.reject(error),
+    );
 
-//     // response interceptors (keep a default rejection handler)
-//     instance.interceptors.response.use(interceptors?.response?.onFulfilled ?? ((r) => r), interceptors?.response?.onRejected ?? ((e) => Promise.reject(e)));
+    // Response interceptor
+    newAxios.interceptors.response.use(
+      (response: AxiosResponse) => response.data || response,
+      onError(newAxios),
+    );
 
-//     return instance;
-// }
+    this.instance = newAxios;
+  }
+}
 
-// // Admin instance with its own interceptors
-// export const adminApi = createAxiosInstance({
-//     request: {
-//         onFulfilled: (config) => {
-//             if (typeof window !== "undefined") {
-//                 // do something before request is sent
-//             }
-//             return config;
-//         },
-//         onRejected: (err) => Promise.reject(err),
-//     },
-//     response: {
-//         onFulfilled: (res) => res.data || res,
-//         onRejected: (err) => {
-//             if (err && err instanceof AxiosError && err.response?.status === 401) {
-//                 // handle unauthorized access, refresh token or redirect to login
-//             }
-//             return Promise.reject(err);
-//         },
-//     },
-// });
+const adminApi = new HttpClient(
+  "/",
+  (instance: AxiosInstance) => async (error: unknown) => {
+    if (
+      error instanceof AxiosError &&
+      error.config &&
+      error.response &&
+      error.response.status === 401
+    ) {
+      if ((error.response.data as any)?.code !== 2) {
+        return Promise.reject(error);
+      }
 
-// // Web instance with its own interceptors
-// export const webApi = createAxiosInstance({
-//     request: {
-//         onFulfilled: (config) => {
-//             if (typeof window !== "undefined") {
-//                 // do something before request is sent
-//             }
-//             return config;
-//         },
-//         onRejected: (err) => Promise.reject(err),
-//     },
-//     response: {
-//         onFulfilled: (res) => {
-//             // web-specific response processing (e.g. strip wrappers)
-//             return res;
-//         },
-//         onRejected: (err) => {
-//             // e.g. show toast for web errors
-//             return Promise.reject(err);
-//         },
-//     },
-// });
+      if (!refreshTokenPromise) {
+        const handleRenewToken = () => {
+          refreshTokenPromise = instance.post(adminRoutes.refreshTokenApi());
+
+          return refreshTokenPromise as Promise<void>;
+        };
+
+        return handleRenewToken().then(() => {
+          refreshTokenPromise = null;
+          return instance.request(error.config!);
+        });
+      }
+
+      await refreshTokenPromise;
+
+      return instance.request(error.config);
+    }
+
+    return Promise.reject(error);
+  },
+).instance;
+
+export default adminApi;

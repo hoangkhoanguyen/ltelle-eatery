@@ -5,5 +5,5 @@ export const Select: FC<SelectHTMLAttributes<HTMLSelectElement>> = ({
   className = "",
   ...props
 }) => {
-  return <select className={cn("select", className)} {...props} />;
+  return <select className={cn("select w-full", className)} {...props} />;
 };

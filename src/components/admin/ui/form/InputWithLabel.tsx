@@ -2,10 +2,10 @@ import React, { FC, PropsWithChildren } from "react";
 import { Label } from "./Label";
 
 export const InputWithLabel: FC<
-  PropsWithChildren<{ label: string; required?: boolean }>
-> = ({ children, label, required }) => {
+  PropsWithChildren<{ label: string; required?: boolean; className?: string }>
+> = ({ children, label, required, className = "" }) => {
   return (
-    <div>
+    <div className={className}>
       <Label>
         {label} {required && <span className="text-error">*</span>}
       </Label>

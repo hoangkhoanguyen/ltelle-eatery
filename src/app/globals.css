@@ -9,3 +9,9 @@
 button {
   @apply cursor-pointer;
 }
+
+.admin .input,
+.admin .select,
+.admin .textarea {
+  @apply outline-none focus:outline-none
+}

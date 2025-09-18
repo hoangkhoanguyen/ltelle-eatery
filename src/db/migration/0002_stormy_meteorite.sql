@@ -1,0 +1,1 @@
+ALTER TABLE "dev"."products" RENAME COLUMN "related_product_id" TO "related_product_ids";

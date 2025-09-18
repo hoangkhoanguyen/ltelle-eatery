@@ -29,8 +29,8 @@ export const products = dbSchema.table("products", {
   allergenInfo: text("allergen_info"),
   subDescription: text("sub_description"),
   description: text("description"),
-  price: real("price").default(0),
-  relatedProductId: jsonb("related_product_id")
+  price: real("price").notNull().default(0),
+  relatedProductIds: jsonb("related_product_ids")
     .$type<number[]>()
     .notNull()
     .default([]),

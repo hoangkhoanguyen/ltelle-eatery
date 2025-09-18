@@ -6,5 +6,11 @@ export const Switch: FC<InputHTMLAttributes<HTMLInputElement>> = ({
   type = "checkbox",
   ...props
 }) => {
-  return <input type={type} className={cn("toggle", className)} {...props} />;
+  return (
+    <input
+      type={type}
+      className={cn("toggle toggle-success", className)}
+      {...props}
+    />
+  );
 };
