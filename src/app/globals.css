@@ -1,17 +1,179 @@
 @import "tailwindcss";
 
+/* @font-face {
+  font-family: Oswald;
+  font-style: normal;
+  font-weight: 200 700;
+  font-display: swap;
+  src: url("/assets/fonts/SVN-Allogist.otf") format("woff2");
+} */
+
 @plugin "daisyui" {
   themes: light --default, dark --prefersdark;
 }
 
 @custom-variant dark (&:where(.dark, .dark *,[data-theme=dark], [data-theme=dark] *));
 
-button {
+button:not(:disabled) {
   @apply cursor-pointer;
 }
 
 .admin .input,
 .admin .select,
 .admin .textarea {
-  @apply outline-none focus:outline-none
+  @apply outline-none focus:outline-none;
+}
+
+.admin {
+  --color-primary: rgb(0, 90, 246);
+}
+
+@theme {
+  --spacing-4.5: 1.125rem /* 18px */;
+}
+
+@theme inline {
+  --font-sans: var(--font-poppins-sans);
+  --font-brand: var(--font-allogist);
+}
+
+/* website */
+@theme {
+  /* color */
+  --color-web-primary: #23351d;
+  --color-web-secondary-1: #f2c75c;
+  --color-web-secondary-2: #fdf1dc;
+  --color-web-secondary-3: #6b0000;
+  --color-web-background-1: #ffffff;
+  --color-web-background-2: #f8f4ec;
+  --color-web-background-3: #aeaeae;
+  --color-web-content-1: #1a1a1a;
+  --color-web-content-2: #444444;
+  --color-web-content-3: #afafaf;
+  --color-web-success: #38a169;
+  --color-web-error: #e53e3e;
+  --color-web-warning: #ecc94b;
+
+  /* font size */
+
+  /* h1 */
+  /* desktop */
+  --text-web-h1: 48px;
+  --text-web-h1--font-weight: 700;
+  --text-web-h1--line-height: 120%;
+  --text-web-h1--line-letter-spacing: -1px;
+
+  /* mobile */
+  --text-web-h1-mobile: 32px;
+  --text-web-h1-mobile--font-weight: 700;
+  --text-web-h1-mobile--line-height: 120%;
+  --text-web-h1-mobile--line-letter-spacing: -1px;
+
+  /* h2 */
+  /* desktop */
+  --text-web-h2: 32px;
+  --text-web-h2--font-weight: 600;
+  --text-web-h2--line-height: 125%;
+  --text-web-h2--line-letter-spacing: -1px;
+
+  /* mobile */
+  --text-web-h2-mobile: 24px;
+  --text-web-h2-mobile--font-weight: 600;
+  --text-web-h2-mobile--line-height: 125%;
+  --text-web-h2-mobile--line-letter-spacing: -1px;
+
+  /* h3 */
+  /* desktop */
+  --text-web-h3: 24px;
+  --text-web-h3--font-weight: 500;
+  --text-web-h3--line-height: 130%;
+  --text-web-h3--line-letter-spacing: -1px;
+
+  /* mobile */
+  --text-web-h3-mobile: 20px;
+  --text-web-h3-mobile--font-weight: 500;
+  --text-web-h3-mobile--line-height: 130%;
+  --text-web-h3-mobile--line-letter-spacing: -1px;
+
+  /* h4 */
+  /* desktop */
+  --text-web-h4: 20px;
+  --text-web-h4--font-weight: 600;
+  --text-web-h4--line-height: 140%;
+  --text-web-h4--line-letter-spacing: -1px;
+
+  /* mobile */
+  --text-web-h4-mobile: 18px;
+  --text-web-h4-mobile--font-weight: 600;
+  --text-web-h4-mobile--line-height: 140%;
+  --text-web-h4-mobile--line-letter-spacing: -1px;
+
+  /* subtitle */
+  /* desktop */
+  --text-web-subtitle: 18px;
+  --text-web-subtitle--font-weight: 400;
+  --text-web-subtitle--line-height: 150%;
+  --text-web-subtitle--line-letter-spacing: 0px;
+
+  /* mobile */
+  --text-web-subtitle-mobile: 16px;
+  --text-web-subtitle-mobile--font-weight: 400;
+  --text-web-subtitle-mobile--line-height: 150%;
+  --text-web-subtitle-mobile--line-letter-spacing: 0px;
+
+  /* body */
+  /* desktop */
+  --text-web-body: 16px;
+  --text-web-body--font-weight: 400;
+  --text-web-body--line-height: 120%;
+  --text-web-body--line-letter-spacing: 0px;
+
+  /* mobile */
+  --text-web-body-mobile: 16px;
+  --text-web-body-mobile--font-weight: 400;
+  --text-web-body-mobile--line-height: 120%;
+  --text-web-body-mobile--line-letter-spacing: 0px;
+
+  /* caption */
+  /* desktop */
+  --text-web-caption: 14px;
+  --text-web-caption--font-weight: 400;
+  --text-web-caption--line-height: 160%;
+  --text-web-caption--line-letter-spacing: 0px;
+
+  /* mobile */
+  --text-web-caption-mobile: 14px;
+  --text-web-caption-mobile--font-weight: 400;
+  --text-web-caption-mobile--line-height: 160%;
+  --text-web-caption-mobile--line-letter-spacing: 0px;
+
+  /* button */
+  /* desktop */
+  --text-web-button: 16px;
+  --text-web-button--font-weight: 700;
+  --text-web-button--line-height: 100%;
+  --text-web-button--line-letter-spacing: 0px;
+
+  /* mobile */
+  --text-web-button-mobile: 14px;
+  --text-web-button-mobile--font-weight: 700;
+  --text-web-button-mobile--line-height: 100%;
+  --text-web-button-mobile--line-letter-spacing: 0px;
+
+  /* label */
+  /* desktop */
+  --text-web-label: 14px;
+  --text-web-label--font-weight: 400;
+  --text-web-label--line-height: 100%;
+  --text-web-label--line-letter-spacing: 0px;
+
+  /* mobile */
+  --text-web-label-mobile: 14px;
+  --text-web-label-mobile--font-weight: 400;
+  --text-web-label-mobile--line-height: 100%;
+  --text-web-label-mobile--line-letter-spacing: 0px;
+}
+
+@utility button-primary {
+  @apply bg-red-400;
 }

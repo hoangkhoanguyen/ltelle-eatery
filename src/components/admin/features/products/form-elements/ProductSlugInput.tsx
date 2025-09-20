@@ -13,12 +13,12 @@ const ProductSlugInput: FC<
   return (
     <InputWithLabel label="Đường dẫn sản phẩm" required>
       <WithError error={error}>
-        <div className="join w-full">
+        <div className="join w-full ">
           <input
             name="slug"
             type="email"
             className={cn(
-              "flex-1 input w-full join-item",
+              "flex-1 input w-full join-item rounded-ss-xl rounded-es-xl",
               error ? "input-error" : "",
             )}
             placeholder="Đường dẫn sản phẩm"
@@ -27,7 +27,7 @@ const ProductSlugInput: FC<
           />
           <button
             type="button"
-            className="btn btn-neutral join-item"
+            className="btn btn-neutral join-item rounded-ee-xl rounded-se-xl"
             onClick={onGenerateSlug}
           >
             Tạo đường dẫn

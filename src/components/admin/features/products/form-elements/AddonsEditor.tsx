@@ -60,7 +60,10 @@ const AddonsEditor = () => {
                   <div className="flex-1">
                     <WithError error={error}>
                       <label
-                        className={cn("input", error ? "input-error" : "")}
+                        className={cn(
+                          "input rounded-xl",
+                          error ? "input-error" : "",
+                        )}
                       >
                         <Icon
                           className="h-[1em] opacity-50"
@@ -88,7 +91,10 @@ const AddonsEditor = () => {
                   <div className="flex-1">
                     <WithError error={error}>
                       <label
-                        className={cn("input", error ? "input-error" : "")}
+                        className={cn(
+                          "input rounded-xl",
+                          error ? "input-error" : "",
+                        )}
                       >
                         <span>VND</span>
                         <input

@@ -1,15 +1,18 @@
+import { cn } from "@/lib/utils";
 import { Button } from "../button";
 
 type PaginationProps = {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
+  className?: string;
 };
 
 const Pagination: React.FC<PaginationProps> = ({
   currentPage,
   totalPages,
   onPageChange,
+  className = "",
 }) => {
   const pagesAroundCurrent = Array.from(
     { length: Math.min(3, totalPages) },
@@ -17,7 +20,7 @@ const Pagination: React.FC<PaginationProps> = ({
   );
 
   return (
-    <div className="flex items-center gap-2.5">
+    <div className={cn("flex items-center gap-2.5", className)}>
       <Button
         size={"sm"}
         onClick={() => onPageChange(currentPage - 1)}

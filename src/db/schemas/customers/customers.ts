@@ -1,0 +1,24 @@
+import { boolean, serial, text, timestamp, varchar } from "drizzle-orm/pg-core";
+import { dbSchema } from "../../schema";
+
+export const customers = dbSchema.table("customers", {
+  id: serial("id").primaryKey(),
+  firstName: varchar("first_name", {
+    length: 255,
+  }).notNull(),
+  lastName: varchar("last_name", {
+    length: 255,
+  }).notNull(),
+  phone: varchar("phone", {
+    length: 20,
+  })
+    .notNull()
+    .unique(),
+  lastUsedAddress: text("last_used_address"),
+  lastUsedOrderType: varchar("last_used_order_type", {
+    length: 20,
+  }),
+  isActive: boolean("is_active").notNull().default(true),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});

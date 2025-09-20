@@ -18,14 +18,10 @@ export const ADMIN_ROUTE = {
 export const WEB_ROUTE = {
   root: "/",
   home: "/",
-  about: "/about",
-  login: "/login",
-  signup: "/signup",
-  profile: "/profile",
-  profileUser: "/profile/[id]",
-  posts: "/posts",
-  post: "/posts/[slug]",
+  menu: "/menu",
+  reservation: "/reservation",
   contact: "/contact",
+  cart: "/cart",
 } as const;
 
 export const ROUTES = {
@@ -119,21 +115,25 @@ export const adminRoutes = {
 export const webRoutes = {
   root: () => WEB_ROUTE.root,
   home: () => WEB_ROUTE.home,
-  about: () => WEB_ROUTE.about,
-  login: () => WEB_ROUTE.login,
-  signup: () => WEB_ROUTE.signup,
-  profile: (id?: string | number) =>
-    typeof id === "undefined"
-      ? WEB_ROUTE.profile
-      : generateRoute("web", "profileUser", { id }),
-  profileUser: (id?: string | number) =>
-    typeof id === "undefined"
-      ? WEB_ROUTE.profileUser
-      : generateRoute("web", "profileUser", { id }),
-  posts: () => WEB_ROUTE.posts,
-  post: (slug?: string) =>
-    typeof slug === "undefined"
-      ? WEB_ROUTE.post
-      : generateRoute("web", "post", { slug }),
+  menu: () => WEB_ROUTE.menu,
+  reservation: () => WEB_ROUTE.reservation,
   contact: () => WEB_ROUTE.contact,
+  cart: () => WEB_ROUTE.cart,
+  // about: () => WEB_ROUTE.about,
+  // login: () => WEB_ROUTE.login,
+  // signup: () => WEB_ROUTE.signup,
+  // profile: (id?: string | number) =>
+  //   typeof id === "undefined"
+  //     ? WEB_ROUTE.profile
+  //     : generateRoute("web", "profileUser", { id }),
+  // profileUser: (id?: string | number) =>
+  //   typeof id === "undefined"
+  //     ? WEB_ROUTE.profileUser
+  //     : generateRoute("web", "profileUser", { id }),
+  // posts: () => WEB_ROUTE.posts,
+  // post: (slug?: string) =>
+  //   typeof slug === "undefined"
+  //     ? WEB_ROUTE.post
+  //     : generateRoute("web", "post", { slug }),
+  // contact: () => WEB_ROUTE.contact,
 };

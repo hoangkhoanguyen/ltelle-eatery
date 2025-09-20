@@ -39,12 +39,18 @@ export type UpdateProductImageDB = Omit<
   "createdAt" | "updatedAt"
 >;
 
+export type AdminProductTableApi = ProductDB & {
+  category: ProductCategoryDB;
+  images: ProductImageDB[];
+};
+
 export interface AdminProductTable {
   id: number;
   title: string;
   price: number | null;
   category: string;
   imageUrl?: string;
+  isActive: boolean;
 }
 
 export interface AdminProductAddons {

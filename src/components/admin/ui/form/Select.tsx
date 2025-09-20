@@ -5,5 +5,7 @@ export const Select: FC<SelectHTMLAttributes<HTMLSelectElement>> = ({
   className = "",
   ...props
 }) => {
-  return <select className={cn("select w-full", className)} {...props} />;
+  return (
+    <select className={cn("select rounded-xl w-full", className)} {...props} />
+  );
 };

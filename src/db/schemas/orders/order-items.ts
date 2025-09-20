@@ -1,0 +1,40 @@
+import { dbSchema } from "@/db/schema";
+import { relations } from "drizzle-orm";
+import {
+  integer,
+  real,
+  serial,
+  text,
+  timestamp,
+  varchar,
+} from "drizzle-orm/pg-core";
+import { orderItemAddons } from "./order-item-addons";
+import { orders } from "./orders";
+import { products } from "../products";
+
+export const orderItems = dbSchema.table("order_items", {
+  id: serial("id").primaryKey(),
+  orderId: integer("order_id").notNull(),
+  productId: integer("product_id").notNull(),
+  productName: varchar("product_name", {
+    length: 255,
+  }).notNull(),
+  price: real("price").notNull(),
+  quantity: integer("quantity").notNull(),
+  totalPrice: real("total_price").notNull(),
+  note: text("note"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
+
+export const orderItemsRelations = relations(orderItems, ({ many, one }) => ({
+  addons: many(orderItemAddons),
+  order: one(orders, {
+    fields: [orderItems.orderId],
+    references: [orders.id],
+  }),
+  product: one(products, {
+    fields: [orderItems.productId],
+    references: [products.id],
+  }),
+}));

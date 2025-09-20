@@ -15,14 +15,12 @@ import {
   UpdateProductAddOnDB,
   UpdateProductImageDB,
 } from "@/types/products";
-import { eq, inArray, notInArray } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 
 export async function addProductCategory(categoryData: NewProductCategoryDB) {
   const [newCategory] = await db
     .insert(productCategories)
-    .values({
-      ...categoryData,
-    })
+    .values(categoryData)
     .returning();
 
   return newCategory;
@@ -60,7 +58,9 @@ export async function getAdminProductTable({
       with: {
         category: true,
         images: {
-          where: (image, { eq }) => eq(image.isPrimary, true),
+          orderBy(fields, { asc }) {
+            return [asc(fields.sortOrder)];
+          },
           limit: 1,
         },
       },

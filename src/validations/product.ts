@@ -26,17 +26,16 @@ const productImageSchema = z.object({
 
 const basicProductSchema = {
   title: z
-    .string()
+    .string({ error: "Tên sản phẩm không được để trống" })
     .min(1, { error: "Tên sản phẩm không được để trống" })
     .max(255, { error: "Tên sản phẩm quá dài" }),
   slug: z
-    .string()
+    .string({ error: "Đường dẫn không được để trống" })
     .min(1, { error: "Đường dẫn không được để trống" })
     .max(255, { error: "Đường dẫn quá dài" }),
-  categoryId: z.number({ error: "Danh mục không hợp lệ" }).min(1, {
+  categoryId: z.number({ error: "Danh mục không được để trống" }).min(1, {
     error: "Danh mục không hợp lệ",
   }),
-  isActive: z.boolean(),
 };
 
 export const createProductSchema = z.object({
@@ -55,6 +54,7 @@ export const updateProductSchema = z.object({
   allergenInfo: z.string().optional(),
   subDescription: z.string().optional(),
   description: z.string().optional(),
+  isActive: z.boolean(),
   price: z
     .number({ error: "Giá không hợp lệ" })
     .nonnegative({ error: "Giá phải là lớn hơn 0" }),

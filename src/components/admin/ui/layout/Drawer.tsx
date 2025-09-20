@@ -24,6 +24,7 @@ export const Drawer: FC<PropsWithChildren<Props>> = ({
     >
       <DialogPanel
         transition
+        data-theme="light"
         className={cn(
           "w-xs h-screen bg-white duration-200 transition data-closed:translate-x-full rtl:data-closed:-translate-x-full ",
           className,

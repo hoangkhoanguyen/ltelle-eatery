@@ -123,7 +123,20 @@ const ProductEditForm = () => {
                       <ProductStatusSwitch value={value} onChange={onChange} />
                     )}
                   />
-                  <CategorySelector />
+                  <Controller
+                    control={control}
+                    name="categoryId"
+                    render={({
+                      field: { value, onChange },
+                      fieldState: { error },
+                    }) => (
+                      <CategorySelector
+                        value={value}
+                        onChange={onChange}
+                        error={error}
+                      />
+                    )}
+                  />
                 </div>
                 <Controller
                   control={control}

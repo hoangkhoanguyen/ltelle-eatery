@@ -3,10 +3,18 @@ import React, { FC } from "react";
 import { InputWithLabel, Switch } from "../../../ui/form";
 import { Editor } from "@/types/common";
 
-const ProductStatusSwitch: FC<Editor> = ({ value, onChange }) => {
+const ProductStatusSwitch: FC<Editor & { disabled?: boolean }> = ({
+  value,
+  onChange,
+  disabled,
+}) => {
   return (
     <InputWithLabel label="Trạng thái" required>
-      <Switch checked={value} onChange={(e) => onChange(e.target.checked)} />
+      <Switch
+        checked={value}
+        onChange={(e) => onChange(e.target.checked)}
+        disabled={disabled}
+      />
     </InputWithLabel>
   );
 };

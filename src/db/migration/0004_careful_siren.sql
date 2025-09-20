@@ -1,0 +1,1 @@
+ALTER TABLE "dev"."product_addons" ADD CONSTRAINT "product_addons_product_id_products_id_fk" FOREIGN KEY ("product_id") REFERENCES "dev"."products"("id") ON DELETE no action ON UPDATE no action;

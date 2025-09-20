@@ -21,7 +21,7 @@ export async function createProductAction(data: NewProductDB) {
     };
   const newProduct = await createProduct(data);
   // You can call your service function here to save the product to the database
-  // TODO: revalidate
+  // TODO: revalidate website
   return { newProduct };
 }
 

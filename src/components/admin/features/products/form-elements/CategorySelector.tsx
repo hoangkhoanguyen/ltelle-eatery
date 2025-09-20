@@ -1,25 +1,16 @@
 "use client";
-import React, { useCallback, useRef } from "react";
+import React, { FC, useCallback, useRef } from "react";
 import { LayoutRef } from "@/components/admin/ui/layout";
 import { Label, Select } from "@/components/admin/ui/form";
 import CreateCategory from "../CreateCategory";
 import useFetchAllCategories from "@/hooks/admin/features/categories/useFetchAllCategories";
-import { useProductDetailsContext } from "../ProductDetailsProvider";
-import { Controller, useController } from "react-hook-form";
 import { IconButton } from "@/components/admin/ui/button";
 import WithError from "@/components/admin/ui/form/WithError";
+import { Editor } from "@/types/common";
 
-const CategorySelector = () => {
-  const { control } = useProductDetailsContext();
+const CategorySelector: FC<Editor> = ({ onChange, value, error }) => {
   const modalRef = useRef<LayoutRef>(null);
   const { data = [] } = useFetchAllCategories();
-
-  const {
-    field: { onChange },
-  } = useController({
-    control,
-    name: "categoryId",
-  });
 
   const onSuccess = useCallback(
     (id: number) => {
@@ -38,25 +29,20 @@ const CategorySelector = () => {
           </Label>
           <IconButton icon="ph:plus" onClick={() => modalRef.current?.open()} />
         </div>
-        <Controller
-          control={control}
-          name="categoryId"
-          render={({ field: { value, onChange }, fieldState: { error } }) => (
-            <WithError error={error}>
-              <Select
-                value={value}
-                onChange={(e) => onChange(e.target.value)}
-                className={error ? "input-error" : ""}
-              >
-                {data.map((item) => (
-                  <option value={item.id} key={item.id}>
-                    {item.name}
-                  </option>
-                ))}
-              </Select>
-            </WithError>
-          )}
-        />
+        <WithError error={error}>
+          <Select
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            className={error ? "input-error" : ""}
+          >
+            <option value="">Chọn</option>
+            {data.map((item) => (
+              <option value={item.id} key={item.id}>
+                {item.name}
+              </option>
+            ))}
+          </Select>
+        </WithError>
       </div>
       <CreateCategory ref={modalRef} onSuccess={onSuccess} />
     </>
