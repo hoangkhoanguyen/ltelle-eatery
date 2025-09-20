@@ -12,7 +12,7 @@ export const HeroSection = () => {
         backgroundImage: "url('/assets/static/hero.png')",
       }}
     >
-      <div className="min-h-screen container md:max-w-[526px] lg:max-w-2xl mx-auto px-3 lg:px-4">
+      <div className="min-h-screen relative container md:max-w-[526px] lg:max-w-2xl mx-auto px-3 lg:px-4">
         <div className="flex flex-col items-center pt-2.5 pb-6 md:pt-10 lg:pt-6">
           <div
             className={cn(
@@ -57,13 +57,12 @@ export const HeroSection = () => {
             </Button>
           </div>
 
-          <div className="w-full md:mb-28">
+          <div className="w-full">
             <Stats />
           </div>
-          <Icon
-            icon="ph:mouse-simple"
-            className="text-5xl animate-bounce invisible lg:visible"
-          />
+        </div>
+        <div className="invisible lg:visible absolute bottom-7 left-1/2 -translate-x-1/2">
+          <Icon icon="ph:mouse-simple" className="text-5xl animate-bounce" />
         </div>
       </div>
     </section>
