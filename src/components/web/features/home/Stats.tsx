@@ -16,7 +16,7 @@ function StatItem({ label, nums }: { nums: string; label: string }) {
       <span className="text-web-h1-mobile md:text-web-h1 text-web-background-1">
         {nums}
       </span>
-      <span className="text-web-caption-mobile md:text-web-caption text-web-background-2">
+      <span className="text-web-caption-mobile md:text-web-caption text-web-background-1">
         {label}
       </span>
     </div>

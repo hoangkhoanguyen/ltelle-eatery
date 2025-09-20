@@ -9,7 +9,7 @@ const buttonVariants = cva("", {
       secondary1: "text-web-content-1 bg-web-secondary-1",
       secondary2: "text-web-content-1 bg-web-secondary-2",
       white:
-        "text-web-content-1 bg-web-background-1 border border-web-background-2 disabled:text-web-background-3 disabled:border-webtext-web-background-3",
+        "text-web-content-1 bg-web-background-1 border border-web-background-2 disabled:text-web-content-3 disabled:border-web-content-3",
       link: "h-max p-0 text-web-background-1 hover:text-web-secondary-1",
     },
   },

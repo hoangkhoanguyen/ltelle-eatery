@@ -15,9 +15,9 @@ const AdjustButton: FC<{ icon: string; onClick?(): void }> = ({
 
 export const QuantityButtons = () => {
   return (
-    <div className="flex items-center h-[52px] bg-web-background-1 border border-web-background-3 rounded-lg overflow-hidden">
+    <div className="flex items-center h-[52px] bg-web-background-1 border border-web-content-3 rounded-lg overflow-hidden">
       <AdjustButton icon="ph:minus" />
-      <span className="text-web-content-1 flex-1 h-full aspect-square flex justify-center items-center box-content border-x border-web-background-3">
+      <span className="text-web-content-1 flex-1 h-full aspect-square flex justify-center items-center box-content border-x border-web-content-3">
         1
       </span>
       <AdjustButton icon="ph:plus" />
