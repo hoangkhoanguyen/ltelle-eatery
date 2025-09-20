@@ -1,4 +1,4 @@
-import { db } from "@/db/drizzle";
+import { getDb } from "@/db/drizzle";
 import { refreshTokens, users } from "@/db/schemas";
 import {
   NewRefreshTokenDB,
@@ -11,6 +11,7 @@ import { eq, and, or, ilike, sql } from "drizzle-orm";
 // Tạo user mới
 export async function createUser(userData: NewUserDB) {
   try {
+    const db = getDb();
     const [newUser] = await db
       .insert(users)
       .values({
@@ -27,6 +28,7 @@ export async function createUser(userData: NewUserDB) {
 // Lấy user theo ID
 export async function getUserById(id: number) {
   try {
+    const db = getDb();
     const user = await db.select().from(users).where(eq(users.id, id)).limit(1);
 
     return user[0] || null;
@@ -38,6 +40,7 @@ export async function getUserById(id: number) {
 // Lấy user theo email
 export async function getUserByEmail(email: string) {
   try {
+    const db = getDb();
     const user = await db
       .select()
       .from(users)
@@ -53,6 +56,7 @@ export async function getUserByEmail(email: string) {
 // Lấy user theo username
 export async function getUserByUsername(username: string) {
   try {
+    const db = getDb();
     const user = await db
       .select()
       .from(users)
@@ -83,6 +87,7 @@ export async function updateUser(
   >,
 ) {
   try {
+    const db = getDb();
     const [updatedUser] = await db
       .update(users)
       .set({
@@ -138,6 +143,7 @@ export async function getUsers(
       conditions.length > 0 ? and(...conditions) : undefined;
 
     // Lấy users
+    const db = getDb();
     const usersList = await db
       .select()
       .from(users)
@@ -166,6 +172,7 @@ export async function getUsers(
 
 export async function createRefreshToken(data: NewRefreshTokenDB) {
   try {
+    const db = getDb();
     const [newToken] = await db
       .insert(refreshTokens)
       .values({
@@ -181,6 +188,7 @@ export async function createRefreshToken(data: NewRefreshTokenDB) {
 
 export async function getTokenInfoByToken(token: string) {
   try {
+    const db = getDb();
     const [tokenInfo] = await db
       .select()
       .from(refreshTokens)
@@ -198,6 +206,7 @@ export async function updateRefreshToken(
   data: Partial<Pick<RefreshTokenDB, "isValid">>,
 ) {
   try {
+    const db = getDb();
     const [updatedRefreshToken] = await db
       .update(refreshTokens)
       .set({

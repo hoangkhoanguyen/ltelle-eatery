@@ -1,26 +1,37 @@
 import { Pool } from "pg";
-import { drizzle, NodePgQueryResultHKT } from "drizzle-orm/node-postgres";
+import {
+  drizzle,
+  NodePgDatabase,
+  NodePgQueryResultHKT,
+} from "drizzle-orm/node-postgres";
 import * as schema from "./schemas";
-import { env } from "@/lib/env";
+import { getEnv } from "@/lib/env";
 import { PgTransaction } from "drizzle-orm/pg-core";
 import { ExtractTablesWithRelations } from "drizzle-orm";
 
-const pool = new Pool({
-  host: env.DB_HOST,
-  port: env.DB_PORT,
-  user: env.DB_USERNAME,
-  password: env.DB_PASSWORD,
-  database: env.DB_NAME,
-  max: 20,
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 2000,
-});
+let db: NodePgDatabase<typeof schema> & {
+  $client: Pool;
+};
 
-export const db = drizzle(pool, { schema });
+export function getDb() {
+  if (!db) {
+    const env = getEnv();
+    const pool = new Pool({
+      host: env.DB_HOST,
+      port: env.DB_PORT,
+      user: env.DB_USERNAME,
+      password: env.DB_PASSWORD,
+      database: env.DB_NAME,
+      max: 20,
+      idleTimeoutMillis: 30000,
+      connectionTimeoutMillis: 2000,
+    });
 
-// export type DB = ReturnType<typeof drizzle>;
+    db = drizzle(pool, { schema });
+  }
 
-// export type TransactionType = Parameters<Parameters<DB["transaction"]>[0]>[0];
+  return db;
+}
 
 type Schema = typeof schema;
 
@@ -30,4 +41,5 @@ export type TransactionType = PgTransaction<
   ExtractTablesWithRelations<Schema>
 >;
 
+// export type DB = ReturnType<typeof drizzle> | TransactionType;
 export type DB = typeof db | TransactionType;

@@ -15,20 +15,30 @@ const envSchema = z.object({
   ACCESS_TOKEN_JWT_EXPIRES_IN: z.string(),
   REFRESH_TOKEN_JWT_SECRET: z.string(),
   REFRESH_TOKEN_JWT_EXPIRES_IN: z.string(),
-  // Thêm biến môi trường khác tại đây...
 });
 
-const parsed = envSchema.safeParse(process.env);
+export type Env = z.infer<typeof envSchema>;
 
-if (!parsed.success) {
-  const { fieldErrors } = parsed.error.flatten();
-  const message = Object.entries(fieldErrors)
-    .map(([k, v]) => `${k}: ${v?.join(", ")}`)
-    .join("\n");
-  throw new Error("Invalid environment variables:\n" + message);
+let parsedEnv: Env;
+
+export function getEnv(): Env {
+  if (!parsedEnv) {
+    const parsed = envSchema.safeParse(process.env);
+
+    if (!parsed.success) {
+      const { fieldErrors } = parsed.error.flatten();
+      const message = Object.entries(fieldErrors)
+        .map(([k, v]) => `${k}: ${v?.join(", ")}`)
+        .join("\n");
+      throw new Error("Invalid environment variables:\n" + message);
+    }
+
+    parsedEnv = parsed.data;
+  }
+
+  return parsedEnv;
 }
 
-export const env = parsed.data;
-export type Env = z.infer<typeof envSchema>;
-// only import env in server-side code
-// never import env in client-side code
+// Usage in other files:
+// import { getEnv } from '@/lib/env'
+// const env = getEnv()

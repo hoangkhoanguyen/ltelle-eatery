@@ -1,9 +1,9 @@
-import { db, DB } from "@/db/drizzle";
+import { DB, getDb } from "@/db/drizzle";
 import { orderItemAddons, orderItems } from "@/db/schemas";
 import { NewOrderDB, NewOrderItemAddonDB, NewOrderItemDB } from "@/types/order";
 
 async function addOrderItemAddons(data: NewOrderItemAddonDB[], tx?: DB) {
-  const executor = tx ?? db;
+  const executor = tx ?? getDb();
 
   return await executor.insert(orderItemAddons).values(data).returning();
 }
@@ -14,7 +14,7 @@ async function addOrderItems(
   })[],
   tx?: DB,
 ) {
-  const executor = tx ?? db;
+  const executor = tx ?? getDb();
 
   await Promise.all(
     data.map(async (item) => {

@@ -1,7 +1,6 @@
 "use client";
 import OrderFilter from "@/components/admin/features/orders/OrderFilter";
 import OrderTable from "@/components/admin/features/orders/OrderTable";
-import FilterTag from "@/components/admin/shared/FilterTag";
 import Header from "@/components/admin/shared/header/Header";
 import SearchInput from "@/components/admin/shared/SearchInput";
 import Pagination from "@/components/admin/ui/table/Pagination";

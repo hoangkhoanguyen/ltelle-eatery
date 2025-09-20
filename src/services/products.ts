@@ -1,4 +1,4 @@
-import { DB, db } from "@/db/drizzle";
+import { DB, getDb } from "@/db/drizzle";
 import {
   productAddons,
   productCategories,
@@ -18,6 +18,7 @@ import {
 import { eq, inArray } from "drizzle-orm";
 
 export async function addProductCategory(categoryData: NewProductCategoryDB) {
+  const db = getDb();
   const [newCategory] = await db
     .insert(productCategories)
     .values(categoryData)
@@ -27,10 +28,12 @@ export async function addProductCategory(categoryData: NewProductCategoryDB) {
 }
 
 export async function getAllProductCategories() {
+  const db = getDb();
   return await db.select().from(productCategories);
 }
 
 export async function createProduct(productData: NewProductDB) {
+  const db = getDb();
   const [newProduct] = await db
     .insert(products)
     .values({
@@ -49,6 +52,7 @@ export async function getAdminProductTable({
   page?: number;
   search?: string;
 }) {
+  const db = getDb();
   const offset = limit * (page - 1);
 
   const [productsList, totalCount] = await Promise.all([
@@ -78,6 +82,7 @@ export async function getAdminProductTable({
 }
 
 export async function getAdminProductById(id: number) {
+  const db = getDb();
   return await db.query.products.findFirst({
     where: eq(products.id, id),
     with: {
@@ -89,6 +94,7 @@ export async function getAdminProductById(id: number) {
 }
 
 export async function getAdminRelatedProductsByIds(ids: number[]) {
+  const db = getDb();
   return await db.query.products.findMany({
     where: inArray(products.id, ids),
     columns: {
@@ -115,7 +121,7 @@ export async function getAdminProductDetailsById(id: number) {
 }
 
 export async function addProductAddons(data: NewProductAddOnDB[], tx?: DB) {
-  const executor = tx ?? db;
+  const executor = tx ?? getDb();
   return await executor.insert(productAddons).values(data).returning();
 }
 
@@ -124,7 +130,7 @@ export async function updateProductAddon(
   data: UpdateProductAddOnDB,
   tx?: DB,
 ) {
-  const executor = tx ?? db;
+  const executor = tx ?? getDb();
   const [updated] = await executor
     .update(productAddons)
     .set({ ...data, updatedAt: new Date() })
@@ -137,7 +143,7 @@ export async function updateProductAddons(
   addons: (Partial<UpdateProductAddOnDB> & { id: number })[],
   tx?: DB,
 ) {
-  const executor = tx ?? db;
+  const executor = tx ?? getDb();
   const updated: ProductAddOnDB[] = [];
 
   for (const addon of addons) {
@@ -171,7 +177,7 @@ export async function addProductImages(
   newImages: NewProductImageDB[],
   tx?: DB,
 ) {
-  const executor = tx ?? db;
+  const executor = tx ?? getDb();
 
   return executor.insert(productImages).values(newImages).returning({
     id: productImages.id,
@@ -183,6 +189,7 @@ export async function addProductImages(
 }
 
 export async function getAllProducts() {
+  const db = getDb();
   return await db.query.products.findMany({
     columns: {
       id: true,
@@ -197,7 +204,7 @@ export async function updateProductImage(
   data: UpdateProductImageDB,
   tx?: DB,
 ) {
-  const executor = tx ?? db;
+  const executor = tx ?? getDb();
   return await executor
     .update(productImages)
     .set({ ...data, updatedAt: new Date() })
@@ -206,6 +213,7 @@ export async function updateProductImage(
 }
 
 export async function deleteProductImage(id: number) {
+  const db = getDb();
   const [deletedImage] = await db
     .delete(productImages)
     .where(eq(productImages.id, id))
@@ -237,6 +245,7 @@ export async function deleteProductImages(ids: number[]) {
   //       .where(eq(productImages.id, minSortOrderImage.id));
   //   }
   // }
+  const db = getDb();
 
   return await db.delete(productImages).where(inArray(productImages.id, ids));
 }
@@ -245,7 +254,7 @@ export async function updateProductImages(
   images: (Partial<UpdateProductImageDB> & { id: number })[],
   tx?: DB,
 ) {
-  const executor = tx ?? db;
+  const executor = tx ?? getDb();
   const updated: ProductImageDB[] = [];
 
   for (const image of images) {
@@ -290,6 +299,7 @@ export async function updateProductById({
   newImages: NewProductImageDB[];
   oldImages: (UpdateProductImageDB & { id: number })[];
 }) {
+  const db = getDb();
   return await db.transaction(async (tx) => {
     await Promise.all([
       // update addons
@@ -323,6 +333,7 @@ export async function updateProductById({
 }
 
 export async function isExistingSlug(slug: string) {
+  const db = getDb();
   const product = await db.query.products.findFirst({
     where: eq(products.slug, slug),
     columns: {

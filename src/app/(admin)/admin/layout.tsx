@@ -1,5 +1,5 @@
 import { AdminQueryProvider } from "@/providers/react-query-provider";
-import React, { FC, PropsWithChildren } from "react";
+import React, { FC, PropsWithChildren, Suspense } from "react";
 import { Toaster } from "sonner";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
@@ -7,7 +7,9 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
   return (
     <div className="admin" data-theme="light">
       <AdminQueryProvider>
-        <NuqsAdapter>{children}</NuqsAdapter>
+        <NuqsAdapter>
+          <Suspense>{children}</Suspense>
+        </NuqsAdapter>
       </AdminQueryProvider>
       <Toaster
         visibleToasts={3}

@@ -6,6 +6,10 @@ import { getAdminProductDetailsById } from "@/services/products";
 import { pick } from "lodash";
 import React from "react";
 
+export const revalidate = 60; // revalidate this page every 60 seconds
+
+// export const dynamic = "force-dynamic";
+
 const ProductDetailsPage = async () => {
   const product = await getAdminProductDetailsById(1);
   console.log("first", product);
