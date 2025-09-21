@@ -1,3 +1,4 @@
+import { ContactSection } from "@/components/web/features/home/ContactSection";
 import { GallerySection } from "@/components/web/features/home/GallerySection";
 import { HeroSection } from "@/components/web/features/home/HeroSection";
 import { OurStorySection } from "@/components/web/features/home/OurStorySection";
@@ -13,6 +14,7 @@ const HomePage = () => {
       <WhyChooseUsSection />
       <GallerySection />
       <ReviewsSection />
+      <ContactSection />
     </div>
   );
 };

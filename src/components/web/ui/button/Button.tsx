@@ -43,7 +43,6 @@ export const Button = <T extends ElementType = "button">({
         "px-3 py-2.5 rounded",
         "flex flex-row justify-center items-center gap-1.5",
         "duration-200 not-disabled:active:scale-90",
-        "text-web-button-mobile lg:text-web-button",
         buttonVariants({ variant }),
         className,
       )}

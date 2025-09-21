@@ -14,7 +14,7 @@ export default function Logo() {
       />
       <div>
         <p className="text-[28px] leading-[100%] font-normal text-web-primary font-brand">
-          L&#39;Telle Eater
+          L&#39;Telle Eatery
         </p>
         <p className="text-web-caption-mobile xl:text-web-caption text-web-content-1">
           French Cusine &bull; Ha Giang
