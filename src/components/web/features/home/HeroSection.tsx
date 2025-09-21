@@ -7,14 +7,7 @@ import Image from "next/image";
 
 export const HeroSection = () => {
   return (
-    <section
-      className="relative"
-      style={
-        {
-          // backgroundImage: "url('/assets/static/hero.png')",
-        }
-      }
-    >
+    <section className="relative pt-[149px] lg:pt-[146px] min-h-screen">
       <div className="absolute w-full h-full top-0 left-0 -z-10">
         <Image
           src="/assets/static/hero.png"
@@ -23,7 +16,7 @@ export const HeroSection = () => {
           alt="Hero Image"
         />
       </div>
-      <div className="min-h-screen relative container">
+      <div className="relative container min-h-[calc(100vh-149px)] lg:min-h-[calc(100vh-146px)]">
         <div className="flex flex-col items-center md:px-10 lg:max-w-2xl mx-auto pt-2.5 pb-6 md:pt-10 lg:pt-6">
           <div
             className={cn(

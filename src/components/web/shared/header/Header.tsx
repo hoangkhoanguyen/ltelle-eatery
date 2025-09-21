@@ -6,7 +6,7 @@ import DesktopMenu from "./DesktopMenu";
 export default function Header() {
   return (
     <>
-      <header>
+      <header className="fixed top-0 start-0 end-0 z-50">
         <div className="bg-web-background-1 border-b border-web-content-3">
           <div className="container">
             {/* upper header */}
