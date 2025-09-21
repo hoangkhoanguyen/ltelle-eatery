@@ -6,7 +6,7 @@ import { Button } from "../../ui/button";
 export const ReviewsSection = () => {
   return (
     <section className="bg-web-background-1">
-      <div className="container mx-auto px-3 md:px-5 py-10">
+      <div className="container py-10">
         <div className="mb-5 text-center">
           <h3 className="text-web-secondary-3 text-web-subtitle-mobile uppercase mb-5 lg:text-web-subtitle">
             GUEST EXPERIENCE
@@ -32,7 +32,7 @@ export const ReviewsSection = () => {
           Discover why travelers from around the world choose Le Bambou for
           their finest dining experience in Ha Giang.
         </p>
-        <div className="mb-10">
+        <div className="mb-10 md:px-20 lg:px-0">
           <ReviewsSliders>
             {[1, 2, 3].map((_, index) => (
               <div

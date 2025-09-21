@@ -12,8 +12,8 @@ export const HeroSection = () => {
         backgroundImage: "url('/assets/static/hero.png')",
       }}
     >
-      <div className="min-h-screen relative container md:max-w-[526px] lg:max-w-2xl mx-auto px-3 lg:px-4">
-        <div className="flex flex-col items-center pt-2.5 pb-6 md:pt-10 lg:pt-6">
+      <div className="min-h-screen relative container">
+        <div className="flex flex-col items-center md:px-10 lg:max-w-2xl mx-auto pt-2.5 pb-6 md:pt-10 lg:pt-6">
           <div
             className={cn(
               "flex items-center gap-1 bg-white/10 rounded-full py-2 px-5",

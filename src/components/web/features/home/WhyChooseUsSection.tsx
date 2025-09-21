@@ -4,7 +4,7 @@ import React from "react";
 export const WhyChooseUsSection = () => {
   return (
     <section className="bg-web-secondary-2">
-      <div className="container mx-auto px-3 md:px-5 pt-10 pb-10 md:pt-12">
+      <div className="container pt-10 pb-10 md:pt-12">
         <h3 className="text-web-secondary-3 text-web-subtitle-mobile uppercase mb-5 lg:text-web-subtitle text-center">
           EXCELLENCE &bull; DISTINCTION &bull; QUALITY
         </h3>

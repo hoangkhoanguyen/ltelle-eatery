@@ -10,7 +10,7 @@ interface IMenuItem {
   title: string;
 }
 
-const MENU: IMenuItem[] = [
+export const MENU: IMenuItem[] = [
   {
     href: webRoutes.home(),
     label: "Home",

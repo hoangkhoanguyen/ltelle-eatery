@@ -30,6 +30,11 @@ button:not(:disabled) {
 
 @theme {
   --spacing-4.5: 1.125rem /* 18px */;
+  --container-margin: auto;
+}
+
+@utility container {
+  @apply mx-auto px-3 md:px-14;
 }
 
 @theme inline {

@@ -26,7 +26,7 @@ const openingHoursConfigs = [
 export const ContactSection = () => {
   return (
     <section className="bg-web-background-2 pt-10 pb-10 md:pb-12 lg:pb-14">
-      <div className="container mx-auto px-3 md:px-5">
+      <div className="container">
         <h3 className="text-web-secondary-1 text-center text-web-subtitle-mobile uppercase mb-5 lg:text-web-subtitle">
           visit us
         </h3>

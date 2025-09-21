@@ -8,7 +8,7 @@ export default function Header() {
     <>
       <header>
         <div className="bg-web-background-1 border-b border-web-content-3">
-          <div className="container mx-auto px-3 md:px-6">
+          <div className="container">
             {/* upper header */}
             <div className="flex justify-between items-center py-1.5 md:py-4.5 border-b border-web-secondary-1">
               <div>
