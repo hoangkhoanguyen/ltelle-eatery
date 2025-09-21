@@ -3,15 +3,27 @@ import { cn } from "@/lib/utils";
 import React from "react";
 import { Button } from "../../ui/button";
 import { Stats } from "./Stats";
+import Image from "next/image";
 
 export const HeroSection = () => {
   return (
     <section
-      className="bg-no-repeat bg-cover bg-top"
-      style={{
-        backgroundImage: "url('/assets/static/hero.png')",
-      }}
+      className="relative"
+      style={
+        {
+          // backgroundImage: "url('/assets/static/hero.png')",
+        }
+      }
     >
+      <div className="absolute w-full h-full top-0 left-0 -z-10">
+        <Image
+          src="/assets/static/hero.png"
+          fill
+          quality={85}
+          className="object-cover"
+          alt="Hero Image"
+        />
+      </div>
       <div className="min-h-screen relative container">
         <div className="flex flex-col items-center md:px-10 lg:max-w-2xl mx-auto pt-2.5 pb-6 md:pt-10 lg:pt-6">
           <div

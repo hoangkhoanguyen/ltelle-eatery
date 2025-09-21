@@ -11,10 +11,10 @@ export const ReviewsSection = () => {
           <h3 className="text-web-secondary-3 text-web-subtitle-mobile uppercase mb-5 lg:text-web-subtitle">
             GUEST EXPERIENCE
           </h3>
-          <h2 className="text-web-h2-mobile capitalize lg:text-web-h2">
+          <h2 className="text-web-h2-mobile capitalize lg:text-web-h2 flex flex-row flex-wrap justify-center gap-x-2">
             <span className="text-web-content-1">What Our</span>{" "}
             <span className="text-web-secondary-1">International</span>{" "}
-            <span className="text-web-primary">Guests Say</span>
+            <span className="text-web-primary w-full md:w-max">Guests Say</span>
           </h2>
         </div>
 

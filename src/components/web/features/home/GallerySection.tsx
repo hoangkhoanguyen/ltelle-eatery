@@ -44,7 +44,7 @@ export const GallerySection = () => {
           <h3 className="text-web-secondary-3 text-web-subtitle-mobile uppercase mb-5 lg:text-web-subtitle">
             L’AMBIANCE &bull; THE EXPERIENCE
           </h3>
-          <h2 className="text-web-h2-mobile capitalize lg:text-web-h2">
+          <h2 className="text-web-h2-mobile capitalize lg:text-web-h2 flex flex-col md:flex-row gap-x-2 justify-center">
             <span className="text-web-content-1">An Atmosphere</span>{" "}
             <span className="text-web-secondary-1">of Pure Romance</span>
           </h2>

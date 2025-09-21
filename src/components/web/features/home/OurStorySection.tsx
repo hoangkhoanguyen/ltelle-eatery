@@ -24,7 +24,7 @@ export const OurStorySection = () => {
               <h3 className="text-web-secondary-3 text-web-subtitle-mobile uppercase mb-5 lg:text-web-subtitle">
                 L&#39;Telle Eater &bull; OUR STORY
               </h3>
-              <h2 className="text-web-h2-mobile capitalize mb-2 md:mb-9 lg:mb-5 lg:text-web-h2">
+              <h2 className="text-web-h2-mobile capitalize mb-2 md:mb-9 lg:mb-5 lg:text-web-h2 flex flex-col md:flex-row gap-x-2">
                 <span className="text-web-content-1">A Love Letter To</span>{" "}
                 <span className="text-web-secondary-1">Frech Gastronomy</span>
               </h2>
