@@ -19,7 +19,6 @@ export const HeroSection = () => {
         <Image
           src="/assets/static/hero.png"
           fill
-          quality={85}
           className="object-cover"
           alt="Hero Image"
         />

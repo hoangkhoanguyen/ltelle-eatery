@@ -15,6 +15,7 @@ const nextConfig: NextConfig = {
         port: "",
       },
     ],
+    qualities: [85],
   },
   output: "standalone",
 };
