@@ -21,7 +21,7 @@ const Footer = () => {
           <div className="col-span-1 lg:col-span-2">
             <div className="flex flex-col gap-5">
               <Link href={webRoutes.home()} className="flex items-center gap-1">
-                <div className="w-12 aspect-square rounded-full bg-web-secondary-1 flex justify-center items-center">
+                <div className="w-12 aspect-square rounded-full bg-web-secondary-2 flex justify-center items-center">
                   <Image
                     src={"/assets/static/logo.svg"}
                     alt="L'Telle Eatery - French Cusine - Ha Giang"
@@ -30,10 +30,10 @@ const Footer = () => {
                   />
                 </div>
                 <div>
-                  <p className="text-[28px] leading-[100%] font-normal text-web-background-1 font-brand">
+                  <p className="text-[28px] leading-[100%] font-normal text-web-secondary-2 font-brand">
                     L&#39;Telle Eatery
                   </p>
-                  <p className="text-web-caption-mobile lg:text-web-caption text-web-background-1">
+                  <p className="text-web-caption-mobile lg:text-web-caption text-web-secondary-2">
                     French Cusine &bull; Ha Giang
                   </p>
                 </div>
