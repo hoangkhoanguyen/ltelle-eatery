@@ -4,7 +4,7 @@ import React from "react";
 export const OurStory = () => {
   return (
     <section className="bg-web-background-3">
-      <div className="container px-3 md:px-4 pt-6 md:pt-10 pb-10 mx-auto">
+      <div className="container px-3 md:px-5 pt-6 md:pt-10 pb-10 mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-10 gap-x-8">
           <div className="order-1 lg:order-2">
             <div className="rounded-2xl overflow-hidden bg-web-secondary-2 py-4.5 px-4 md:px-6 md:py-8 lg:px-5 lg:py-6 lg:mt-11">
