@@ -10,7 +10,7 @@ export const OurStorySection = () => {
             <div className="rounded-2xl overflow-hidden bg-web-secondary-2 py-4.5 px-4 md:px-6 md:py-8 lg:px-5 lg:py-6 lg:mt-11">
               <div className="relative aspect-[5/6] rounded-2xl overflow-hidden">
                 <Image
-                  src={"/assets/static/our-story.png"}
+                  src={"/assets/static/our-story.jpg"}
                   alt="Our Story"
                   fill
                   className="object-cover"
