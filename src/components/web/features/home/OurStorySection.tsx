@@ -14,6 +14,7 @@ export const OurStorySection = () => {
                   alt="Our Story"
                   fill
                   className="object-cover"
+                  quality={100}
                 />
               </div>
             </div>
