@@ -1,7 +1,7 @@
 import Icon from "@/components/common/Icon";
 import React from "react";
 
-export const WhyChooseUs = () => {
+export const WhyChooseUsSection = () => {
   return (
     <section className="bg-web-secondary-2">
       <div className="container mx-auto px-3 md:px-5 pt-10 pb-10 md:pt-12">

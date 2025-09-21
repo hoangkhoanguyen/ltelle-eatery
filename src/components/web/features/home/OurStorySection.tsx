@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
-export const OurStory = () => {
+export const OurStorySection = () => {
   return (
     <section className="bg-web-background-3">
       <div className="container px-3 md:px-5 pt-6 md:pt-10 pb-10 mx-auto">
