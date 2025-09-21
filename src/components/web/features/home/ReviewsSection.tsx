@@ -1,6 +1,7 @@
 import Icon from "@/components/common/Icon";
 import React from "react";
 import { ReviewsSliders } from "./ReviewsSliders";
+import { Button } from "../../ui/button";
 
 export const ReviewsSection = () => {
   return (
@@ -31,16 +32,46 @@ export const ReviewsSection = () => {
           Discover why travelers from around the world choose Le Bambou for
           their finest dining experience in Ha Giang.
         </p>
+        <div className="mb-10">
+          <ReviewsSliders>
+            {[1, 2, 3].map((_, index) => (
+              <div
+                key={index}
+                className="grid grid-cols-1 lg:grid-cols-3 gap-5"
+              >
+                <Review />
+                <Review />
+                <Review />
+              </div>
+            ))}
+          </ReviewsSliders>
+        </div>
 
-        <ReviewsSliders>
-          {[1, 2, 3].map((_, index) => (
-            <div key={index} className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-              <Review />
-              <Review />
-              <Review />
-            </div>
-          ))}
-        </ReviewsSliders>
+        <div className="bg-web-background-2 py-5 px-3 md:px-10 lg:px-28 rounded-lg max-w-[860px] mx-auto ">
+          <div className="mb-5 text-center">
+            <p className="mb-5 text-web-content-1 text-web-h4-mobile lg:text-web-h4">
+              Ready to Create Your Own Memorable Experience?
+            </p>
+            <p className="text-web-body-mobile lg:text-web-body text-web-content-2">
+              Join hundreds of satisfied international guests who have
+              discovered the magic of French cuisine in the heart of Ninh Binh.
+            </p>
+          </div>
+          <div className="flex flex-col md:flex-row items-stretch md:items-center justify-center gap-5">
+            <Button
+              variant={"white"}
+              className="text-web-label text-web-content-1 lg:text-web-label border-web-content-3"
+            >
+              Explore Our Menu
+            </Button>
+            <Button
+              variant={"secondary2"}
+              className="text-web-label text-web-content-1 lg:text-web-label"
+            >
+              Reserve Your Table
+            </Button>
+          </div>
+        </div>
       </div>
     </section>
   );
