@@ -37,7 +37,6 @@ const galleryImages: IGalleryImage[] = [
 ];
 
 export const GallerySection = () => {
-  const image = galleryImages[0];
   return (
     <section className="bg-web-background-3">
       <div className="container mx-auto px-3 md:px-5 py-10">
