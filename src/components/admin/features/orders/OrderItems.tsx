@@ -6,7 +6,7 @@ import React, { FC } from "react";
 
 const OrderItems: FC<{ items: AdminOrderItem[] }> = ({ items }) => {
   return (
-    <div className="card card-body bg-white">
+    <div className="card p-5 bg-white">
       <h2 className="card-title">Order Items</h2>
       <div className="mt-4 flex flex-col gap-4">
         {items.map((item) => (

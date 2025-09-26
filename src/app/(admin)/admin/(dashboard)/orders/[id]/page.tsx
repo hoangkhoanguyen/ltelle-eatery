@@ -5,9 +5,9 @@ import Header from "@/components/admin/shared/header/Header";
 import { getAdminOrderById } from "@/services/orders";
 import React from "react";
 import OrderSummary from "@/components/admin/features/orders/OrderSummary";
-import InternalNote from "@/components/admin/features/orders/InternalNote";
 import OrderItems from "@/components/admin/features/orders/OrderItems";
 import { AdminOrderAddon, OrderStatus, OrderType } from "@/types/orders";
+import OrderInternalNote from "@/components/admin/features/orders/OrderInternalNote";
 
 const OrderDetailsPage = async ({
   params,
@@ -90,7 +90,7 @@ const OrderDetailsPage = async ({
                   createdAt: order.createdAt,
                 }}
               />
-              <InternalNote
+              <OrderInternalNote
                 data={{
                   internalNote: order.internalNote,
                   id: order.id,

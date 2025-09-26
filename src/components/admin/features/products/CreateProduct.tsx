@@ -71,7 +71,7 @@ const CreateProduct = () => {
         Thêm mới
       </Button>
       <LayoutWithRef afterClose={onAfterClose} Component={Modal} ref={modalRef}>
-        <div className="card card-body bg-white w-md">
+        <div className="card p-5 bg-white w-md">
           <p className="card-title">Thêm mới sản phẩm</p>
           <div className="grid grid-cols-1 gap-2 mb-2">
             <Controller

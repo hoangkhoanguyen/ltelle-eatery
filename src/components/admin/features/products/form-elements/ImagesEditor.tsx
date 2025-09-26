@@ -87,7 +87,7 @@ const ImagesEditor = () => {
 
   return (
     <div className="card bg-white">
-      <div className="card-body">
+      <div className="p-5">
         <div className="flex justify-between items-center">
           <p className="card-title">Hình ảnh sản phẩm</p>
 

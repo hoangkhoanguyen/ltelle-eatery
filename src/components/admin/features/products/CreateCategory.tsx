@@ -38,7 +38,7 @@ const CreateCategory = memo(
     return (
       <LayoutWithRef ref={ref} Component={Modal} afterClose={onAfterClose}>
         <div className="card bg-white grid grid-cols-1 gap-4 w-sm">
-          <div className="card-body">
+          <div className="p-5">
             <p className="card-title">Thêm nhóm món ăn</p>
             <Controller
               control={control}

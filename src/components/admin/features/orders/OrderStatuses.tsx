@@ -1,10 +1,9 @@
 "use client";
-import Icon from "@/components/common/Icon";
-import { cn } from "@/lib/utils";
 import { OrderStatus } from "@/types/orders";
 import React, { ComponentProps, FC, useMemo } from "react";
 import { Button } from "../../ui/button";
 import useUpdateOrderStatus from "@/hooks/admin/features/orders/useUpdateOrderStatus";
+import StatusItem from "../../shared/StatusItem";
 
 const STATUS_RENDER: Record<
   OrderStatus,
@@ -122,7 +121,7 @@ const OrderStatuses: FC<{
   }, [status, historyStatus]);
 
   return (
-    <div className="card bg-white card-body">
+    <div className="card bg-white p-5">
       <p className="card-title">Order Status</p>
       <div className="flex justify-between relative mt-4 pb-5">
         {statuses.map((status, idx) => (
@@ -150,58 +149,3 @@ const OrderStatuses: FC<{
 };
 
 export default OrderStatuses;
-
-function StatusItem({
-  first,
-  active,
-  icon,
-  label,
-  color = "primary",
-}: {
-  first?: boolean;
-  active?: boolean;
-  icon: string;
-  label: string;
-  color?: "primary" | "error";
-}) {
-  return (
-    <div className={cn("flex justify-end relative", first ? "" : "flex-1")}>
-      {!first && (
-        <span
-          className={cn(
-            "absolute top-1/2 left-0 -translate-y-1/2 w-full h-0.5 z-0",
-            active
-              ? color === "primary"
-                ? "bg-primary"
-                : "bg-error"
-              : "bg-gray-300",
-          )}
-        ></span>
-      )}
-      <div
-        className={cn(
-          "relative w-12 aspect-square rounded-full flex items-center justify-center",
-          active
-            ? color === "primary"
-              ? "bg-primary"
-              : "bg-error"
-            : "bg-gray-300",
-        )}
-      >
-        <Icon icon={icon} className="text-white text-lg" />
-        <span
-          className={cn(
-            "absolute -bottom-6 text-center w-max text-xs font-medium",
-            active
-              ? color === "primary"
-                ? "text-primary"
-                : "text-error"
-              : "text-gray-400",
-          )}
-        >
-          {label}
-        </span>
-      </div>
-    </div>
-  );
-}

@@ -25,7 +25,7 @@ export default function Filter({
         Filter
       </Button>
       <LayoutWithRef Component={Drawer} ref={ref} beforeOpen={onBeforeOpen}>
-        <div className="card-body max-h-full flex flex-col">
+        <div className="p-5 max-h-full flex flex-col">
           <p className="card-title">Filter</p>
           <div className="flex-1 overflow-auto pb-2">{children}</div>
           <div className="card-actions justify-end">

@@ -5,7 +5,7 @@ const DeliveryInformation: FC<{
   data: Pick<AdminOrderDetails, "deliveryAddress" | "addressNote">;
 }> = ({ data }) => {
   return (
-    <div className="card card-body bg-white">
+    <div className="card p-5 bg-white">
       <h2 className="card-title">Delivery Information</h2>
       <div className="grid grid-cols-1 gap-4 mt-4">
         <div>

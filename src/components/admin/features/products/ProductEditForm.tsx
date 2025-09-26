@@ -27,7 +27,7 @@ const ProductEditForm = () => {
         <div className="col-span-12 md:col-span-8 xl:col-span-9">
           <div className="grid grid-cols-1 gap-4">
             <div className="card bg-white">
-              <div className="card-body">
+              <div className="p-5">
                 <div className="card-title">Thông tin cơ bản</div>
                 <div className="grid grid-cols-1 gap-4">
                   <Controller
@@ -112,7 +112,7 @@ const ProductEditForm = () => {
         </div>
         <div className="col-span-12 md:col-span-4 xl:col-span-3">
           <div className="card bg-white">
-            <div className="card-body">
+            <div className="p-5">
               <div className="card-title">Thông tin khác</div>
               <div className="grid grid-cols-1 gap-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 gap-4">

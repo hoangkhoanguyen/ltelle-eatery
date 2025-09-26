@@ -10,7 +10,7 @@ const OrderSummary: FC<{
   >;
 }> = ({ data }) => {
   return (
-    <div className="card card-body bg-white">
+    <div className="card p-5 bg-white">
       <h2 className="card-title">Order Summary</h2>
       <div className="mt-4 flex flex-col gap-3">
         <div>

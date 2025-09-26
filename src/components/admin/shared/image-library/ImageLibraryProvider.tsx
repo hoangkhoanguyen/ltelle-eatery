@@ -59,7 +59,7 @@ export default function ImageLibraryModalProvider({
       {children}
       <LayoutWithRef ref={modalref} Component={Modal} afterClose={onCloseModal}>
         <div className="card bg-white w-xl">
-          <div className="card-body">
+          <div className="p-5">
             <ImageLibrary
               selectedImgs={selectedImgs}
               onClickImgBox={onToggleImg}

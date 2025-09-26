@@ -28,7 +28,7 @@ const AddonsEditor = () => {
 
   return (
     <div className="card bg-white">
-      <div className="card-body">
+      <div className="p-5">
         <div className="flex justify-between items-center gap-4">
           <p className="card-title">Addons</p>
           <Button onClick={onAddAddons}>+ Thêm</Button>

@@ -9,7 +9,7 @@ const ProductSelectorModal = forwardRef<LayoutRef>(({}, ref) => {
   return (
     <LayoutWithRef ref={ref} Component={Modal}>
       <div className="card bg-white w-md">
-        <div className="card-body">
+        <div className="p-5">
           <p className="card-title">Chọn sản phẩm liên quan</p>
           <Select>{}</Select>
         </div>
