@@ -2,7 +2,7 @@
 import React, { FC, ReactNode, useState } from "react";
 import { Swiper, SwiperClass, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import { FreeMode, Thumbs } from "swiper/modules";
+import { Autoplay, FreeMode, Thumbs } from "swiper/modules";
 
 export const Gallery: FC<{
   children: ReactNode[];
@@ -15,8 +15,13 @@ export const Gallery: FC<{
       <Swiper
         className="mb-5"
         slidesPerView={1}
+        autoplay={{
+          delay: 3000,
+          disableOnInteraction: false,
+        }}
+        loop
         thumbs={{ swiper: thumbsSwiper }}
-        modules={[FreeMode, Thumbs]}
+        modules={[FreeMode, Thumbs, Autoplay]}
       >
         {children.map((child, index) => (
           <SwiperSlide key={index}>{child}</SwiperSlide>
