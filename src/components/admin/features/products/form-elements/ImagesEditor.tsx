@@ -61,7 +61,7 @@ const ImagesEditor = () => {
     const result = await deleteProductImagesAction(savedIds);
 
     // on success
-    if (result.result === "success") {
+    if (result.success) {
       onDeleteSuccess();
       setDeleting(false);
       return;
