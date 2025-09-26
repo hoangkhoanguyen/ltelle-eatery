@@ -45,8 +45,8 @@ export const ContactSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-6">
           <div className="col-span-1">
             <Card>
-              <div className="flex flex-col gap-5">
-                <div className="flex flex-col gap-10">
+              <div className="flex flex-col gap-5 h-full">
+                <div className="flex flex-col gap-10 flex-1">
                   <CardTitle icon="ph:map-pin" title="Location" />
 
                   <div className="w-full">
@@ -70,7 +70,7 @@ export const ContactSection = () => {
                       className="rotate-90 text-lg"
                     />
                   }
-                  className="border-web-content-3 text-web-label-mobile lg:text-web-label"
+                  className="text-web-label-mobile lg:text-web-label"
                 >
                   Get Directions
                 </Button>
@@ -79,8 +79,8 @@ export const ContactSection = () => {
           </div>
           <div className="col-span-1">
             <Card>
-              <div className="flex flex-col gap-5">
-                <div className="flex flex-col gap-10">
+              <div className="flex flex-col gap-5 h-full">
+                <div className="flex flex-col gap-10 flex-1">
                   <CardTitle icon="ph:phone" title="Contact" />
 
                   <div className="w-full flex flex-col gap-5">
@@ -110,7 +110,7 @@ export const ContactSection = () => {
                   rel="noreferrer"
                   variant="white"
                   startIcon={<Icon icon="ph:chat-circle" className="text-lg" />}
-                  className="border-web-content-3 text-web-label-mobile lg:text-web-label"
+                  className="text-web-label-mobile lg:text-web-label"
                 >
                   WhatsApp
                 </Button>
