@@ -1,42 +1,61 @@
 import React, { useState } from "react";
 import Filter from "../../shared/Filter";
-import { parseAsBoolean, useQueryStates } from "nuqs";
+import {
+  parseAsArrayOf,
+  parseAsBoolean,
+  parseAsString,
+  SetValues,
+  useQueryStates,
+} from "nuqs";
 import { Select } from "../../ui/form";
+import { ORDER_STATUS, ORDER_TYPE } from "@/constants/orders";
+import { OrderStatus, OrderType } from "@/types/orders";
 
-const OrderFilter = () => {
-  const [urlQuery, setURLQuery] = useQueryStates({
-    isActive: parseAsBoolean,
-  });
-  const [query, setQuery] = useState<{
-    isActive: boolean | null;
-  }>({
-    isActive: null,
-  });
+interface FilterQuery {
+  status: string[];
+  order_type: string[];
+  start_date: string;
+  end_date: string;
+}
+
+const OrderFilter = ({
+  query: initQuery,
+  setQuery: setURLQuery,
+}: {
+  query: FilterQuery;
+  setQuery(value: FilterQuery): void;
+}) => {
+  const [query, setQuery] = useState<FilterQuery>(initQuery);
+  // const [urlQuery, setURLQuery] = useState<FilterQuery>(initQuery);
+
+  const onChangeQuery = <K extends keyof FilterQuery>(
+    key: K,
+    value: FilterQuery[K],
+  ) => {
+    // update url to state
+    setQuery((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
 
   const onUpdateToState = () => {
     // update url to state
-    setQuery(urlQuery);
+    setQuery(initQuery);
+  };
+
+  const onReset = () => {
+    setQuery({
+      status: [],
+      order_type: [],
+      start_date: "",
+      end_date: "",
+    });
   };
 
   const onSubmit = () => {
     // update state to url
     setURLQuery(query);
-  };
-
-  const onReset = () => {
-    setQuery({
-      isActive: null,
-    });
-  };
-
-  const onChange = <T extends keyof typeof urlQuery>(
-    key: T,
-    value: (typeof urlQuery)[T],
-  ) => {
-    setQuery((p) => ({
-      ...p,
-      [key]: value,
-    }));
   };
 
   return (
@@ -45,32 +64,53 @@ const OrderFilter = () => {
       onSubmit={onSubmit}
       onBeforeOpen={onUpdateToState}
     >
-      <Select
-        value={
-          query.isActive === null
-            ? "all"
-            : query.isActive === true
-            ? "true"
-            : "false"
-        }
-        onChange={(e) => {
-          switch (e.target.value) {
-            case "all":
-              onChange("isActive", null);
-              break;
-            case "true":
-              onChange("isActive", true);
-              break;
-            default:
-              onChange("isActive", false);
-              break;
-          }
-        }}
-      >
-        <option value={"all"}>Tất cả</option>
-        <option value={"true"}>Đang hoạt động</option>
-        <option value={"false"}>Ngưng hoạt động</option>
-      </Select>
+      <fieldset className="fieldset bg-base-100 border-base-300 rounded-box w-full border p-4">
+        <legend className="fieldset-legend">Order Status</legend>
+        {Object.values(OrderStatus).map((status) => (
+          <label className="label" key={status}>
+            <input
+              type="checkbox"
+              checked={query.status.includes(status)}
+              onChange={(e) => {
+                if (e.target.checked) {
+                  onChangeQuery("status", [...query.status, status]);
+                } else {
+                  onChangeQuery(
+                    "status",
+                    query.status.filter((s) => s !== status),
+                  );
+                }
+              }}
+              className="checkbox"
+            />
+            <span>{ORDER_STATUS[status].label}</span>
+          </label>
+        ))}
+      </fieldset>
+
+      <fieldset className="fieldset bg-base-100 border-base-300 rounded-box w-full border p-4">
+        <legend className="fieldset-legend">Order Type</legend>
+        {Object.values(OrderType).map((type) => (
+          <label className="label" key={type}>
+            <input
+              type="checkbox"
+              checked={query.order_type.includes(type)}
+              onChange={(e) => {
+                if (e.target.checked) {
+                  onChangeQuery("order_type", [...query.order_type, type]);
+                } else {
+                  onChangeQuery(
+                    "order_type",
+                    query.order_type.filter((t) => t !== type),
+                  );
+                }
+              }}
+              className="checkbox"
+            />
+            <span>{ORDER_TYPE[type].label}</span>
+          </label>
+        ))}
+      </fieldset>
     </Filter>
   );
 };

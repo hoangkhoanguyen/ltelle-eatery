@@ -1,8 +1,9 @@
 import { dbSchema } from "@/db/schema";
 import { relations } from "drizzle-orm";
-import { pgEnum } from "drizzle-orm/pg-core";
+import { pgEnum, uuid } from "drizzle-orm/pg-core";
 import { real, serial, text, timestamp, varchar } from "drizzle-orm/pg-core";
 import { orderItems } from "./order-items";
+import { orderStatusHistory } from "./order-status-history";
 export const orderTypeEnum = pgEnum("order_type", ["delivery", "pickup"]);
 export const orderStatusEnum = pgEnum("status", [
   "pending",
@@ -13,8 +14,12 @@ export const orderStatusEnum = pgEnum("status", [
 
 export const orders = dbSchema.table("orders", {
   id: serial("id").primaryKey(),
+  uuid: uuid("uuid").notNull().defaultRandom().unique(),
   code: varchar("code", { length: 20 }).notNull(),
-  customerName: varchar("customer_name", {
+  firstName: varchar("first_name", {
+    length: 255,
+  }).notNull(),
+  lastName: varchar("last_name", {
     length: 255,
   }).notNull(),
   customerPhone: varchar("phone", {
@@ -22,13 +27,18 @@ export const orders = dbSchema.table("orders", {
   }).notNull(),
   totalPrice: real("total_price").notNull(),
   note: text("note"),
-  orderType: orderTypeEnum("order_type"),
-  deliveryAddress: text("delivery_address"),
-  internalNote: text("internal_note"),
+  internalNote: text("internal_note").notNull().default(""),
+  orderType: orderTypeEnum("order_type").notNull(),
+  deliveryAddress: text("delivery_address").notNull().default(""),
+  addressNote: text("address_note").notNull().default(""),
+  status: orderStatusEnum("status").notNull().default("pending"),
+  paymentMethod: varchar("payment_method", { length: 50 }).notNull(),
+  shippingFee: real("shipping_fee").notNull().default(0),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
 export const ordersRelations = relations(orders, ({ many }) => ({
   items: many(orderItems),
+  statusHistory: many(orderStatusHistory),
 }));

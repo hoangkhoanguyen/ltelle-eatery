@@ -1,3 +1,5 @@
+import queryString from "query-string";
+
 export const ADMIN_ROUTE = {
   root: "/admin",
   dashboard: "/admin",
@@ -13,6 +15,7 @@ export const ADMIN_ROUTE = {
   categoriesApi: "admin/api/categories",
   productsApi: "admin/api/products",
   allProductApi: "admin/api/products/all",
+  ordersApi: "admin/api/orders",
 } as const;
 
 export const WEB_ROUTE = {
@@ -108,8 +111,18 @@ export const adminRoutes = {
   imagesApi: () => ADMIN_ROUTE.imagesApi,
   categoriesApi: () => ADMIN_ROUTE.categoriesApi,
   productsApi: (query: any) =>
-    `${ADMIN_ROUTE.productsApi}?${new URLSearchParams(query).toString()}`,
+    `${ADMIN_ROUTE.productsApi}?${queryString.stringify(query, {
+      arrayFormat: "comma",
+      skipEmptyString: true,
+      skipNull: true,
+    })}`,
   allProductsApi: () => ADMIN_ROUTE.allProductApi,
+  ordersApi: (query: any) =>
+    `${ADMIN_ROUTE.ordersApi}?${queryString.stringify(query, {
+      arrayFormat: "comma",
+      skipEmptyString: true,
+      skipNull: true,
+    })}`,
 };
 
 export const webRoutes = {
@@ -119,21 +132,4 @@ export const webRoutes = {
   reservation: () => WEB_ROUTE.reservation,
   contact: () => WEB_ROUTE.contact,
   cart: () => WEB_ROUTE.cart,
-  // about: () => WEB_ROUTE.about,
-  // login: () => WEB_ROUTE.login,
-  // signup: () => WEB_ROUTE.signup,
-  // profile: (id?: string | number) =>
-  //   typeof id === "undefined"
-  //     ? WEB_ROUTE.profile
-  //     : generateRoute("web", "profileUser", { id }),
-  // profileUser: (id?: string | number) =>
-  //   typeof id === "undefined"
-  //     ? WEB_ROUTE.profileUser
-  //     : generateRoute("web", "profileUser", { id }),
-  // posts: () => WEB_ROUTE.posts,
-  // post: (slug?: string) =>
-  //   typeof slug === "undefined"
-  //     ? WEB_ROUTE.post
-  //     : generateRoute("web", "post", { slug }),
-  // contact: () => WEB_ROUTE.contact,
 };

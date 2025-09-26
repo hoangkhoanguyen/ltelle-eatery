@@ -1,29 +1,26 @@
 "use client";
-
 import { usePathname } from "next/navigation";
 import React from "react";
 import { MenuItem } from "./MenuItem";
-
 import { cn } from "@/lib/utils";
-import useIsSidebarOpen from "@/hooks/admin/features/ui/useIsSidebarOpen";
 import { adminRoutes } from "@/constants/route";
 
 const menuItems = [
   // { label: "Dashboard", href: "/admin", icon: "dashboard" },
   {
-    label: "Sản phẩm",
+    label: "Products",
     href: adminRoutes.products(),
     icon: "famicons:fast-food-outline",
     activeIcon: "famicons:fast-food",
   },
   {
-    label: "Đơn đặt hàng",
+    label: "Orders",
     href: adminRoutes.orders(),
     icon: "bx:food-menu",
     activeIcon: "bxs:food-menu",
   },
   {
-    label: "Đơn đặt bàn",
+    label: "Reservations",
     href: adminRoutes.reservations(),
     icon: "material-symbols:food-bank-outline-rounded",
     activeIcon: "material-symbols:food-bank-rounded",

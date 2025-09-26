@@ -1,20 +1,20 @@
 import React from "react";
 import { BasicTable } from "../../ui/table";
 import { createColumnHelper } from "@tanstack/react-table";
-import { AdminProductTable } from "@/types/products";
 import { IconButton } from "../../ui/button";
 import { useRouter } from "next/navigation";
 import { adminRoutes } from "@/constants/route";
-import Image from "next/image";
-import { cn } from "@/lib/utils";
-const columnHelper = createColumnHelper<AdminProductTable>();
+import { AdminOrderTable } from "@/types/orders";
+import moment from "moment";
+import { ORDER_STATUS, ORDER_TYPE } from "@/constants/orders";
+const columnHelper = createColumnHelper<AdminOrderTable>();
 
 export default function OrderTable({
   data,
   onReloadData,
   loading,
 }: {
-  data: AdminProductTable[];
+  data: AdminOrderTable[];
   onReloadData(): void;
   loading?: boolean;
 }) {
@@ -26,8 +26,8 @@ export default function OrderTable({
       cell(props) {
         return (
           <IconButton
-            icon="tabler:edit"
-            onClick={() => route.push(adminRoutes.product(props.getValue()))}
+            icon="ph:eye"
+            onClick={() => route.push(adminRoutes.order(props.getValue()))}
           />
         );
       },
@@ -35,25 +35,44 @@ export default function OrderTable({
         align: "center",
       },
     }),
-    columnHelper.accessor("imageUrl", {
-      header: "Hình ảnh",
+    columnHelper.accessor("status", {
+      header: "Status",
       cell(props) {
+        const value = props.getValue();
         return (
-          <Image src={props.getValue() || ""} alt="" width={64} height={64} />
+          <span className={`badge badge-soft ${ORDER_STATUS[value].color}`}>
+            {ORDER_STATUS[value].label}
+          </span>
         );
       },
+      meta: { align: "center" },
+    }),
+    columnHelper.accessor("code", {
+      header: "Order Code",
       meta: {
         align: "center",
       },
     }),
-    columnHelper.accessor("title", {
-      header: "Tên",
+    columnHelper.accessor("customerName", {
+      header: "Customer Name",
     }),
-    columnHelper.accessor("category", {
-      header: "Nhóm",
+    columnHelper.accessor("customerPhone", {
+      header: "Customer Phone",
     }),
-    columnHelper.accessor("price", {
-      header: "Giá (VNĐ)",
+    columnHelper.accessor("orderType", {
+      header: "Order Type",
+      cell(props) {
+        const value = props.getValue();
+        return (
+          <span className={`badge badge-soft ${ORDER_TYPE[value].color}`}>
+            {ORDER_TYPE[value].label}
+          </span>
+        );
+      },
+    }),
+
+    columnHelper.accessor("totalPrice", {
+      header: "Total Price (VNĐ)",
       cell(props) {
         return props.getValue()?.toLocaleString();
       },
@@ -61,23 +80,10 @@ export default function OrderTable({
         align: "right",
       },
     }),
-    columnHelper.accessor("isActive", {
-      header: "Trạng thái",
+    columnHelper.accessor("createdAt", {
+      header: "Created At",
       cell(props) {
-        const isActive = props.getValue();
-        return (
-          <span
-            className={cn(
-              "badge badge-outline",
-              isActive ? "badge-success" : "badge-error",
-            )}
-          >
-            {isActive ? "Đang hoạt động" : "Ngưng hoạt động"}
-          </span>
-        );
-      },
-      meta: {
-        align: "center",
+        return moment(props.getValue()).format("DD/MM/YYYY hh:mm A");
       },
     }),
   ];

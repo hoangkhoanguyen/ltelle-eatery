@@ -1,5 +1,6 @@
 "use server";
 import { adminRoutes } from "@/constants/route";
+import { createOrder, CreateOrderRequest } from "@/services/orders";
 import {
   createProduct,
   deleteProductImages,
@@ -9,35 +10,63 @@ import {
 import { AdminEditProductForm, NewProductDB } from "@/types/products";
 import { revalidatePath } from "next/cache";
 
-export async function createProductAction(data: NewProductDB) {
-  // Process form data and create product
-  console.log("Creating product with data:", data);
-  const isExisSlug = await isExistingSlug(data.slug);
+export async function createOrderAction(data: CreateOrderRequest) {
+  try {
+    const createdOrder = await createOrder(data);
 
-  if (isExisSlug)
-    throw {
-      code: 1,
-      message: "Duplicate slug",
+    return {
+      success: true,
+      data: createdOrder,
     };
-  const newProduct = await createProduct(data);
-  // You can call your service function here to save the product to the database
-  // TODO: revalidate website
-  return { newProduct };
+  } catch {
+    return {
+      success: false,
+      error: "Failed to create order",
+    };
+  }
+}
+
+export async function createProductAction(data: NewProductDB) {
+  try {
+    console.log("Creating product with data:", data);
+    const isExisSlug = await isExistingSlug(data.slug);
+
+    if (isExisSlug) {
+      return {
+        success: false,
+        code: 1,
+        error: "Duplicate slug",
+      };
+    }
+
+    const newProduct = await createProduct(data);
+    // TODO: revalidate website
+
+    return {
+      success: true,
+      data: { newProduct },
+    };
+  } catch {
+    return {
+      success: false,
+      error: "Failed to create product",
+    };
+  }
 }
 
 export async function deleteProductImagesAction(ids: number[]) {
   try {
-    // delete
     await deleteProductImages(ids);
     // TODO: revalidate website
 
     return {
-      result: "success",
+      success: true,
+      data: { deletedIds: ids },
     };
-  } catch (error) {
-    console.log("eror", error);
+  } catch {
     return {
-      result: "error",
+      success: false,
+      error: "Failed to delete product images",
     };
   }
 }
@@ -49,52 +78,60 @@ export async function updateProductAction({
   data: AdminEditProductForm;
   id: number;
 }) {
-  const imagesWithOrder = images.map((item, index) => ({
-    ...item,
-    sortOrder: index + 1,
-    altText: rest.title,
-  }));
+  try {
+    const imagesWithOrder = images.map((item, index) => ({
+      ...item,
+      sortOrder: index + 1,
+      altText: rest.title,
+    }));
 
-  const addonsWithOrder = addons.map((item, index) => ({
-    ...item,
-    sortOrder: index + 1,
-  }));
+    const addonsWithOrder = addons.map((item, index) => ({
+      ...item,
+      sortOrder: index + 1,
+    }));
 
-  await updateProductById({
-    id,
-    productData: rest,
-    newAddons: addonsWithOrder
-      .filter((item) => !item.id)
-      .map((item) => ({
-        ...item,
-        productId: id,
-      })),
-    oldAddons: addonsWithOrder
-      .filter((item) => item.id)
-      .map((item) => ({
-        ...item,
-        id: item.id!,
-        productId: id,
-      })),
-    newImages: imagesWithOrder
-      .filter((item) => !item.id)
-      .map((item) => ({
-        ...item,
-        productId: id,
-      })),
-    oldImages: imagesWithOrder
-      .filter((item) => item.id)
-      .map((item) => ({
-        ...item,
-        id: item.id!,
-        productId: id,
-      })),
-  });
+    await updateProductById({
+      id,
+      productData: rest,
+      newAddons: addonsWithOrder
+        .filter((item) => !item.id)
+        .map((item) => ({
+          ...item,
+          productId: id,
+        })),
+      oldAddons: addonsWithOrder
+        .filter((item) => item.id)
+        .map((item) => ({
+          ...item,
+          id: item.id!,
+          productId: id,
+        })),
+      newImages: imagesWithOrder
+        .filter((item) => !item.id)
+        .map((item) => ({
+          ...item,
+          productId: id,
+        })),
+      oldImages: imagesWithOrder
+        .filter((item) => item.id)
+        .map((item) => ({
+          ...item,
+          id: item.id!,
+          productId: id,
+        })),
+    });
 
-  revalidatePath(adminRoutes.product(id));
-  // TODO: revalidate for website
+    revalidatePath(adminRoutes.product(id));
+    // TODO: revalidate for website
 
-  return {
-    message: "success",
-  };
+    return {
+      success: true,
+      data: { id, message: "Product updated successfully" },
+    };
+  } catch {
+    return {
+      success: false,
+      error: "Failed to update product",
+    };
+  }
 }

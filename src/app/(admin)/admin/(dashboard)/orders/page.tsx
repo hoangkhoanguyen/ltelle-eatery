@@ -6,23 +6,29 @@ import SearchInput from "@/components/admin/shared/SearchInput";
 import Pagination from "@/components/admin/ui/table/Pagination";
 import useFetchOrders from "@/hooks/admin/features/orders/useFetchOrders";
 import useOrdersParams from "@/hooks/admin/features/orders/useOrdersParams";
-import { AdminProductTable } from "@/types/products";
 import React, { useMemo } from "react";
+import CreateOrder from "./CreateOrder";
+import { AdminOrderTable, OrderStatus, OrderType } from "@/types/orders";
 
 const ProductPage = () => {
   const { query, setQuery } = useOrdersParams();
-
   const { data, refetch, isPending, isRefetching } = useFetchOrders(query);
 
-  const convertedData: AdminProductTable[] = useMemo(
-    () =>
-      data?.products.map((item) => ({
+  const convertedData: AdminOrderTable[] = useMemo(
+    (): AdminOrderTable[] =>
+      data?.orders.map((item) => ({
         id: item.id,
-        title: item.title,
-        price: item.price,
-        category: item.category.name,
-        imageUrl: item.images[0]?.url,
-        isActive: item.isActive,
+        customerName: `${item.firstName} ${item.lastName}`,
+        customerPhone: item.customerPhone,
+        totalPrice: item.totalPrice,
+        orderType: item.orderType as OrderType,
+        paymentMethod: item.paymentMethod,
+        status: item.status as OrderStatus,
+        createdAt: item.createdAt,
+        code: item.code,
+        note: item.note,
+        deliveryAddress: item.deliveryAddress,
+        internalNote: item.internalNote,
       })) || [],
     [data],
   );
@@ -30,7 +36,7 @@ const ProductPage = () => {
   return (
     <div className="container px-5 pb-5 mx-auto flex flex-col gap-4 min-h-screen">
       <Header
-        title="Danh sách đơn hàng"
+        title="Order List"
         center={
           <div className="flex-1 px-7">
             <SearchInput
@@ -45,7 +51,8 @@ const ProductPage = () => {
         }
         actions={
           <div className="flex gap-2">
-            <OrderFilter />
+            <OrderFilter query={query} setQuery={setQuery} />
+            <CreateOrder />
           </div>
         }
       />

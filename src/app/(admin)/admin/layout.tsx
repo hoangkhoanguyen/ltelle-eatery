@@ -2,10 +2,21 @@ import { AdminQueryProvider } from "@/providers/react-query-provider";
 import React, { FC, PropsWithChildren, Suspense } from "react";
 import { Toaster } from "sonner";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
+import { Inter } from "next/font/google";
+
+const interSans = Inter({
+  variable: "--font-inter-sans",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
 
 const Layout: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <div className="admin" data-theme="light">
+    <div
+      className={`admin ${interSans.variable} font-inter-sans`}
+      data-theme="light"
+    >
       <AdminQueryProvider>
         <NuqsAdapter>
           <Suspense>{children}</Suspense>

@@ -22,3 +22,9 @@ export const customers = dbSchema.table("customers", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
+
+export type CustomerDB = typeof customers.$inferSelect;
+export type NewCustomerDB = typeof customers.$inferInsert;
+export type UpdateCustomerDB = Partial<
+  Omit<CustomerDB, "id" | "createdAt" | "phone">
+>;

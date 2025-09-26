@@ -8,7 +8,6 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { cn } from "@/lib/utils";
-import Icon from "@/components/common/Icon";
 
 declare module "@tanstack/react-table" {
   interface ColumnMeta<TData extends RowData, TValue> {
@@ -34,8 +33,6 @@ export function BasicTable<T extends object>({
   });
 
   const columnLength = table.getAllColumns().length;
-
-  console.log("length", columnLength, Array(columnLength).fill(0));
 
   const renderSkeleton = () => (
     <tr>
@@ -85,7 +82,11 @@ export function BasicTable<T extends object>({
             table.getRowModel().rows.map((row) => (
               <tr key={row.id} className="hover:bg-base-200 duration-200">
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} align={cell.column.columnDef.meta?.align}>
+                  <td
+                    key={cell.id}
+                    className="p-2"
+                    align={cell.column.columnDef.meta?.align}
+                  >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}

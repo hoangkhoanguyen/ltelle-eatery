@@ -5,50 +5,22 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1757667793698,
-      "tag": "0000_next_zaran",
+      "when": 1758807849544,
+      "tag": "0000_productive_northstar",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "7",
-      "when": 1757693908967,
-      "tag": "0001_sloppy_sunset_bain",
+      "when": 1758808408643,
+      "tag": "0001_shallow_oracle",
       "breakpoints": true
     },
     {
       "idx": 2,
       "version": "7",
-      "when": 1757731344069,
-      "tag": "0002_stormy_meteorite",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1757773458905,
-      "tag": "0003_cuddly_magneto",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1758266742441,
-      "tag": "0004_careful_siren",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "7",
-      "when": 1758273405910,
-      "tag": "0005_natural_piledriver",
-      "breakpoints": true
-    },
-    {
-      "idx": 6,
-      "version": "7",
-      "when": 1758274310742,
-      "tag": "0006_closed_dorian_gray",
+      "when": 1758812476009,
+      "tag": "0002_cooing_manta",
       "breakpoints": true
     }
   ]

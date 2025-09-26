@@ -10,6 +10,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "db:generate": "npm run clean && drizzle-kit generate",
+    "db:migrate": "npm run clean && drizzle-kit migrate",
     "db:update": "npm run clean && drizzle-kit generate && drizzle-kit migrate"
   },
   "dependencies": {
@@ -23,9 +25,11 @@
     "dotenv": "^17.2.2",
     "drizzle-orm": "^0.44.5",
     "lodash": "^4.17.21",
+    "moment": "^2.30.1",
     "next": "15.5.2",
     "nuqs": "^2.6.0",
     "pg": "^8.16.3",
+    "query-string": "^9.3.1",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-hook-form": "^7.62.0",

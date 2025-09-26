@@ -5,6 +5,10 @@ export enum OrderType {
   pickup = "pickup",
 }
 
+export enum PaymentMethod {
+  cash_on_delivery = "cash_on_delivery",
+}
+
 export enum OrderStatus {
   pending = "pending",
   processing = "processing",
@@ -19,7 +23,7 @@ export interface AdminOrderTable {
   customerPhone: string;
   totalPrice: number;
   note: string | null;
-  createdAt: string;
+  createdAt: Date;
   orderType: OrderType;
   deliveryAddress: string | null;
   status: OrderStatus;
@@ -49,6 +53,9 @@ export interface AdminOrderItem {
 export interface AdminOrderDetails extends AdminOrderTable {
   internalNote: string | null;
   orderItems: AdminOrderItem[];
+  addressNote: string | null;
+  paymentMethod: string;
+  shippingFee: number;
 }
 
 export type OrderDB = typeof orders.$inferSelect;
@@ -59,3 +66,5 @@ export type NewOrderItemDB = typeof orderItems.$inferInsert;
 
 export type OrderItemAddonDB = typeof orderItemAddons.$inferSelect;
 export type NewOrderItemAddonDB = typeof orderItemAddons.$inferInsert;
+
+export type AdminOrderTableApi = OrderDB;

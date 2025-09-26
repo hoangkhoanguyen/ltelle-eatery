@@ -27,9 +27,13 @@ export const orderItemAddons = dbSchema.table(
     updatedAt: timestamp("updated_at").notNull().defaultNow(),
   },
   (table) => ({
-    orderItemFK: foreignKey({
+    addonFK: foreignKey({
       columns: [table.addonId],
       foreignColumns: [productAddons.id],
+    }),
+    orderItemFK: foreignKey({
+      columns: [table.orderItemId],
+      foreignColumns: [orderItems.id],
     }),
   }),
 );

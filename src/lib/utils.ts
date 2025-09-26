@@ -93,3 +93,14 @@ export function generateSlug(title: string) {
 
   return slug;
 }
+
+export function formatCurrency(
+  amount: number,
+  locale = "vi-VN",
+  currency = "VND",
+) {
+  return new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency,
+  }).format(amount);
+}

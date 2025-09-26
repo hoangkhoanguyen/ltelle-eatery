@@ -1,13 +1,5 @@
 @import "tailwindcss";
 
-/* @font-face {
-  font-family: Oswald;
-  font-style: normal;
-  font-weight: 200 700;
-  font-display: swap;
-  src: url("/assets/fonts/SVN-Allogist.otf") format("woff2");
-} */
-
 @plugin "daisyui" {
   themes: light --default, dark --prefersdark;
 }
@@ -38,9 +30,23 @@ button:not(:disabled) {
 }
 
 @theme inline {
+  --font-poppins-sans: var(--font-poppins-sans);
+  --font-brand: var(--font-allogist);
+  --font-inter-sans: var(--font-inter-sans);
+}
+
+/* .website {
   --font-sans: var(--font-poppins-sans);
   --font-brand: var(--font-allogist);
-}
+} */
+
+/* @theme inline .admin {
+  --font-sans: var(--font-inter-sans);
+} */
+/* 
+.admin {
+  --font-sans: var(--font-inter-sans);
+} */
 
 /* website */
 @theme {

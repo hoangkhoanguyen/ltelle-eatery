@@ -1,12 +1,23 @@
 import React, { FC, useState } from "react";
 import { Input } from "../ui/form";
+import { parseAsString, useQueryState } from "nuqs";
 
 const SearchInput: FC<{
   className?: string;
   placeholder?: string;
   onSubmit(search: string): void;
-}> = ({ placeholder = "Tìm kiếm", onSubmit, className }) => {
-  const [search, setSearch] = useState("");
+}> = ({ placeholder = "Search...", onSubmit, className }) => {
+  const [query, setQuery] = useQueryState(
+    "search",
+    parseAsString.withDefault(""),
+  );
+
+  const [search, setSearch] = useState(query);
+
+  const onSubmitSearch = () => {
+    if (onSubmit) return onSubmit(search);
+    setQuery(search);
+  };
 
   return (
     <Input
@@ -15,7 +26,7 @@ const SearchInput: FC<{
       onChange={(e) => setSearch(e.target.value)}
       onKeyUp={(e) => {
         if (e.key === "Enter") {
-          onSubmit(search);
+          onSubmitSearch();
         }
       }}
       className={className}

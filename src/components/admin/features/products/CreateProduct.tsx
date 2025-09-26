@@ -6,7 +6,7 @@ import useAddProductForm from "@/hooks/admin/features/products/useAddProductForm
 import { Controller, useWatch } from "react-hook-form";
 import ProductTitleInput from "./form-elements/ProductTitleInput";
 import ProductSlugInput from "./form-elements/ProductSlugInput";
-import { generateSlug, getErrorCode } from "@/lib/utils";
+import { generateSlug } from "@/lib/utils";
 import CategorySelector from "./form-elements/CategorySelector";
 import { AdminCreateProductForm } from "@/types/products";
 import useAddProduct from "@/hooks/admin/features/products/useAddProduct";
@@ -44,12 +44,12 @@ const CreateProduct = () => {
         isActive: false,
       },
       {
-        onSuccess({ newProduct }) {
-          toast.success("Tạo sản phẩm thành công");
-          route.push(adminRoutes.product(newProduct.id));
-        },
-        onError(error) {
-          const code = getErrorCode(error);
+        onSuccess({ data, success, code }) {
+          if (success && data) {
+            toast.success("Tạo sản phẩm thành công");
+            route.push(adminRoutes.product(data.newProduct.id));
+            return;
+          }
 
           switch (code) {
             case 1:
