@@ -17,7 +17,7 @@ export const MENU: IMenuItem[] = [
     title: "Welcome to Our Table",
   },
   {
-    href: webRoutes.menu(),
+    href: webRoutes.menu("all"),
     label: "Menu",
     title: "Our Dishes & Drinks",
   },

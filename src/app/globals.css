@@ -188,3 +188,28 @@ button:not(:disabled) {
 @utility button-primary {
   @apply bg-red-400;
 }
+
+.my-slider {
+  @apply pb-8;
+  .swiper-wrapper {
+    @apply pb-10;
+  }
+
+  .swiper-pagination {
+    .swiper-pagination-bullet {
+      @apply bg-web-content-2 opacity-100 duration-200;
+      /* background: var(); */
+      &.swiper-pagination-bullet-active {
+        @apply bg-web-secondary-1;
+      }
+    }
+  }
+}
+
+@utility section-subtitle {
+  @apply text-web-secondary-3 text-web-subtitle-mobile uppercase lg:text-web-subtitle;
+}
+
+@utility section-title {
+  @apply text-web-h2-mobile lg:text-web-h2 capitalize;
+}

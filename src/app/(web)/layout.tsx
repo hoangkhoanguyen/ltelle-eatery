@@ -22,7 +22,9 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
       className={`website ${popinsSans.variable} ${allogist.variable} antialiased font-poppins-sans`}
     >
       <Header />
-      <main>{children}</main>
+      <main className="pt-[149px] lg:pt-[146px] min-h-[calc(100vh-149px)] lg:min-h-[calc(100vh-146px)]">
+        {children}
+      </main>
       <Footer />
     </div>
   );

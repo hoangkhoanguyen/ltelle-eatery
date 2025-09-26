@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export const HeroSection = () => {
   return (
-    <section className="relative pt-[149px] lg:pt-[146px] min-h-screen">
+    <section className="relative ">
       <div className="absolute w-full h-full top-0 left-0 -z-10">
         <Image
           src="/assets/static/hero.png"

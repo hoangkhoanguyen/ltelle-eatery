@@ -21,7 +21,8 @@ export const ADMIN_ROUTE = {
 export const WEB_ROUTE = {
   root: "/",
   home: "/",
-  menu: "/menu",
+  // menu: "/menu",
+  menu: "/menu/[category]",
   reservation: "/reservation",
   contact: "/contact",
   cart: "/cart",
@@ -128,7 +129,7 @@ export const adminRoutes = {
 export const webRoutes = {
   root: () => WEB_ROUTE.root,
   home: () => WEB_ROUTE.home,
-  menu: () => WEB_ROUTE.menu,
+  menu: (category: string) => generateRoute("web", "menu", { category }),
   reservation: () => WEB_ROUTE.reservation,
   contact: () => WEB_ROUTE.contact,
   cart: () => WEB_ROUTE.cart,
