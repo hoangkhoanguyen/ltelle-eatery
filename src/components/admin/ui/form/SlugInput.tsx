@@ -1,17 +1,17 @@
 "use client";
 import React, { FC } from "react";
-import { InputWithLabel } from "../../../ui/form";
 import { Editor } from "@/types/common";
 import { cn } from "@/lib/utils";
 import WithError from "@/components/admin/ui/form/WithError";
+import { InputWithLabel } from "./InputWithLabel";
 
-const ProductSlugInput: FC<
+export const SlugInput: FC<
   Editor & {
     onGenerateSlug(): void;
   }
 > = ({ value, onChange, error, onGenerateSlug }) => {
   return (
-    <InputWithLabel label="Đường dẫn sản phẩm" required>
+    <InputWithLabel label="Đường dẫn" required>
       <WithError error={error}>
         <div className="join w-full ">
           <input
@@ -21,7 +21,7 @@ const ProductSlugInput: FC<
               "flex-1 input w-full join-item rounded-ss-xl rounded-es-xl",
               error ? "input-error" : "",
             )}
-            placeholder="Đường dẫn sản phẩm"
+            placeholder="Đường dẫn"
             value={value}
             onChange={(e) => onChange(e.target.value)}
           />
@@ -37,5 +37,3 @@ const ProductSlugInput: FC<
     </InputWithLabel>
   );
 };
-
-export default ProductSlugInput;

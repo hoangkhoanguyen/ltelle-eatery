@@ -6,3 +6,5 @@ export * from "./Select";
 export * from "./Switch";
 export * from "./Textarea";
 export * from "./InputWithStatus";
+export * from "./SlugInput";
+export * from "./WithError";

@@ -5,7 +5,6 @@ import { LayoutRef, LayoutWithRef, Modal } from "../../ui/layout";
 import useAddProductForm from "@/hooks/admin/features/products/useAddProductForm";
 import { Controller, useWatch } from "react-hook-form";
 import ProductTitleInput from "./form-elements/ProductTitleInput";
-import ProductSlugInput from "./form-elements/ProductSlugInput";
 import { generateSlug } from "@/lib/utils";
 import CategorySelector from "./form-elements/CategorySelector";
 import { AdminCreateProductForm } from "@/types/products";
@@ -13,6 +12,7 @@ import useAddProduct from "@/hooks/admin/features/products/useAddProduct";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { adminRoutes } from "@/constants/route";
+import { SlugInput } from "../../ui/form";
 
 const CreateProduct = () => {
   const modalRef = useRef<LayoutRef>(null);
@@ -95,7 +95,7 @@ const CreateProduct = () => {
                 field: { value, onChange },
                 fieldState: { error },
               }) => (
-                <ProductSlugInput
+                <SlugInput
                   value={value}
                   onChange={onChange}
                   error={error}

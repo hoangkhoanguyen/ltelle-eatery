@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import ProductTitleInput from "./form-elements/ProductTitleInput";
-import ProductSlugInput from "./form-elements/ProductSlugInput";
 import ProductStatusSwitch from "./form-elements/ProductStatusSwitch";
 import ProductAllergenInfoInput from "./form-elements/ProductAllergenInfoInput";
 import ProductSubDescriptionInput from "./form-elements/ProductSubDescriptionInput";
@@ -14,6 +13,7 @@ import AddonsEditor from "./form-elements/AddonsEditor";
 import { useProductDetailsContext } from "./ProductDetailsProvider";
 import { Controller, useWatch } from "react-hook-form";
 import { generateSlug } from "@/lib/utils";
+import { SlugInput } from "../../ui/form";
 
 const ProductEditForm = () => {
   const { control } = useProductDetailsContext();
@@ -21,6 +21,7 @@ const ProductEditForm = () => {
     control,
     name: "title",
   });
+
   return (
     <div className="container p-5 mx-auto">
       <div className="grid grid-cols-12 gap-4">
@@ -51,7 +52,7 @@ const ProductEditForm = () => {
                       field: { value, onChange },
                       fieldState: { error },
                     }) => (
-                      <ProductSlugInput
+                      <SlugInput
                         value={value}
                         onChange={onChange}
                         error={error}

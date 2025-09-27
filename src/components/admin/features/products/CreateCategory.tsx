@@ -4,11 +4,12 @@ import useCreateCategoryForm from "@/hooks/admin/features/categories/useCreateCa
 import React, { forwardRef, memo, useCallback } from "react";
 import { Controller } from "react-hook-form";
 import { Button } from "@/components/admin/ui/button";
-import { Input, InputWithLabel } from "../../ui/form";
+import { Input, InputWithLabel, SlugInput } from "../../ui/form";
 import WithError from "../../ui/form/WithError";
 import { AdminCreateProductCategoryForm } from "@/types/products";
 import useAddProductCategory from "@/hooks/admin/features/categories/useAddProductCategory";
 import { toast } from "sonner";
+import { generateSlug } from "@/lib/utils";
 
 interface Props {
   onSuccess(id: number): void;
@@ -16,7 +17,7 @@ interface Props {
 
 const CreateCategory = memo(
   forwardRef<LayoutRef, Props>(({ onSuccess }, ref) => {
-    const { control, reset, handleSubmit } = useCreateCategoryForm();
+    const { control, reset, handleSubmit, getValues } = useCreateCategoryForm();
     const { mutate } = useAddProductCategory();
 
     const onAfterClose = useCallback(() => {
@@ -56,6 +57,24 @@ const CreateCategory = memo(
                     />
                   </InputWithLabel>
                 </WithError>
+              )}
+            />
+            <Controller
+              control={control}
+              name="slug"
+              render={({
+                field: { value, onChange },
+                fieldState: { error },
+              }) => (
+                <SlugInput
+                  value={value}
+                  onChange={onChange}
+                  error={error}
+                  onGenerateSlug={() => {
+                    const name = getValues("name");
+                    onChange(generateSlug(name));
+                  }}
+                />
               )}
             />
             <div className="card-actions justify-end mt-2">
