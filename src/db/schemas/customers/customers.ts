@@ -11,16 +11,22 @@ export const customers = dbSchema.table("customers", {
   }).notNull(),
   phone: varchar("phone", {
     length: 20,
-  })
-    .notNull()
-    .unique(),
+  }).notNull(),
   lastUsedAddress: text("last_used_address"),
   lastUsedOrderType: varchar("last_used_order_type", {
     length: 20,
   }),
   isActive: boolean("is_active").notNull().default(true),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+  createdAt: timestamp("created_at", {
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", {
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
 });
 
 export type CustomerDB = typeof customers.$inferSelect;

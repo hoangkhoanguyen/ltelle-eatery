@@ -1,21 +1,21 @@
 import { dbSchema } from "@/db/schema";
 import { relations } from "drizzle-orm";
-import { pgEnum, uuid } from "drizzle-orm/pg-core";
+import { uuid } from "drizzle-orm/pg-core";
 import { real, serial, text, timestamp, varchar } from "drizzle-orm/pg-core";
 import { orderItems } from "./order-items";
 import { orderStatusHistory } from "./order-status-history";
-export const orderTypeEnum = pgEnum("order_type", ["delivery", "pickup"]);
-export const orderStatusEnum = pgEnum("status", [
-  "pending",
-  "processing",
-  "completed",
-  "cancelled",
-]);
+// export const orderTypeEnum = pgEnum("order_type", ["delivery", "pickup"]);
+// export const orderStatusEnum = pgEnum("status", [
+//   "pending",
+//   "processing",
+//   "completed",
+//   "cancelled",
+// ]);
 
 export const orders = dbSchema.table("orders", {
   id: serial("id").primaryKey(),
   uuid: uuid("uuid").notNull().defaultRandom().unique(),
-  code: varchar("code", { length: 20 }).notNull(),
+  code: varchar("code", { length: 20 }).notNull().unique(),
   firstName: varchar("first_name", {
     length: 255,
   }).notNull(),
@@ -28,14 +28,28 @@ export const orders = dbSchema.table("orders", {
   totalPrice: real("total_price").notNull(),
   note: text("note"),
   internalNote: text("internal_note").notNull().default(""),
-  orderType: orderTypeEnum("order_type").notNull(),
+  orderType: varchar("order_type", {
+    length: 20,
+  }).notNull(),
   deliveryAddress: text("delivery_address").notNull().default(""),
   addressNote: text("address_note").notNull().default(""),
-  status: orderStatusEnum("status").notNull().default("pending"),
+  status: varchar("status", {
+    length: 20,
+  })
+    .notNull()
+    .default("pending"),
   paymentMethod: varchar("payment_method", { length: 50 }).notNull(),
   shippingFee: real("shipping_fee").notNull().default(0),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+  createdAt: timestamp("created_at", {
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", {
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
 });
 
 export const ordersRelations = relations(orders, ({ many }) => ({

@@ -15,8 +15,16 @@ export const users = dbSchema.table("users", {
   avatar: text("avatar"),
   role: varchar("role", { length: 50 }).notNull().default("user"), // admin, manager, user
   isActive: boolean("is_active").notNull().default(true),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+  createdAt: timestamp("created_at", {
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", {
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
 });
 
 export const usersRelations = relations(users, ({ many }) => ({

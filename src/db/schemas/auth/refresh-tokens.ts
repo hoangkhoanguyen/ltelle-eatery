@@ -8,8 +8,16 @@ export const refreshTokens = dbSchema.table("refresh_tokens", {
   userId: integer("user_id").notNull(),
   refreshToken: text("refresh_token").notNull(),
   isValid: boolean("is_valid").notNull().default(true),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+  createdAt: timestamp("created_at", {
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", {
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
 });
 
 export const refreshTokenRelations = relations(refreshTokens, ({ one }) => ({

@@ -20,8 +20,16 @@ export const productAddons = dbSchema.table(
     sortOrder: integer("sort_order").notNull().default(0),
     price: real("price").notNull().default(0),
     isActive: boolean("is_active").notNull().default(true),
-    createdAt: timestamp("created_at").notNull().defaultNow(),
-    updatedAt: timestamp("updated_at").notNull().defaultNow(),
+    createdAt: timestamp("created_at", {
+      withTimezone: true,
+    })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", {
+      withTimezone: true,
+    })
+      .notNull()
+      .defaultNow(),
   },
   (table) => ({
     productFk: foreignKey({

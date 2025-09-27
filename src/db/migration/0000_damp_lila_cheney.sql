@@ -1,5 +1,3 @@
-CREATE TYPE "public"."status" AS ENUM('pending', 'processing', 'completed', 'cancelled');--> statement-breakpoint
-CREATE TYPE "public"."order_type" AS ENUM('delivery', 'pickup');--> statement-breakpoint
 CREATE TABLE "dev"."users" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"username" varchar(100) NOT NULL,
@@ -82,8 +80,7 @@ CREATE TABLE "dev"."customers" (
 	"last_used_order_type" varchar(20),
 	"is_active" boolean DEFAULT true NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL,
-	CONSTRAINT "customers_phone_unique" UNIQUE("phone")
+	"updated_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "dev"."order_item_addons" (
@@ -113,6 +110,7 @@ CREATE TABLE "dev"."order_items" (
 --> statement-breakpoint
 CREATE TABLE "dev"."orders" (
 	"id" serial PRIMARY KEY NOT NULL,
+	"uuid" uuid DEFAULT gen_random_uuid() NOT NULL,
 	"code" varchar(20) NOT NULL,
 	"first_name" varchar(255) NOT NULL,
 	"last_name" varchar(255) NOT NULL,
@@ -120,14 +118,24 @@ CREATE TABLE "dev"."orders" (
 	"total_price" real NOT NULL,
 	"note" text,
 	"internal_note" text DEFAULT '' NOT NULL,
-	"order_type" "order_type" NOT NULL,
+	"order_type" varchar(20) NOT NULL,
 	"delivery_address" text DEFAULT '' NOT NULL,
 	"address_note" text DEFAULT '' NOT NULL,
-	"status" "status" DEFAULT 'pending' NOT NULL,
+	"status" varchar(20) DEFAULT 'pending' NOT NULL,
 	"payment_method" varchar(50) NOT NULL,
 	"shipping_fee" real DEFAULT 0 NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL
+	"updated_at" timestamp DEFAULT now() NOT NULL,
+	CONSTRAINT "orders_uuid_unique" UNIQUE("uuid"),
+	CONSTRAINT "orders_code_unique" UNIQUE("code")
+);
+--> statement-breakpoint
+CREATE TABLE "dev"."order_status_history" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"order_id" integer NOT NULL,
+	"previous_status" varchar(50) NOT NULL,
+	"new_status" varchar(50) NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "dev"."app_configs" (
@@ -150,8 +158,27 @@ CREATE TABLE "dev"."ui_configs" (
 	CONSTRAINT "ui_configs_key_scope_pk" PRIMARY KEY("key","scope")
 );
 --> statement-breakpoint
+CREATE TABLE "dev"."reservations" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"uuid" uuid DEFAULT gen_random_uuid() NOT NULL,
+	"code" varchar(50) NOT NULL,
+	"customer_first_name" varchar(255) NOT NULL,
+	"customer_last_name" varchar(255) NOT NULL,
+	"customer_phone" varchar(20) NOT NULL,
+	"note" text DEFAULT '' NOT NULL,
+	"internal_note" text DEFAULT '' NOT NULL,
+	"number_of_people" integer DEFAULT 1 NOT NULL,
+	"arrival_time" timestamp NOT NULL,
+	"status" varchar(20) DEFAULT 'scheduled' NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL,
+	CONSTRAINT "reservations_uuid_unique" UNIQUE("uuid"),
+	CONSTRAINT "reservations_code_unique" UNIQUE("code")
+);
+--> statement-breakpoint
 ALTER TABLE "dev"."product_addons" ADD CONSTRAINT "product_addons_product_id_products_id_fk" FOREIGN KEY ("product_id") REFERENCES "dev"."products"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "dev"."order_item_addons" ADD CONSTRAINT "order_item_addons_addon_id_product_addons_id_fk" FOREIGN KEY ("addon_id") REFERENCES "dev"."product_addons"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "dev"."order_item_addons" ADD CONSTRAINT "order_item_addons_order_item_id_order_items_id_fk" FOREIGN KEY ("order_item_id") REFERENCES "dev"."order_items"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "dev"."order_items" ADD CONSTRAINT "order_items_product_id_products_id_fk" FOREIGN KEY ("product_id") REFERENCES "dev"."products"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "dev"."order_items" ADD CONSTRAINT "order_items_order_id_orders_id_fk" FOREIGN KEY ("order_id") REFERENCES "dev"."orders"("id") ON DELETE no action ON UPDATE no action;
+ALTER TABLE "dev"."order_items" ADD CONSTRAINT "order_items_order_id_orders_id_fk" FOREIGN KEY ("order_id") REFERENCES "dev"."orders"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "dev"."order_status_history" ADD CONSTRAINT "order_status_history_order_id_orders_id_fk" FOREIGN KEY ("order_id") REFERENCES "dev"."orders"("id") ON DELETE no action ON UPDATE no action;

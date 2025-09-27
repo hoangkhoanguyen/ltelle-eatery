@@ -16,8 +16,16 @@ export const productImages = dbSchema.table("product_images", {
   productId: integer("product_id").notNull(),
   isPrimary: boolean("is_primary").notNull().default(false),
   sortOrder: integer("sort_order").notNull().default(0),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+  createdAt: timestamp("created_at", {
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", {
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
 });
 
 export const productImageRelations = relations(productImages, ({ one }) => ({

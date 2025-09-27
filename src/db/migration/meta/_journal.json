@@ -5,22 +5,15 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1758807849544,
-      "tag": "0000_productive_northstar",
+      "when": 1758976494008,
+      "tag": "0000_damp_lila_cheney",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "7",
-      "when": 1758808408643,
-      "tag": "0001_shallow_oracle",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1758812476009,
-      "tag": "0002_cooing_manta",
+      "when": 1758976808734,
+      "tag": "0001_outgoing_annihilus",
       "breakpoints": true
     }
   ]

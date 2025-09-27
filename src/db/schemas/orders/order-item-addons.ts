@@ -23,8 +23,16 @@ export const orderItemAddons = dbSchema.table(
     price: real("price").notNull(),
     quantity: integer("quantity").notNull(),
     totalPrice: real("total_price").notNull(),
-    createdAt: timestamp("created_at").notNull().defaultNow(),
-    updatedAt: timestamp("updated_at").notNull().defaultNow(),
+    createdAt: timestamp("created_at", {
+      withTimezone: true,
+    })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", {
+      withTimezone: true,
+    })
+      .notNull()
+      .defaultNow(),
   },
   (table) => ({
     addonFK: foreignKey({

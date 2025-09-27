@@ -26,8 +26,16 @@ export const orderItems = dbSchema.table(
     quantity: integer("quantity").notNull(),
     totalPrice: real("total_price").notNull(),
     note: text("note").notNull().default(""),
-    createdAt: timestamp("created_at").notNull().defaultNow(),
-    updatedAt: timestamp("updated_at").notNull().defaultNow(),
+    createdAt: timestamp("created_at", {
+      withTimezone: true,
+    })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", {
+      withTimezone: true,
+    })
+      .notNull()
+      .defaultNow(),
   },
   (table) => ({
     productIdFk: foreignKey({

@@ -15,8 +15,16 @@ export const uiConfigs = dbSchema.table(
     value: jsonb("value").notNull(),
     category: varchar("category", { length: 100 }).notNull(), // 'theme', 'layout', 'display'
     description: text("description"),
-    createdAt: timestamp("created_at").notNull().defaultNow(),
-    updatedAt: timestamp("updated_at").notNull().defaultNow(),
+    createdAt: timestamp("created_at", {
+      withTimezone: true,
+    })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", {
+      withTimezone: true,
+    })
+      .notNull()
+      .defaultNow(),
   },
   (table) => ({
     pk: primaryKey({ columns: [table.key, table.scope] }),

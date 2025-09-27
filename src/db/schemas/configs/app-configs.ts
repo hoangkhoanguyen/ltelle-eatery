@@ -6,8 +6,16 @@ export const appConfigs = dbSchema.table("app_configs", {
   value: jsonb("value").notNull(),
   category: varchar("category", { length: 100 }).notNull(),
   description: text("description"),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+  createdAt: timestamp("created_at", {
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", {
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
 });
 
 export type AppConfigDB = typeof appConfigs.$inferSelect;

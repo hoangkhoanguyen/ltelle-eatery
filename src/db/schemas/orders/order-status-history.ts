@@ -16,7 +16,11 @@ export const orderStatusHistory = dbSchema.table(
     orderId: integer("order_id").notNull(),
     previousStatus: varchar("previous_status", { length: 50 }).notNull(),
     newStatus: varchar("new_status", { length: 50 }).notNull(),
-    createdAt: timestamp("created_at").notNull().defaultNow(),
+    createdAt: timestamp("created_at", {
+      withTimezone: true,
+    })
+      .notNull()
+      .defaultNow(),
   },
   (table) => ({
     orderIdFk: foreignKey({
