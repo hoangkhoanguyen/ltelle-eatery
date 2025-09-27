@@ -6,7 +6,7 @@ import { webRoutes } from "@/constants/route";
 
 const ProductCard = () => {
   return (
-    <div className="flex flex-col rounded-xl overflow-hidden border border-web-content-3">
+    <div className="flex flex-col rounded-xl overflow-hidden border border-web-content-3 @container">
       <div className="w-full aspect-square bg-gray-300 relative">
         <Image src="/assets/static/product-image.png" alt="ldkvnmlksf" fill />
       </div>
