@@ -43,8 +43,8 @@ const basicProductSchema = {
     .refine((val) => !/\s/.test(val), {
       error: "Đường dẫn không được chứa khoảng trắng",
     }),
-  categoryId: z.number({ error: "Danh mục không được để trống" }).min(1, {
-    error: "Danh mục không hợp lệ",
+  categoryId: z.number({ error: "Danh mục không hợp lệ" }).min(1, {
+    error: "Danh mục không được để trống",
   }),
 };
 

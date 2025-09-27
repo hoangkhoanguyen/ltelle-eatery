@@ -32,7 +32,9 @@ const CategorySelector: FC<Editor> = ({ onChange, value, error }) => {
         <WithError error={error}>
           <Select
             value={value}
-            onChange={(e) => onChange(e.target.value)}
+            onChange={(e) => {
+              onChange(Number(e.target.value));
+            }}
             className={error ? "input-error" : ""}
           >
             <option value="">Chọn</option>
