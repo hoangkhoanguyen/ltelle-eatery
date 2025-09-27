@@ -22,6 +22,7 @@ const NewFood = () => {
                 src="/assets/static/product-image.png"
                 alt="New Food"
                 fill
+                className="object-cover"
               />
             </div>
             <div className="relative md:absolute md:bottom-0 md:left-0 md:w-full md:p-5 flex gap-5 items-start">
