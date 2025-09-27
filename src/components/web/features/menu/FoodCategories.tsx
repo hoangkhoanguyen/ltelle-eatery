@@ -1,7 +1,7 @@
 import { webRoutes } from "@/constants/route";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import React from "react";
+import React, { FC } from "react";
 import ProductCard from "../../shared/ProductCard";
 
 const categories = [
@@ -27,7 +27,9 @@ const categories = [
   },
 ];
 
-const FoodCategories = () => {
+const FoodCategories: FC<{ activeCategoryKey: string }> = ({
+  activeCategoryKey,
+}) => {
   return (
     <section className="pt-8 pb-24 bg-web-background-1">
       <div className="container">
@@ -39,14 +41,16 @@ const FoodCategories = () => {
           <span className="text-web-secondary-1">Categories</span>
         </h2>
         <div className="flex flex-wrap justify-center items-center gap-3 lg:gap-5 mb-10">
-          {categories.map((category, index) => (
+          {categories.map((category) => (
             <Link
+              scroll={false}
               href={webRoutes.menu(category.key)}
               key={category.key}
               className={cn(
-                "px-5 h-10 flex items-center text-web-content-2 border border-web-content-2 rounded-lg text-web-body-mobile lg:text-web-body",
-                index === 0 &&
-                  "text-web-background-1 bg-web-primary text-web-button-mobile lg:text-web-button",
+                "px-5 h-10 flex items-center  rounded-lg text-web-body-mobile lg:text-web-body",
+                activeCategoryKey === category.key
+                  ? "text-web-background-1 bg-web-primary text-web-button-mobile lg:text-web-button"
+                  : "text-web-content-2 border border-web-content-2",
               )}
             >
               {category.name}

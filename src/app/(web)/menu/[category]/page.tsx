@@ -5,7 +5,8 @@ import NewFood from "@/components/web/features/menu/NewFood";
 import { WhyChooseUsSection } from "@/components/web/shared/WhyChooseUsSection";
 import React from "react";
 
-const page = () => {
+const page = async ({ params }: { params: Promise<{ category: string }> }) => {
+  const { category } = await params;
   return (
     <div className="bg-web-background-3">
       <section className="relative">
@@ -19,7 +20,7 @@ const page = () => {
         </div>
       </section>
       <AboutMenu />
-      <FoodCategories />
+      <FoodCategories activeCategoryKey={category} />
       <NewFood />
       <section className="bg-web-background-1">
         <WhyChooseUsSection />
