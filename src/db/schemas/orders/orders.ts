@@ -45,11 +45,7 @@ export const orders = dbSchema.table("orders", {
   })
     .notNull()
     .defaultNow(),
-  updatedAt: timestamp("updated_at", {
-    withTimezone: true,
-  })
-    .notNull()
-    .defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
 export const ordersRelations = relations(orders, ({ many }) => ({

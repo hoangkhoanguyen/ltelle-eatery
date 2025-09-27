@@ -49,7 +49,10 @@ export async function createOrder(
     const [customer] = await tx
       .select()
       .from(customers)
-      .where(eq(customers.phone, orderData.customerPhone))
+      .where(
+        eq(customers.phone, orderData.customerPhone) &&
+          eq(customers.isActive, true),
+      )
       .limit(1);
 
     if (!customer) {
