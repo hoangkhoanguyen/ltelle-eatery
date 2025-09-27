@@ -5,6 +5,13 @@ export const productCategorySchema = z.object({
     .string()
     .min(1, { error: "Tên danh mục không được để trống" })
     .max(255, { error: "Tên danh mục quá dài" }),
+  slug: z
+    .string()
+    .min(1, { error: "Đường dẫn không được để trống" })
+    .max(255, { error: "Đường dẫn quá dài" })
+    .refine((val) => !/\s/.test(val), {
+      error: "Đường dẫn không được chứa khoảng trắng",
+    }),
   isActive: z.boolean().optional(),
   description: z.string().max(1000, { error: "Mô tả quá dài" }).optional(),
 });
@@ -30,9 +37,12 @@ const basicProductSchema = {
     .min(1, { error: "Tên sản phẩm không được để trống" })
     .max(255, { error: "Tên sản phẩm quá dài" }),
   slug: z
-    .string({ error: "Đường dẫn không được để trống" })
+    .string()
     .min(1, { error: "Đường dẫn không được để trống" })
-    .max(255, { error: "Đường dẫn quá dài" }),
+    .max(255, { error: "Đường dẫn quá dài" })
+    .refine((val) => !/\s/.test(val), {
+      error: "Đường dẫn không được chứa khoảng trắng",
+    }),
   categoryId: z.number({ error: "Danh mục không được để trống" }).min(1, {
     error: "Danh mục không hợp lệ",
   }),

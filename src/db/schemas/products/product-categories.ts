@@ -5,6 +5,7 @@ import { products } from "./products";
 
 export const productCategories = dbSchema.table("product_categories", {
   id: serial("id").primaryKey(),
+  slug: varchar("slug", { length: 255 }).notNull().unique(),
   name: varchar("name", { length: 255 }).notNull(),
   isActive: boolean("is_active").notNull().default(false),
   description: varchar("description", { length: 1024 }),

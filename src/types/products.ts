@@ -97,3 +97,38 @@ export type AdminCreateProductCategoryForm = z.infer<
 >;
 
 export type AdminEditProductForm = z.infer<typeof updateProductSchema>;
+
+// website
+export interface WebProductCategory {
+  id: number;
+  name: string;
+}
+export interface WebProduct {
+  id: number;
+  title: string;
+  slug: string;
+  price: number;
+  imageUrl?: string;
+  subDescription: string;
+  category: WebProductCategory;
+}
+
+export interface WebProductImage {
+  id: number;
+  url: string;
+  altText: string;
+}
+
+export interface WebProductAddons {
+  id: number;
+  name: string;
+  price: number;
+}
+
+export interface WebProductDetails extends WebProduct {
+  images: WebProductImage[];
+  description: string | null;
+  allergenInfo: string | null;
+  addons: WebProductAddons[];
+  relatedProducts: WebProduct[];
+}
