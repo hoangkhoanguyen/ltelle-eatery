@@ -213,3 +213,8 @@ button:not(:disabled) {
 @utility section-title {
   @apply text-web-h2-mobile lg:text-web-h2 capitalize;
 }
+
+@utility web-input {
+  @apply w-full border border-web-content-3 px-4 py-4.5 rounded focus:outline-web-primary focus-visible:outline-web-primary;
+  @apply text-web-content-1 text-web-caption-mobile lg:text-web-caption placeholder:text-web-content-3;
+}
