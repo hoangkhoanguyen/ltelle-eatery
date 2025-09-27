@@ -1,8 +1,8 @@
 import React from "react";
 import QuantityEditor from "../../shared/QuantityEditor";
 
-const ProductQuantityEditor = () => {
+const CartItemQuantity = () => {
   return <QuantityEditor />;
 };
 
-export default ProductQuantityEditor;
+export default CartItemQuantity;

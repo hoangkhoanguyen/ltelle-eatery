@@ -1,9 +1,8 @@
-"use client";
 import React from "react";
 import AddonsEditor from "../../shared/AddonsEditor";
 
-const ProductAddOns = () => {
+const CardItemAddons = () => {
   return <AddonsEditor />;
 };
 
-export default ProductAddOns;
+export default CardItemAddons;

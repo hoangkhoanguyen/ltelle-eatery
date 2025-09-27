@@ -19,7 +19,7 @@ const allogist = localFont({
 const Layout: FC<PropsWithChildren> = ({ children }) => {
   return (
     <div
-      className={`website ${popinsSans.variable} ${allogist.variable} antialiased font-poppins-sans`}
+      className={`website ${popinsSans.variable} ${allogist.variable} antialiased font-poppins-sans bg-web-background-1`}
     >
       <Header />
       <main className="pt-[149px] lg:pt-[146px] min-h-[calc(100vh-149px)] lg:min-h-[calc(100vh-146px)]">
