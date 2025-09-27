@@ -1,6 +1,8 @@
 import Image from "next/image";
 import React from "react";
 import QuickCartButton from "./QuickCartButton";
+import Link from "next/link";
+import { webRoutes } from "@/constants/route";
 
 const ProductCard = () => {
   return (
@@ -13,9 +15,12 @@ const ProductCard = () => {
           <p className="text-web-label-mobile lg:text-web-label text-web-secondary-3 mb-0.5">
             Caesar Salad
           </p>
-          <h3 className="text-web-h3-mobile lg:text-web-h3 text-web-content-1 mb-2.5 line-clamp-1">
+          <Link
+            href={webRoutes.dish("caesar-salad")}
+            className="text-web-h3-mobile lg:text-web-h3 text-web-content-1 mb-2.5 line-clamp-1"
+          >
             Caesar Salad Caesar Salad Caesar Salad Caesar Salad
-          </h3>
+          </Link>
           <p className="text-web-body-mobile lg:text-web-body text-web-content-1 line-clamp-3">
             Crisp romaine lettuce, parmesan cheese, croutons, and Caesar
             dressing, Fresh mozzarella Crisp romaine lettuce, parmesan cheese,
