@@ -3,6 +3,7 @@ import { jsonb, text, timestamp, varchar } from "drizzle-orm/pg-core";
 
 export const appConfigs = dbSchema.table("app_configs", {
   key: varchar("key", { length: 255 }).primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
   value: jsonb("value").notNull(),
   category: varchar("category", { length: 100 }).notNull(),
   description: text("description"),

@@ -11,11 +11,13 @@ export const ADMIN_ROUTE = {
   orders: "/admin/orders",
   order: "/admin/orders/[id]",
   refreshTokenApi: "/admin/api/refresh-token",
-  imagesApi: "admin/api/images",
-  categoriesApi: "admin/api/categories",
-  productsApi: "admin/api/products",
-  allProductApi: "admin/api/products/all",
-  ordersApi: "admin/api/orders",
+  imagesApi: "/admin/api/images",
+  categoriesApi: "/admin/api/categories",
+  productsApi: "/admin/api/products",
+  allProductApi: "/admin/api/products/all",
+  ordersApi: "/admin/api/orders",
+  uiSettings: "/admin/settings/ui/[category]",
+  appSettings: "/admin/settings/app/[category]",
 } as const;
 
 export const WEB_ROUTE = {
@@ -125,6 +127,15 @@ export const adminRoutes = {
       skipEmptyString: true,
       skipNull: true,
     })}`,
+
+  uiSettings: (category?: string) =>
+    typeof category === "undefined"
+      ? ADMIN_ROUTE.uiSettings
+      : generateRoute("admin", "uiSettings", { category }),
+  appSettings: (category?: string) =>
+    typeof category === "undefined"
+      ? ADMIN_ROUTE.appSettings
+      : generateRoute("admin", "appSettings", { category }),
 };
 
 export const webRoutes = {

@@ -29,6 +29,13 @@
       "when": 1758989030334,
       "tag": "0003_tearful_dagger",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1759044362097,
+      "tag": "0004_bumpy_lizard",
+      "breakpoints": true
     }
   ]
 }

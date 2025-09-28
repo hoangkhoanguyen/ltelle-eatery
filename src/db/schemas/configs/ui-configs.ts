@@ -11,6 +11,7 @@ export const uiConfigs = dbSchema.table(
   "ui_configs",
   {
     key: varchar("key", { length: 255 }).notNull(),
+    name: varchar("name", { length: 255 }).notNull(),
     scope: varchar("scope", { length: 50 }).notNull(), // 'global', 'admin', 'web'
     value: jsonb("value").notNull(),
     category: varchar("category", { length: 100 }).notNull(), // 'theme', 'layout', 'display'
