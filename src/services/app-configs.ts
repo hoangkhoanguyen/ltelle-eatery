@@ -50,6 +50,7 @@ export async function setAppConfig(
   const [result] = await executor
     .insert(appConfigs)
     .values({
+      name: config.name,
       key: config.key,
       value: config.value,
       category: config.category,
@@ -95,6 +96,7 @@ export async function bulkSetAppConfigs(
     value: any;
     category: string;
     description?: string;
+    name: string;
   }>,
   tx?: DB,
 ): Promise<AppConfigDB[]> {

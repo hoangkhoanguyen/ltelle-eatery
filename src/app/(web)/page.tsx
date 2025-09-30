@@ -4,9 +4,16 @@ import { HeroSection } from "@/components/web/features/home/HeroSection";
 import { OurStorySection } from "@/components/web/features/home/OurStorySection";
 import { ReviewsSection } from "@/components/web/features/home/ReviewsSection";
 import { WhyChooseUsSection } from "@/components/web/shared/WhyChooseUsSection";
+import { getAdminProductDetailsById } from "@/services/products";
+import { headers } from "next/headers";
 import React from "react";
 
-const HomePage = () => {
+export const revalidate = 300; // revalidate this page every 300 seconds
+
+const HomePage = async () => {
+  headers();
+  const product = await getAdminProductDetailsById(1);
+
   return (
     <div>
       <HeroSection />

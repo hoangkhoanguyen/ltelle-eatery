@@ -1,4 +1,5 @@
 import { dbSchema } from "@/db/schema";
+import { Config } from "@/types/configs";
 import {
   jsonb,
   primaryKey,
@@ -11,10 +12,9 @@ export const uiConfigs = dbSchema.table(
   "ui_configs",
   {
     key: varchar("key", { length: 255 }).notNull(),
-    name: varchar("name", { length: 255 }).notNull(),
-    scope: varchar("scope", { length: 50 }).notNull(), // 'global', 'admin', 'web'
-    value: jsonb("value").notNull(),
-    category: varchar("category", { length: 100 }).notNull(), // 'theme', 'layout', 'display'
+    title: varchar("title", { length: 255 }).notNull(),
+    scope: varchar("scope", { length: 50 }).notNull(),
+    value: jsonb("value").$type<Config>().notNull(),
     description: text("description"),
     createdAt: timestamp("created_at", {
       withTimezone: true,
@@ -31,3 +31,13 @@ export const uiConfigs = dbSchema.table(
     pk: primaryKey({ columns: [table.key, table.scope] }),
   }),
 );
+
+export type UIConfigDB = typeof uiConfigs.$inferSelect;
+export type NewUIConfigDB = typeof uiConfigs.$inferInsert;
+export type UpdateUIConfigDB = Partial<
+  Omit<UIConfigDB, "key" | "scope" | "createdAt">
+>;
+
+// scope -> category -> key
+// website -> page -> homepage
+// website -> layout -> header

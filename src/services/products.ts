@@ -106,6 +106,7 @@ export async function getAdminRelatedProductsByIds(ids: number[]) {
 }
 
 export async function getAdminProductDetailsById(id: number) {
+  console.log("get product", id);
   const product = await getAdminProductById(id);
 
   if (!product) return undefined;

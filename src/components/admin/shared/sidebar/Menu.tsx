@@ -52,12 +52,6 @@ const menuItems: IMenuItem[] = [
       },
     ],
   },
-  // {
-  //   label: "Profile",
-  //   href: adminRoutes.me,
-  //   icon: "iconamoon:profile-circle",
-  //   activeIcon: "iconamoon:profile-circle-fill",
-  // },
 ];
 
 export const Menu = () => {

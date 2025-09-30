@@ -1,20 +1,29 @@
 import React, { FC, PropsWithChildren } from "react";
-import { InputWithLabel } from "../../ui/form";
+import { Label, Switch } from "../../ui/form";
 
 const SettingsInput: FC<
   PropsWithChildren<{
     label: string;
     required?: boolean;
     description?: string;
+    isAlwaysShow?: boolean;
   }>
-> = ({ label, required, description, children }) => {
+> = ({ label, required, description, children, isAlwaysShow }) => {
   return (
-    <InputWithLabel label={label} required={required}>
-      {description && (
-        <p className="text-xs mb-1 text-gray-500 italic">{description}</p>
-      )}
+    <div className="border border-gray-200 p-4 rounded-xl">
+      <div className="mb-2">
+        <div className="flex items-center justify-between">
+          <Label>
+            {label} {required && <span className="text-red-500">*</span>}
+          </Label>
+          {!isAlwaysShow && <Switch className="toggle-sm" />}
+        </div>
+        {description && (
+          <p className="text-xs mb-1 text-gray-500 italic">{description}</p>
+        )}
+      </div>
       {children}
-    </InputWithLabel>
+    </div>
   );
 };
 

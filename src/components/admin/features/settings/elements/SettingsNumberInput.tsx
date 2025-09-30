@@ -4,7 +4,7 @@ import React, { FC, InputHTMLAttributes } from "react";
 
 const SettingsNumberInput: FC<
   Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> & {
-    onChange?: (value: string) => void;
+    onChange?: (value: number) => void;
   }
 > = ({ className, onChange, ...props }) => {
   return (
@@ -14,7 +14,7 @@ const SettingsNumberInput: FC<
       onChange={
         onChange &&
         ((e) => {
-          onChange(e.target.value);
+          onChange(Number(e.target.value));
         })
       }
       {...props}
