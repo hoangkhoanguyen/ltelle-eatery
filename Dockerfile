@@ -53,6 +53,7 @@ RUN chgrp -R nodejs /app
 
 # allow group can read
 RUN chmod -R g+r /app
+RUN chmod -R g+w /app
 
 USER nextjs
 
