@@ -11,6 +11,7 @@ import Header from "../../shared/header/Header";
 import { Button } from "../../ui/button";
 import { FieldType, MetaValue } from "@/types/settings";
 import { Config } from "@/types/configs";
+import ImageLibraryModalProvider from "../../shared/image-library/ImageLibraryProvider";
 
 const Setting: FC<{
   configs: Config;
@@ -47,7 +48,7 @@ const Setting: FC<{
   }, [onReset]);
 
   return (
-    <>
+    <ImageLibraryModalProvider>
       <Header
         title={title}
         actions={
@@ -89,7 +90,7 @@ const Setting: FC<{
           ))}
         </div>
       </div>
-    </>
+    </ImageLibraryModalProvider>
   );
 };
 

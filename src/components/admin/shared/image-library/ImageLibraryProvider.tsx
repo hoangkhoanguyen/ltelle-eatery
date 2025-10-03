@@ -12,7 +12,10 @@ import { LayoutRef, LayoutWithRef, Modal } from "../../ui/layout";
 import { Button } from "../../ui/button";
 
 const Context = createContext<{
-  openLibrary(onSuccess: (selectedImgs: string[]) => void): void;
+  openLibrary(
+    onSuccess: (selectedImgs: string[]) => void,
+    isMulti: boolean,
+  ): void;
 } | null>(null);
 
 export default function ImageLibraryModalProvider({
@@ -22,13 +25,16 @@ export default function ImageLibraryModalProvider({
 
   const [selectedImgs, setSelectedImg] = useState<string[]>([]);
 
+  const [isMulti, setIsMulti] = useState(false);
+
   const [onSuccess, setOnSuccess] = useState<(imgs: string[]) => void>(
     () => {},
   );
 
   const openModal = useCallback(
-    (onSuccess: (selectedImgs: string[]) => void) => {
+    (onSuccess: (selectedImgs: string[]) => void, isMulti: boolean) => {
       setOnSuccess(() => onSuccess);
+      setIsMulti(isMulti);
       modalref.current?.open();
     },
     [],
@@ -39,11 +45,18 @@ export default function ImageLibraryModalProvider({
     setSelectedImg([]);
   }, []);
 
-  const onToggleImg = useCallback((url: string) => {
-    setSelectedImg((p) =>
-      p.includes(url) ? p.filter((item) => item !== url) : [...p, url],
-    );
-  }, []);
+  const onToggleImg = useCallback(
+    (url: string) => {
+      if (isMulti) {
+        setSelectedImg((p) =>
+          p.includes(url) ? p.filter((item) => item !== url) : [...p, url],
+        );
+        return;
+      }
+      setSelectedImg((p) => (p.includes(url) ? [] : [url]));
+    },
+    [isMulti],
+  );
 
   const onSubmit = useCallback(() => {
     onSuccess(selectedImgs);

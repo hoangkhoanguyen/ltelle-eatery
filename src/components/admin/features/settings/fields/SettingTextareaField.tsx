@@ -4,7 +4,7 @@ import SettingsTextareaInput from "../elements/SettingsTextareaInput";
 import { CommonField, TextareaField } from "@/types/settings";
 
 const SettingTextareaField: FC<
-  Omit<TextareaField, "type"> & { control: Control; name: string }
+  Omit<TextareaField, "type" | "key"> & { control: Control; name: string }
 > = ({ control, name, ...props }) => {
   return (
     <Controller

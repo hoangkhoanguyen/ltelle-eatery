@@ -34,16 +34,6 @@ export const WhyChooseUsSection: FC<{ configs?: any }> = ({
             desc={reason.desc}
           />
         ))}
-        {/* <ReasonItem
-          icon="ph:users"
-          title="Exceptional Service Quality"
-          desc="A team of professional, dedicated and knowledgeable culinary staff are always ready to serve, bringing you the most complete and thoughtful dining experience."
-        />
-        <ReasonItem
-          icon="ph:house"
-          title="Elegant Space & Amenities"
-          desc="A cozy, romantic space with sophisticated architecture, ideal for intimate dinners or special occasions with breathtaking mountain views.."
-        /> */}
       </div>
     </div>
   );

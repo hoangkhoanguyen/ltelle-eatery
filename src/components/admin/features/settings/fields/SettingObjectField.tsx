@@ -5,7 +5,7 @@ import SettingField from "../SettingField";
 import SettingsInput from "../SettingsInput";
 
 const SettingObjectField: FC<
-  Omit<ObjectField, "type"> & {
+  Omit<ObjectField, "type" | "key"> & {
     control: Control;
     name: string;
   }

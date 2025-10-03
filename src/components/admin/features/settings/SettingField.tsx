@@ -7,6 +7,7 @@ import SettingImageField from "./fields/SettingImageField";
 import SettingBooleanField from "./fields/SettingBooleanField";
 import SettingTextareaField from "./fields/SettingTextareaField";
 import SettingArrayField from "./fields/SettingArrayField";
+import { omit } from "lodash";
 
 const SettingField: FC<{
   item: FieldType;
@@ -23,9 +24,21 @@ const SettingField: FC<{
     case "image":
       return <SettingImageField control={control} name={name} />;
     case "object":
-      return <SettingObjectField control={control} name={name} {...item} />;
+      return (
+        <SettingObjectField
+          control={control}
+          name={name}
+          {...omit(item, "type", "key")}
+        />
+      );
     case "array":
-      return <SettingArrayField control={control} name={name} {...item} />;
+      return (
+        <SettingArrayField
+          control={control}
+          name={name}
+          {...omit(item, "type", "key")}
+        />
+      );
   }
   return null;
 };

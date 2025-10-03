@@ -7,7 +7,7 @@ const SettingsTextInput: FC<
     onChange?: (value: string) => void;
     errorMessage?: string;
   }
-> = ({ onChange, errorMessage, ...props }) => {
+> = ({ onChange, errorMessage, value = "", ...props }) => {
   return (
     <WithError
       error={{
@@ -17,6 +17,7 @@ const SettingsTextInput: FC<
       <InputWithStatus
         type="text"
         error={!!errorMessage}
+        value={value}
         onChange={
           onChange &&
           ((e) => {

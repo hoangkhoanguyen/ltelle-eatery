@@ -4,7 +4,7 @@ import SettingsTextInput from "../elements/SettingsTextInput";
 import { TextField } from "@/types/settings";
 
 const SettingTextField: FC<
-  Omit<TextField, "type"> & { control: Control; name: string }
+  Omit<TextField, "type" | "key"> & { control: Control; name: string }
 > = ({ control, name, ...props }) => {
   return (
     <Controller

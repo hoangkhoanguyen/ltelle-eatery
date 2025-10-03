@@ -5,7 +5,7 @@ import SettingsListInput from "../elements/SettingsListInput";
 import SettingObjectField from "./SettingObjectField";
 
 const SettingArrayField: FC<
-  Omit<ArrayField, "type"> & { control: Control; name: string }
+  Omit<ArrayField, "type" | "key"> & { control: Control; name: string }
 > = ({ control, name, isEditableList, itemType, newItem, needBox }) => {
   const { fields, append, remove } = useFieldArray({
     control,

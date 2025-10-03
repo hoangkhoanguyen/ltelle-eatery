@@ -28,13 +28,15 @@ export async function updateUIConfigsAction({
   value: Config;
 }) {
   try {
+    console.log("key, value", key, value);
     await updateUIConfigByKey({ key, value });
     revalidateTag(`ui-${key}`);
     return {
       success: true,
       message: "UI Config updated successfully",
     };
-  } catch {
+  } catch (error) {
+    console.log("error", error);
     return {
       success: false,
       message: "Failed to update UI Config",

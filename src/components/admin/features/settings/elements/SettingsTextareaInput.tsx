@@ -8,12 +8,13 @@ const SettingsTextareaInput: FC<
     onChange?: (value: string) => void;
     errorMessage?: string;
   }
-> = ({ className, onChange, errorMessage, ...props }) => {
+> = ({ className, onChange, errorMessage, value = "", ...props }) => {
   return (
     <WithError error={{ message: errorMessage }}>
       <Textarea
         className={cn(errorMessage && "textarea-error", className)}
         rows={5}
+        value={value}
         onChange={
           onChange &&
           ((e) => {

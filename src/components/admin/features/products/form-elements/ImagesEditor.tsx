@@ -34,7 +34,7 @@ const ImagesEditor = () => {
   };
 
   const onOpenLibrary = () => {
-    openLibrary(onAddImages);
+    openLibrary(onAddImages, true);
   };
 
   const onDeleteSuccess = () => {

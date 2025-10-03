@@ -4,7 +4,7 @@ import React, { FC } from "react";
 const SettingsBooleanInput: FC<{
   checked?: boolean;
   onCheckedChange?: (checked: boolean) => void;
-}> = ({ checked, onCheckedChange }) => {
+}> = ({ checked = false, onCheckedChange }) => {
   return (
     <Switch
       checked={checked}
