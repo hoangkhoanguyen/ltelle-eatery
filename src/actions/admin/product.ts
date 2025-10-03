@@ -28,7 +28,6 @@ export async function createOrderAction(data: CreateOrderRequest) {
 
 export async function createProductAction(data: NewProductDB) {
   try {
-    console.log("Creating product with data:", data);
     const isExisSlug = await isExistingSlug(data.slug);
 
     if (isExisSlug) {

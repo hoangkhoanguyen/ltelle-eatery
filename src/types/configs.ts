@@ -5,16 +5,20 @@ export interface ImageValue {
   url: string;
   alt: string;
 }
-export type ObjectValue = Record<string, Value>;
-export type ArrayValue = Value[];
+// export type ObjectValue = Record<string, Value>;
+export interface ObjectValue {
+  [key: string]: Value;
+}
+
+export type ArrayValue = ObjectValue[];
 
 export type Value =
-  | { value: TextValue }
-  | { value: NumberValue }
-  | { value: BooleanValue }
-  | { value: ImageValue }
-  | { value: ObjectValue }
-  | { value: ArrayValue };
+  | TextValue
+  | NumberValue
+  | BooleanValue
+  | ImageValue
+  | ObjectValue
+  | ArrayValue;
 
 export type ConfigValue = Record<string, Value>;
 

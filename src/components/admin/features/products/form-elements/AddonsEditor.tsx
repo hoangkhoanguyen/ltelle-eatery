@@ -24,8 +24,6 @@ const AddonsEditor = () => {
     });
   };
 
-  console.log("fieldsaddon", fields);
-
   return (
     <div className="card bg-white">
       <div className="p-5">

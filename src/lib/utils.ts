@@ -104,3 +104,7 @@ export function formatCurrency(
     currency,
   }).format(amount);
 }
+
+export function splitTextByNewLine(text: string) {
+  return text.split(/\r?\n/);
+}

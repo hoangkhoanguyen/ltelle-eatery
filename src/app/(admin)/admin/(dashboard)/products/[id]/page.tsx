@@ -12,7 +12,6 @@ import React from "react";
 
 const ProductDetailsPage = async () => {
   const product = await getAdminProductDetailsById(1);
-  console.log("first", product);
 
   if (!product) return <>NoData</>;
 

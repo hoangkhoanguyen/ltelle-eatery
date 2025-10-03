@@ -8,7 +8,9 @@ const WithError: FC<PropsWithChildren<Pick<Editor, "error">>> = ({
   return (
     <>
       {children}
-      {error && <p className="text-xs text-error mt-1">{error.message}</p>}
+      {error?.message && (
+        <p className="text-xs text-error mt-1">{error.message}</p>
+      )}
     </>
   );
 };

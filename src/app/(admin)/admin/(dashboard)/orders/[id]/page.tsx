@@ -17,7 +17,6 @@ const OrderDetailsPage = async ({
   const id = (await params).id;
 
   const order = await getAdminOrderById(Number(id));
-  console.log("order", order);
 
   if (!order) {
     return <div>Order not found</div>;

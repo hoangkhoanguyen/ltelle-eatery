@@ -1,22 +1,28 @@
+import { Textarea } from "@/components/admin/ui/form";
+import WithError from "@/components/admin/ui/form/WithError";
 import { cn } from "@/lib/utils";
-import React, { FC, TextareaHTMLAttributes } from "react";
+import React, { ComponentProps, FC } from "react";
 
 const SettingsTextareaInput: FC<
-  Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, "onChange"> & {
+  Omit<ComponentProps<typeof Textarea>, "onChange"> & {
     onChange?: (value: string) => void;
+    errorMessage?: string;
   }
-> = ({ className, onChange, ...props }) => {
+> = ({ className, onChange, errorMessage, ...props }) => {
   return (
-    <textarea
-      className={cn("input w-full", className)}
-      onChange={
-        onChange &&
-        ((e) => {
-          onChange(e.target.value);
-        })
-      }
-      {...props}
-    ></textarea>
+    <WithError error={{ message: errorMessage }}>
+      <Textarea
+        className={cn(errorMessage && "textarea-error", className)}
+        rows={5}
+        onChange={
+          onChange &&
+          ((e) => {
+            onChange(e.target.value);
+          })
+        }
+        {...props}
+      ></Textarea>
+    </WithError>
   );
 };
 

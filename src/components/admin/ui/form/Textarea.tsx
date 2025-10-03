@@ -7,7 +7,7 @@ export const Textarea: FC<TextareaHTMLAttributes<HTMLTextAreaElement>> = ({
 }) => {
   return (
     <textarea
-      className={cn("textarea rounded-xl w-full", className)}
+      className={cn("textarea rounded-xl w-full textarea-sm", className)}
       {...props}
     ></textarea>
   );

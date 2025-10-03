@@ -7,15 +7,12 @@ import useFetchImages from "@/hooks/admin/media/useFetchImages";
 import useUploadImage from "@/hooks/admin/media/useUploadImage";
 import { Input } from "../../ui/form";
 import { cn } from "@/lib/utils";
-import { adminRoutes } from "@/constants/route";
 
 const ImageLibrary: FC<{
   selectedImgs: string[];
   onClickImgBox(url: string): void;
 }> = ({ onClickImgBox, selectedImgs }) => {
   const fileRef = useRef<HTMLInputElement>(null);
-
-  console.log("url", adminRoutes.imagesApi());
 
   const { data: images = [], refetch } = useFetchImages();
 

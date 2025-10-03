@@ -1,15 +1,20 @@
 import Icon from "@/components/common/Icon";
-import React from "react";
+import { ConfigValue } from "@/types/configs";
+import React, { FC } from "react";
+import SectionTitleFromConfigs from "./SectionTitleFromConfigs";
+import SectionSubTitleFromConfigs from "./SectionSubTitleFromConfigs";
 
-export const WhyChooseUsSection = () => {
+export const WhyChooseUsSection: FC<{ configs?: any }> = ({
+  configs = { reasons: [], title: [], sub_title: [] },
+}) => {
   return (
     <div className="container pt-10 pb-10 md:pt-12">
       <h3 className="section-subtitle mb-5 text-center">
-        EXCELLENCE &bull; DISTINCTION &bull; QUALITY
+        {/* EXCELLENCE &bull; DISTINCTION &bull; QUALITY */}
+        <SectionSubTitleFromConfigs sub_title={configs.sub_title} />
       </h3>
       <h2 className="text-center flex flex-col items-center mb-5 section-title">
-        <span className="text-web-primary">Why customers</span>
-        <span className="text-web-secondary-1">choose us</span>
+        <SectionTitleFromConfigs title={configs.title} />
       </h2>
 
       <div className="mb-10 lg:max-w-2xl mx-auto">
@@ -21,12 +26,15 @@ export const WhyChooseUsSection = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 md:gap-5">
-        <ReasonItem
-          icon="ph:leaf"
-          title="Clear & Clean Original Ingredients"
-          desc="We are committed to using the freshest ingredients, carefully selected from reputable local farms, ensuring safety and natural flavors in every dish."
-        />
-        <ReasonItem
+        {configs.reasons.map((reason: any, index: number) => (
+          <ReasonItem
+            key={index}
+            icon={reason.icon}
+            title={reason.title}
+            desc={reason.desc}
+          />
+        ))}
+        {/* <ReasonItem
           icon="ph:users"
           title="Exceptional Service Quality"
           desc="A team of professional, dedicated and knowledgeable culinary staff are always ready to serve, bringing you the most complete and thoughtful dining experience."
@@ -35,7 +43,7 @@ export const WhyChooseUsSection = () => {
           icon="ph:house"
           title="Elegant Space & Amenities"
           desc="A cozy, romantic space with sophisticated architecture, ideal for intimate dinners or special occasions with breathtaking mountain views.."
-        />
+        /> */}
       </div>
     </div>
   );

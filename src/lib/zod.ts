@@ -48,5 +48,5 @@ export function generateSettingSchema(items: FieldType[]) {
   return items.reduce((acc, item) => {
     acc[item.key] = generateSettingFieldSchema(item);
     return acc;
-  }, {} as Record<string, z.ZodTypeAny>);
+  }, {} as Record<string, z.ZodType>);
 }

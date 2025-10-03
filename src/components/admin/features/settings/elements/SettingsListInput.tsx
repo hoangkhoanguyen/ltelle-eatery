@@ -4,28 +4,29 @@ import React, { FC, ReactNode } from "react";
 
 const SettingsListInput: FC<{
   children: ReactNode[];
-  onAdd: (index: number) => void;
-  canAdd?: boolean;
-}> = ({ children, onAdd, canAdd }) => {
+  onAdd: () => void;
+  onRemove: (index: number) => void;
+  isEditableList?: boolean;
+}> = ({ children, onAdd, onRemove, isEditableList }) => {
   return (
-    <div className="flex flex-col gap-2 items-stretch">
-      {children.length > 0 ? (
+    <div className="flex flex-col gap-4 items-stretch">
+      {children.length > 0 &&
         children.map((child, index) => (
           <div key={index} className={"flex items-start gap-2"}>
             <div className="flex-1">{child}</div>
-            {canAdd && (
-              <IconButton icon="ph:plus" onClick={() => onAdd(index)} />
+            {isEditableList && (
+              <IconButton
+                icon="ph:x-bold"
+                color="error"
+                onClick={() => onRemove(index)}
+              />
             )}
           </div>
-        ))
-      ) : (
-        <>
-          {canAdd && (
-            <Button className="rounded-lg" onClick={() => onAdd(0)}>
-              <Icon icon={"ph:plus"} />
-            </Button>
-          )}
-        </>
+        ))}
+      {isEditableList && (
+        <Button className="rounded-lg" onClick={onAdd}>
+          <Icon icon={"ph:plus"} />
+        </Button>
       )}
     </div>
   );

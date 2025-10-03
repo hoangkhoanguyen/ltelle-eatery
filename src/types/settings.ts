@@ -2,7 +2,7 @@ export interface CommonField {
   key: string;
   label: string;
   description: string;
-  isAlwaysShow: boolean;
+  // isAlwaysShow: boolean;
   isRequired: boolean;
 }
 
@@ -31,13 +31,16 @@ export interface ImageField {
 
 export interface ObjectField {
   type: "object";
+  needBox?: boolean;
   fields: FieldType[];
 }
 
 export interface ArrayField {
   type: "array";
-  canAdd: boolean;
-  itemType: FieldItemType;
+  isEditableList: boolean;
+  itemType: ObjectField;
+  newItem: any;
+  needBox?: boolean;
 }
 
 export type FieldItemType =
@@ -52,9 +55,8 @@ export type FieldItemType =
 export type FieldType = CommonField & FieldItemType;
 
 export type MetaValue = {
+  key: string;
   title: string;
   description: string;
   fields: FieldType[];
 };
-
-export type MetaType = Record<string, MetaValue>;

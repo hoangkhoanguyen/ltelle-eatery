@@ -1,108 +1,95 @@
 "use client";
-import React, { FC, useMemo } from "react";
+import React, { FC, useCallback, useEffect, useMemo } from "react";
 import SettingsCard from "./SettingsCard";
-import { Config } from "@/types/configs";
-import { FieldType, MetaValue } from "@/types/settings";
 import SettingsInput from "./SettingsInput";
-import SettingsListInput from "./elements/SettingsListInput";
-import SettingsTextInput from "./elements/SettingsTextInput";
-import SettingsNumberInput from "./elements/SettingsNumberInput";
-import SettingsBooleanInput from "./elements/SettingsBooleanInput";
-import SettingsImageInput from "./elements/SettingsImageInput";
-import SettingsTextareaInput from "./elements/SettingsTextareaInput";
 import { generateSettingSchema } from "@/lib/zod";
-import { Controller, FieldError, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
-import WithError from "../../ui/form/WithError";
+import SettingField from "./SettingField";
+import Header from "../../shared/header/Header";
+import { Button } from "../../ui/button";
+import { FieldType, MetaValue } from "@/types/settings";
+import { Config } from "@/types/configs";
 
 const Setting: FC<{
-  meta: MetaValue;
-  settingData: Config;
-}> = ({ meta }) => {
-  const schema = useMemo(
-    () => generateSettingSchema(meta.fields),
-    [meta.fields],
-  );
+  configs: Config;
+  title: string;
+  onSubmit(data: any): void;
+  metaFields: MetaValue[];
+}> = ({ configs, metaFields, title, onSubmit }) => {
+  const schema = useMemo(() => {
+    return metaFields.reduce(
+      (acc, meta) => ({
+        ...acc,
+        [meta.key]: z.object(generateSettingSchema(meta.fields)),
+      }),
+      {} as Record<string, z.ZodType>,
+    );
+  }, [metaFields]);
 
-  const { control } = useForm({
+  const {
+    control,
+    reset,
+    formState: { isDirty },
+    handleSubmit,
+  } = useForm({
     mode: "onSubmit",
     resolver: zodResolver(z.object(schema)),
   });
 
-  const renderFieldInput = (
-    item: FieldType,
-    form: {
-      value: any;
-      onChange: (value: any) => void;
-      error?: FieldError;
-    },
-  ) => {
-    switch (item.type) {
-      case "array":
-        return (
-          <SettingsListInput onAdd={() => {}} canAdd={item.canAdd}>
-            {form.value || []}
-          </SettingsListInput>
-        );
-      case "object":
-        return <div>Object</div>;
-      case "text":
-        return (
-          <WithError error={form.error}>
-            <SettingsTextInput value={form.value} onChange={form.onChange} />
-          </WithError>
-        );
-      case "textarea":
-        return (
-          <WithError error={form.error}>
-            <SettingsTextareaInput
-              value={form.value}
-              onChange={form.onChange}
-            />
-          </WithError>
-        );
-      case "number":
-        return (
-          <WithError error={form.error}>
-            <SettingsNumberInput value={form.value} onChange={form.onChange} />
-          </WithError>
-        );
-      case "boolean":
-        return <SettingsBooleanInput />;
-      case "image":
-        return <SettingsImageInput />;
-      default:
-        return <></>;
-    }
-  };
+  const onReset = useCallback(() => {
+    reset(structuredClone(configs));
+  }, [reset, configs]);
+
+  useEffect(() => {
+    onReset();
+  }, [onReset]);
 
   return (
-    <SettingsCard title={meta.title} description={meta.description}>
-      <div className="flex flex-col gap-5">
-        {meta.fields.map((field) => (
-          <SettingsInput
-            key={field.key}
-            label={field.label}
-            required={field.isRequired}
-            description={field.description}
-            isAlwaysShow={field.isAlwaysShow}
-          >
-            <Controller
-              control={control}
-              name={field.key}
-              render={({ field: { value, onChange }, fieldState: { error } }) =>
-                renderFieldInput(field, {
-                  value,
-                  onChange,
-                  error,
-                })
-              }
-            />
-          </SettingsInput>
-        ))}
+    <>
+      <Header
+        title={title}
+        actions={
+          isDirty && (
+            <div className="card-actions">
+              <Button color="primary" onClick={handleSubmit(onSubmit)}>
+                Save
+              </Button>
+              <Button onClick={onReset}>Discard</Button>
+            </div>
+          )
+        }
+      />
+      <div className="container py-5">
+        <div className="grid grid-cols-1 gap-5">
+          {metaFields.map((section) => (
+            <SettingsCard
+              key={section.key}
+              title={section.title}
+              description={section.description}
+            >
+              <div className="flex flex-col gap-5">
+                {section.fields.map((field: FieldType) => (
+                  <SettingsInput
+                    key={field.key}
+                    label={field.label}
+                    required={field.isRequired}
+                    description={field.description}
+                  >
+                    <SettingField
+                      control={control}
+                      item={field}
+                      name={`${section.key}.${field.key}`}
+                    />
+                  </SettingsInput>
+                ))}
+              </div>
+            </SettingsCard>
+          ))}
+        </div>
       </div>
-    </SettingsCard>
+    </>
   );
 };
 

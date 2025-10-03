@@ -1,7 +1,10 @@
+import { splitTextByNewLine } from "@/lib/utils";
 import Image from "next/image";
-import React from "react";
+import React, { FC } from "react";
+import SectionTitleFromConfigs from "../../shared/SectionTitleFromConfigs";
+import SectionSubTitleFromConfigs from "../../shared/SectionSubTitleFromConfigs";
 
-export const OurStorySection = () => {
+export const OurStorySection: FC<{ configs: any }> = ({ configs }) => {
   return (
     <section className="bg-web-background-3">
       <div className="container pt-6 md:pt-10 pb-10">
@@ -21,32 +24,23 @@ export const OurStorySection = () => {
           <div className="order-2 lg:order-1">
             <div>
               <h3 className="text-web-secondary-3 text-web-subtitle-mobile uppercase mb-5 lg:text-web-subtitle">
-                L&#39;Telle Eater &bull; OUR STORY
+                {/* {configs.sub_title.map((item: any, index: number) => (
+                  <span key={index}>
+                    {index !== 0 && <span className="ms-1">&bull;</span>}{" "}
+                    {item.text}
+                  </span>
+                ))} */}
+                <SectionSubTitleFromConfigs sub_title={configs.sub_title} />
               </h3>
-              <h2 className="text-web-h2-mobile capitalize mb-2 md:mb-9 lg:mb-5 lg:text-web-h2 flex flex-col md:flex-row gap-x-2">
-                <span className="text-web-content-1">A Love Letter To</span>{" "}
-                <span className="text-web-secondary-1">Frech Gastronomy</span>
+              <h2 className="text-web-h2-mobile capitalize mb-2 md:mb-9 lg:mb-5 lg:text-web-h2 flex flex-row gap-x-2 flex-wrap">
+                <SectionTitleFromConfigs title={configs.title} />
               </h2>
               <div className="text-web-content-2 text-web-subtitle-mobile lg:text-web-subtitle flex flex-col gap-5">
-                <p>
-                  In 2012, Chef Laurent Dubois brought his Parisian dream to the
-                  mystical mountains of Ha Giang. Trained in Lyon&#39;s most
-                  prestigious culinary schools and seasoned in Michelin-starred
-                  kitchens, he envisioned a place where French sophistication
-                  would dance with Vietnamese warmth.
-                </p>
-                <p>
-                  Every morning, our team sources the finest local ingredients
-                  from Ha Giang&#39;s mountain farmers, combining them with
-                  carefully imported French specialties. Each plate is a canvas
-                  where culinary artistry meets heartfelt storytelling.
-                </p>
-                <p>
-                  Every morning, our team sources the finest local ingredients
-                  from Ha Giang&#39;s mountain farmers, combining them with
-                  carefully imported French specialties. Each plate is a canvas
-                  where culinary artistry meets heartfelt storytelling.
-                </p>
+                {splitTextByNewLine(configs.content).map(
+                  (text: string, index: number) => (
+                    <p key={index}>{text}</p>
+                  ),
+                )}
               </div>
             </div>
           </div>

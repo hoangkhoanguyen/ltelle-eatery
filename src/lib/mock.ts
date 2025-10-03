@@ -8,17 +8,13 @@ export const homepageConfigs: UIConfigDB = {
   description: "Cấu hình các phần giao diện của trang chủ",
   value: {
     hero: {
-      title: {
-        value: [{ value: "L'Telle Eatery" }, { value: "Nhà hàng hảo hạng" }],
-      },
-      description: { value: "Nhà hàng hảo hạng với các món ăn tuyệt vời" },
+      title: [{ title: "L'Telle Eatery" }, { title: "Nhà hàng hảo hạng" }],
+      description: "Nhà hàng hảo hạng với các món ăn tuyệt vời",
       image: {
-        value: {
-          url: "/assets/static/hero.jpg",
-          alt: "Hero Image",
-        },
+        url: "/assets/static/hero.jpg",
+        alt: "Hero Image",
       },
-      blur: { value: true },
+      blur: true,
     },
   },
   createdAt: new Date(),

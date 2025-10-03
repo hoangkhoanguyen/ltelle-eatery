@@ -35,9 +35,5 @@ export const uiConfigs = dbSchema.table(
 export type UIConfigDB = typeof uiConfigs.$inferSelect;
 export type NewUIConfigDB = typeof uiConfigs.$inferInsert;
 export type UpdateUIConfigDB = Partial<
-  Omit<UIConfigDB, "key" | "scope" | "createdAt">
+  Omit<UIConfigDB, "key" | "scope" | "createdAt" | "updatedAt">
 >;
-
-// scope -> category -> key
-// website -> page -> homepage
-// website -> layout -> header
