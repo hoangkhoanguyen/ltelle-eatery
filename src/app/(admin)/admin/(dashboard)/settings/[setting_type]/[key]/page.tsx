@@ -26,15 +26,15 @@ const page = async ({
   const initConfigs =
     settings.initConfigs?.[key as keyof typeof settings.initConfigs];
 
-  if (!config) {
-    return <div>Invalid Config Key {key}</div>;
-  }
+  if (config) return <SettingComponent data={config} meta={meta} />;
 
-  if (initConfigs && !config) {
+  console.log("initConfigs", initConfigs);
+
+  if (initConfigs) {
     return <InitSettingComponent initConfigs={initConfigs} />;
   }
 
-  return <SettingComponent data={config} meta={meta} />;
+  return <div>No configuration found for key: {key}</div>;
 };
 
 export default page;

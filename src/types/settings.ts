@@ -6,6 +6,7 @@ export interface CommonField {
   description: string;
   // isAlwaysShow: boolean;
   isRequired: boolean;
+  disabled?: boolean;
 }
 
 export interface TextField {

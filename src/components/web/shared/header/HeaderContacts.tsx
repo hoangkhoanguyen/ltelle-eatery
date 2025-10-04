@@ -1,13 +1,16 @@
 import Icon from "@/components/common/Icon";
-import React from "react";
+import React, { FC } from "react";
 
-export const HeaderContacts = () => {
+export const HeaderContacts: FC<{ phone: string; openHours: string }> = ({
+  phone,
+  openHours,
+}) => {
   return (
     <div className="flex flex-col md:flex-row items-start md:items-center gap-1 md:gap-4.5">
-      <HeaderContactItem icon="ph:phone-light" content="+84 123 456 789" />
+      <HeaderContactItem icon="ph:phone-light" content={phone} />
       <HeaderContactItem
         icon="ph:clock-light"
-        content="Open Daily: 8:00 AM - 10:00 PM "
+        content={`Open Daily: ${openHours}`}
       />
     </div>
   );

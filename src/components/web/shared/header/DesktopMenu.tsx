@@ -1,6 +1,6 @@
-import { webRoutes } from "@/constants/route";
+// import { webRoutes } from "@/constants/route";
 import Link from "next/link";
-import React from "react";
+import React, { FC } from "react";
 import CartButton from "./CartButton";
 import MobileMenu from "./MobileMenu";
 
@@ -10,35 +10,35 @@ interface IMenuItem {
   title: string;
 }
 
-export const MENU: IMenuItem[] = [
-  {
-    href: webRoutes.home(),
-    label: "Home",
-    title: "Welcome to Our Table",
-  },
-  {
-    href: webRoutes.menu("all"),
-    label: "Menu",
-    title: "Our Dishes & Drinks",
-  },
-  {
-    href: webRoutes.reservation(),
-    label: "Reservations",
-    title: "Book Your Table",
-  },
-  {
-    href: webRoutes.contact(),
-    label: "Contact",
-    title: "Get in Touch",
-  },
-];
+// export const MENU: IMenuItem[] = [
+//   {
+//     href: webRoutes.home(),
+//     label: "Home",
+//     title: "Welcome to Our Table",
+//   },
+//   {
+//     href: webRoutes.menu("all"),
+//     label: "Menu",
+//     title: "Our Dishes & Drinks",
+//   },
+//   {
+//     href: webRoutes.reservation(),
+//     label: "Reservations",
+//     title: "Book Your Table",
+//   },
+//   {
+//     href: webRoutes.contact(),
+//     label: "Contact",
+//     title: "Get in Touch",
+//   },
+// ];
 
-const DesktopMenu = () => {
+const DesktopMenu: FC<{ menus: IMenuItem[] }> = ({ menus }) => {
   return (
     <div className="flex items-center gap-2 lg:gap-10">
       <nav aria-label="Site navigation" className="hidden lg:block">
         <ul className="flex items-center gap-10">
-          {MENU.map((menu) => (
+          {menus.map((menu) => (
             <li key={menu.label}>
               <MenuItem {...menu} />
             </li>

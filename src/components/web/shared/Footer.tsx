@@ -1,19 +1,20 @@
 import Icon from "@/components/common/Icon";
 import { webRoutes } from "@/constants/route";
+import { splitTextByNewLine } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
-import { MENU } from "./header/DesktopMenu";
+import React, { FC } from "react";
+// import { MENU } from "./header/DesktopMenu";
 
-const SERVICES = [
-  { label: "Private Event Catering" },
-  { label: "Wine Pairing Dinners" },
-  { label: "Corporate Events" },
-  { label: "Fine Dining Experience" },
-  { label: "Special Celebrations" },
-];
+// const SERVICES = [
+//   { label: "Private Event Catering" },
+//   { label: "Wine Pairing Dinners" },
+//   { label: "Corporate Events" },
+//   { label: "Fine Dining Experience" },
+//   { label: "Special Celebrations" },
+// ];
 
-const Footer = () => {
+const Footer: FC<{ configs: any }> = ({ configs }) => {
   return (
     <footer className="bg-[#101828]">
       <div className="container py-10">
@@ -40,13 +41,16 @@ const Footer = () => {
               </Link>
 
               <p className="text-web-caption-mobile lg:text-web-caption text-web-background-1">
-                Experience authentic French cuisine in the heart of Ninh Binh.
-                Our commitment to excellence and hospitality makes every visit
-                memorable.
+                {configs.description}
               </p>
 
               <div className="flex gap-5">
-                <Link href={"facebook.com"}>
+                {configs.socials.map((social: any, index: number) => (
+                  <Link key={index} href={social.href}>
+                    <MediaIcon icon={social.icon} />
+                  </Link>
+                ))}
+                {/* <Link href={"facebook.com"}>
                   <MediaIcon icon="ph:facebook-logo" />
                 </Link>
                 <Link href={"instagram.com"}>
@@ -54,7 +58,7 @@ const Footer = () => {
                 </Link>
                 <Link href={"threads.com"}>
                   <MediaIcon icon="ph:threads-logo" />
-                </Link>
+                </Link> */}
               </div>
             </div>
           </div>
@@ -64,7 +68,7 @@ const Footer = () => {
               Quick Links
             </p>
             <ul className="flex flex-col gap-2">
-              {MENU.map((item, index) => (
+              {configs.quick_links.map((item: any, index: number) => (
                 <li key={index}>
                   <Link
                     href={item.href}
@@ -82,7 +86,7 @@ const Footer = () => {
               Our Services
             </p>
             <ul className="flex flex-col gap-2">
-              {SERVICES.map((item, index) => (
+              {configs.services.map((item: any, index: number) => (
                 <li key={index}>
                   <span className="text-web-background-1 text-web-label-mobile lg:text-web-label">
                     {item.label}
@@ -105,7 +109,19 @@ const Footer = () => {
                     icon="ph:map-pin"
                     className="text-web-secondary-1 text-xl mt-1 flex-shrink-0"
                   />
-                  <p className="text-web-background-1 text-web-caption-mobile lg:text-web-caption">
+                  <div>
+                    {splitTextByNewLine(configs.contact.address).map(
+                      (line, idx) => (
+                        <p
+                          key={idx}
+                          className="text-web-background-1 text-web-caption-mobile lg:text-web-caption"
+                        >
+                          {line}
+                        </p>
+                      ),
+                    )}
+                  </div>
+                  {/* <p className="text-web-background-1 text-web-caption-mobile lg:text-web-caption">
                     08 Mai Hac De Street,
                     <br />
                     Nguyen Trai Ward,
@@ -113,7 +129,7 @@ const Footer = () => {
                     Ha Giang Province
                     <br />
                     Vietnam 08000
-                  </p>
+                  </p> */}
                 </div>
 
                 {/* Phone */}
@@ -123,10 +139,10 @@ const Footer = () => {
                     className="text-web-secondary-1 text-xl flex-shrink-0"
                   />
                   <a
-                    href="tel:+84123456789"
+                    href={`tel:${configs.contact.phone}`}
                     className="text-web-background-1 text-web-caption-mobile lg:text-web-caption hover:text-web-secondary-1 transition-colors"
                   >
-                    +84 123 456 789
+                    {configs.contact.phone}
                   </a>
                 </div>
 
@@ -137,10 +153,10 @@ const Footer = () => {
                     className="text-web-secondary-1 text-xl flex-shrink-0"
                   />
                   <Link
-                    href="mailto:info@gmail.com"
+                    href={`mailto:${configs.contact.email}`}
                     className="text-web-background-1 text-web-caption-mobile lg:text-web-caption hover:text-web-secondary-1 transition-colors"
                   >
-                    info@gmail.com
+                    {configs.contact.email}
                   </Link>
                 </div>
               </div>
@@ -150,8 +166,9 @@ const Footer = () => {
                   Contact Information
                 </p>
                 <div className="text-web-background-1 text-web-caption-mobile lg:text-web-caption">
-                  <p>Daily: 11:00 AM - 10:00 PM</p>
-                  <p>Last order: 9:30 PM</p>
+                  {configs.opening_hours.map((line: any, idx: any) => (
+                    <p key={idx}>{line.text}</p>
+                  ))}
                 </div>
               </div>
             </div>
@@ -164,7 +181,7 @@ const Footer = () => {
           <div className="col-span-1 lg:col-span-6">
             <div className="flex flex-col lg:flex-row justify-between gap-2.5">
               <p className="text-web-background-3 text-web-h4-mobile lg:text-web-h4 text-start md:text-center lg:text-start">
-                &copy; 2025 L’TELLE EATER Restaurant. All rights reserved.
+                &copy; 2025 L&#39;TELLE EATER Restaurant. All rights reserved.
               </p>
               <div className="text-start md:text-center lg:text-end">
                 <p className="text-web-background-3 text-web-h4-mobile lg:text-web-h4">

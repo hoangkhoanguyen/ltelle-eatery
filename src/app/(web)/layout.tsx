@@ -3,6 +3,7 @@ import Header from "@/components/web/shared/header/Header";
 import React, { FC, PropsWithChildren } from "react";
 import { Poppins } from "next/font/google";
 import localFont from "next/font/local";
+import { getUIConfigsByKey } from "@/services/ui-configs";
 
 const popinsSans = Poppins({
   variable: "--font-poppins-sans",
@@ -16,16 +17,19 @@ const allogist = localFont({
   variable: "--font-allogist",
 });
 
-const Layout: FC<PropsWithChildren> = ({ children }) => {
+const Layout: FC<PropsWithChildren> = async ({ children }) => {
+  const configs = await getUIConfigsByKey("layout");
+
+  console.log("first", configs);
   return (
     <div
       className={`website ${popinsSans.variable} ${allogist.variable} antialiased font-poppins-sans bg-web-background-1`}
     >
-      <Header />
+      <Header configs={configs?.value.header || {}} />
       <main className="pt-[149px] lg:pt-[146px] min-h-[calc(100vh-149px)] lg:min-h-[calc(100vh-146px)]">
         {children}
       </main>
-      <Footer />
+      <Footer configs={configs?.value.footer || {}} />
     </div>
   );
 };

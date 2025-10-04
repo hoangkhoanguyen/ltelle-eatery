@@ -3,7 +3,7 @@ import { HeaderContacts } from "./HeaderContacts";
 import Logo from "./Logo";
 import DesktopMenu from "./DesktopMenu";
 
-export default function Header() {
+export default function Header({ configs }: { configs: any }) {
   return (
     <>
       <header className="fixed top-0 start-0 end-0 z-50">
@@ -12,7 +12,10 @@ export default function Header() {
             {/* upper header */}
             <div className="flex justify-between items-center py-1.5 md:py-4.5 border-b border-web-secondary-1">
               <div>
-                <HeaderContacts />
+                <HeaderContacts
+                  openHours={configs.open_daily}
+                  phone={configs.phone}
+                />
               </div>
               <span className="text-web-body text-web-content-1 hidden md:block">
                 Welcom to Ha Giang
@@ -21,7 +24,7 @@ export default function Header() {
             {/* below header */}
             <div className="pt-4 pb-5 flex justify-between items-center">
               <Logo />
-              <DesktopMenu />
+              <DesktopMenu menus={configs.nav_bar} />
             </div>
           </div>
         </div>
