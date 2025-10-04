@@ -5,6 +5,7 @@ import Link from "next/link";
 import SectionTitleFromConfigs from "../../shared/SectionTitleFromConfigs";
 import SectionSubTitleFromConfigs from "../../shared/SectionSubTitleFromConfigs";
 import { splitTextByNewLine } from "@/lib/utils";
+import { webRoutes } from "@/constants/route";
 
 const NewFood: FC<{ configs: any }> = ({ configs }) => {
   if (!configs.isShow) return null;
@@ -54,7 +55,7 @@ const NewFood: FC<{ configs: any }> = ({ configs }) => {
                       </p>
                     </div>
                     <Link
-                      href={"/"}
+                      href={webRoutes.dish(configs?.product_slug)}
                       className="md:hidden bg-web-primary text-web-background-1 text-center rounded-lg py-4 text-web-button-mobile lg:text-web-button"
                     >
                       Discover
@@ -63,7 +64,7 @@ const NewFood: FC<{ configs: any }> = ({ configs }) => {
                 </div>
               </div>
               <Link
-                href={"/"}
+                href={webRoutes.dish(configs?.product_slug)}
                 className="hidden md:block bg-web-primary text-web-background-1 text-center rounded-lg py-4 md:px-10 text-web-button-mobile lg:text-web-button"
               >
                 Discover

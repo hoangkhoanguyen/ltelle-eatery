@@ -21,7 +21,7 @@ export const newProductInitValue: ConfigValue = {
   ],
   description:
     "Be the first to savor our newest additions, crafted with the freshest ingredients and innovative flavors.",
-  product_id: 0,
+  product_slug: "",
   banner: {
     url: "",
     alt: "New Food Banner",
@@ -101,13 +101,13 @@ export const newProductMeta: MetaValue = {
       placeholder: "Nhập mô tả",
     },
     {
-      key: "product_id",
-      type: "number",
-      label: "ID sản phẩm mới",
+      key: "product_slug",
+      type: "text",
+      label: "Slug sản phẩm mới",
       description:
-        "ID của sản phẩm mới nhất sẽ được hiển thị trên phần Sản phẩm mới",
+        "Slug của sản phẩm mới nhất sẽ được hiển thị trên phần Sản phẩm mới",
       isRequired: true,
-      placeholder: "Nhập ID sản phẩm mới",
+      placeholder: "Nhập slug sản phẩm mới",
     },
     {
       key: "banner",
