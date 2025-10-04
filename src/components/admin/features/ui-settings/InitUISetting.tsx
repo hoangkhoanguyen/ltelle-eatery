@@ -5,13 +5,16 @@ import { initUIConfigs } from "@/constants/settings/ui";
 import { Button } from "../../ui/button";
 import useInitUIConfigs from "@/hooks/admin/ui-settings/useInitUIConfigs";
 import { toast } from "sonner";
+import { useSetLoading } from "@/hooks/admin/loading";
 
 const InitUISetting: FC<{
   configKey: string;
 }> = ({ configKey }) => {
   const initConfigs = initUIConfigs[configKey as keyof typeof initUIConfigs];
 
-  const { mutate } = useInitUIConfigs();
+  const { mutate, isPending } = useInitUIConfigs();
+
+  useSetLoading(isPending);
 
   if (!initConfigs) {
     return <div>Invalid UI Config Key {configKey}</div>;

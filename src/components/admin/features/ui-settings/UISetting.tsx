@@ -5,6 +5,7 @@ import { UIConfigDB } from "@/db/schemas";
 import { uiMeta } from "@/constants/settings/ui";
 import useUpdateUIConfigs from "@/hooks/admin/ui-settings/useUpdateUIConfigs";
 import { toast } from "sonner";
+import { useSetLoading } from "@/hooks/admin/loading";
 
 const UISetting: FC<{ data: UIConfigDB }> = ({ data }) => {
   const meta = useMemo(
@@ -12,7 +13,9 @@ const UISetting: FC<{ data: UIConfigDB }> = ({ data }) => {
     [data.key],
   );
 
-  const { mutate } = useUpdateUIConfigs();
+  const { mutate, isPending } = useUpdateUIConfigs();
+
+  useSetLoading(isPending);
 
   const onSubmit = (newConfig: any) => {
     console.log("first", newConfig);

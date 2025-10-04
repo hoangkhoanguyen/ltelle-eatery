@@ -30,27 +30,10 @@ const menuItems: IMenuItem[] = [
   },
   {
     label: "Cấu hình giao diện",
-    href: adminRoutes.uiSettings(""),
+    href: adminRoutes.uiSettings(),
     icon: "material-symbols:settings-outline-rounded",
     activeIcon: "material-symbols:settings-rounded",
-    type: "collapse",
-    children: [
-      {
-        label: "Tổng quan",
-        href: adminRoutes.uiSettings("general"),
-        type: "link",
-      },
-      {
-        label: "Trang chủ",
-        href: adminRoutes.uiSettings("home"),
-        type: "link",
-      },
-      {
-        label: "Menu",
-        href: adminRoutes.uiSettings("menu"),
-        type: "link",
-      },
-    ],
+    type: "link",
   },
 ];
 

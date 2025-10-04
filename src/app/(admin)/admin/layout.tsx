@@ -3,6 +3,7 @@ import React, { FC, PropsWithChildren, Suspense } from "react";
 import { Toaster } from "sonner";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { Inter } from "next/font/google";
+import { FullscreenLoading } from "@/components/admin/ui/loading";
 
 const interSans = Inter({
   variable: "--font-inter-sans",
@@ -27,12 +28,13 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
         position="bottom-center"
         toastOptions={{
           classNames: {
-            success: "!text-green-600",
-            error: "!text-red-600",
-            info: "!text-blue-600",
+            success: "!bg-green-600 !text-white",
+            error: "!bg-red-600 !text-white",
+            info: "!bg-blue-600 !text-white",
           },
         }}
       />
+      <FullscreenLoading />
     </div>
   );
 };

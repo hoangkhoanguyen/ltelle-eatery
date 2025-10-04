@@ -9,15 +9,17 @@ const page = () => {
     <div>
       <Header title="Cấu hình giao diện website" />
       <div className="container py-5">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
           {UIKEYS.map((item) => (
             <Link
               href={adminRoutes.uiSettings(item.key)}
               key={item.key}
-              className="card bg-white p-5"
+              className="card bg-white p-5 hover:text-primary hover:shadow duration-500"
             >
               <div className="card-header">
-                <h3 className="card-title">{item.title}</h3>
+                <h3 className="text-sm text-center font-semibold">
+                  {item.title}
+                </h3>
               </div>
             </Link>
           ))}
