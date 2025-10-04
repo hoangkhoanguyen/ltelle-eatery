@@ -218,3 +218,21 @@ button:not(:disabled) {
   @apply w-full border border-web-content-3 px-4 py-4.5 rounded focus:outline-web-primary focus-visible:outline-web-primary;
   @apply text-web-content-1 text-web-caption-mobile lg:text-web-caption placeholder:text-web-content-3;
 }
+
+:root {
+  interpolate-size: allow-keywords;
+}
+
+details {
+  @apply overflow-hidden;
+}
+
+details::details-content {
+  block-size: 0;
+  transition: block-size 0.2s, content-visibility 0.2s;
+  transition-behavior: allow-discrete;
+}
+
+details[open]::details-content {
+  block-size: auto;
+}
