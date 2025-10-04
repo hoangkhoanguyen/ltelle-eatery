@@ -29,11 +29,22 @@ const menuItems: IMenuItem[] = [
     type: "link",
   },
   {
-    label: "Cấu hình giao diện",
-    href: adminRoutes.uiSettings(),
+    label: "Cài đặt",
     icon: "material-symbols:settings-outline-rounded",
     activeIcon: "material-symbols:settings-rounded",
-    type: "link",
+    type: "collapse",
+    children: [
+      {
+        label: "Giao diện",
+        href: adminRoutes.settings("ui"),
+        type: "link",
+      },
+      {
+        label: "Ứng dụng",
+        href: adminRoutes.settings("app"),
+        type: "link",
+      },
+    ],
   },
 ];
 

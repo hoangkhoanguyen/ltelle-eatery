@@ -1,21 +1,20 @@
 "use client";
 import React, { FC } from "react";
 import Setting from "../settings/Setting";
-import useUpdateUIConfigs from "@/hooks/admin/ui-settings/useUpdateUIConfigs";
+import useUpdateAppConfigs from "@/hooks/admin/app-settings/useUpdateAppConfigs";
 import { toast } from "sonner";
 import { useSetLoading } from "@/hooks/admin/loading";
 import { ISetting, MetaValue } from "@/types/settings";
 
-const UISetting: FC<{ data: ISetting; meta: MetaValue[] }> = ({
+const AppConfig: FC<{ data: ISetting; meta: MetaValue[] }> = ({
   data,
   meta,
 }) => {
-  const { mutate, isPending } = useUpdateUIConfigs();
+  const { mutate, isPending } = useUpdateAppConfigs();
 
   useSetLoading(isPending);
 
   const onSubmit = (newConfig: any) => {
-    console.log("first", newConfig);
     mutate(
       { key: data.key, value: newConfig },
       {
@@ -39,4 +38,4 @@ const UISetting: FC<{ data: ISetting; meta: MetaValue[] }> = ({
   );
 };
 
-export default UISetting;
+export default AppConfig;

@@ -16,8 +16,7 @@ export const ADMIN_ROUTE = {
   productsApi: "/admin/api/products",
   allProductApi: "/admin/api/products/all",
   ordersApi: "/admin/api/orders",
-  uiSettings: "/admin/settings/ui/[key]",
-  appSettings: "/admin/settings/app/[key]",
+  settings: "/admin/settings/[setting_type]/[key]",
 } as const;
 
 export const WEB_ROUTE = {
@@ -128,14 +127,13 @@ export const adminRoutes = {
       skipNull: true,
     })}`,
 
-  uiSettings: (key?: string) =>
+  settings: (setting_type: string, key?: string) =>
     typeof key === "undefined"
-      ? ADMIN_ROUTE.uiSettings.replace("/[key]", "")
-      : generateRoute("admin", "uiSettings", { key }),
-  appSettings: (key?: string) =>
-    typeof key === "undefined"
-      ? ADMIN_ROUTE.appSettings.replace("/[key]", "")
-      : generateRoute("admin", "appSettings", { key }),
+      ? generateRoute("admin", "settings", { setting_type, key: "" }).slice(
+          0,
+          -1,
+        )
+      : generateRoute("admin", "settings", { key, setting_type }),
 };
 
 export const webRoutes = {

@@ -1,3 +1,5 @@
+import { Config } from "./configs";
+
 export interface CommonField {
   key: string;
   label: string;
@@ -60,3 +62,10 @@ export type MetaValue = {
   description: string;
   fields: FieldType[];
 };
+
+export interface ISetting {
+  title: string;
+  key: string;
+  description?: string | null;
+  value: Config;
+}

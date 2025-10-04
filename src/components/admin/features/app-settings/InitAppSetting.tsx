@@ -1,21 +1,24 @@
 "use client";
 import React, { FC } from "react";
 import Header from "../../shared/header/Header";
+// import { initAppConfigs } from "@/constants/settings/app";
 import { Button } from "../../ui/button";
-import useInitUIConfigs from "@/hooks/admin/ui-settings/useInitUIConfigs";
+import useInitAppConfigs from "@/hooks/admin/app-settings/useInitAppConfigs";
 import { toast } from "sonner";
 import { useSetLoading } from "@/hooks/admin/loading";
 import { NewUIConfigDB } from "@/db/schemas";
 
-const InitUISetting: FC<{
+const InitAppSetting: FC<{
   initConfigs: NewUIConfigDB;
 }> = ({ initConfigs }) => {
-  const { mutate, isPending } = useInitUIConfigs();
+  // const initConfigs = initAppConfigs[configKey as keyof typeof initAppConfigs];
+
+  const { mutate, isPending } = useInitAppConfigs();
 
   useSetLoading(isPending);
 
   if (!initConfigs) {
-    return <div>Invalid UI Config Key</div>;
+    return <div>Invalid App Config Key {initConfigs}</div>;
   }
 
   return (
@@ -28,12 +31,10 @@ const InitUISetting: FC<{
             onClick={() =>
               mutate(initConfigs, {
                 onSuccess: () => {
-                  // Handle success
-                  toast.success("UI Config initialized successfully");
+                  toast.success("App Config initialized successfully");
                 },
                 onError: () => {
-                  // Handle error
-                  toast.error("Failed to initialize UI Config");
+                  toast.error("Failed to initialize App Config");
                 },
               })
             }
@@ -46,4 +47,4 @@ const InitUISetting: FC<{
   );
 };
 
-export default InitUISetting;
+export default InitAppSetting;

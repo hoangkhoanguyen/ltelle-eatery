@@ -1,6 +1,6 @@
 import { homepageMeta, initialHomepageConfig } from "./homepage";
 
-export const UIKEYS = [
+export const UIItems = [
   {
     key: "homepage",
     title: "Cấu hình trang chủ",

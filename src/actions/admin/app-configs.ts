@@ -1,60 +1,43 @@
-// "use server";
-// import { NewAppConfigDB } from "@/db/schemas";
-// import {
-//   setAppConfig,
-//   updateAppConfig,
-//   appConfigExists,
-// } from "@/services/app-configs";
+"use server";
+import { NewAppConfigDB } from "@/db/schemas";
+import { initAppConfig, updateAppConfigByKey } from "@/services/app-configs";
+import { Config } from "@/types/configs";
 
-// // Initialize a new app config
-// export async function initAppConfig(data: NewAppConfigDB) {
-//   try {
-//     const newConfig = await setAppConfig(data);
+export async function initAppConfigsAction(data: NewAppConfigDB) {
+  try {
+    await initAppConfig(data);
 
-//     return {
-//       success: true,
-//       data: newConfig,
-//     };
-//   } catch {
-//     return {
-//       success: false,
-//       error: "Failed to initialize configuration",
-//     };
-//   }
-// }
+    return {
+      success: true,
+      message: "App Config initialized successfully",
+    };
+  } catch {
+    return {
+      success: false,
+      message: "Failed to initialize App Config",
+    };
+  }
+}
 
-// // Update existing app config
-// export async function updateAppConfigAction({
-//   key,
-//   value,
-// }: {
-//   key: string;
-//   value: any;
-// }) {
-//   try {
-//     // Check if config exists
-//     const exists = await appConfigExists(key);
+export async function updateAppConfigsAction({
+  key,
+  value,
+}: {
+  key: string;
+  value: Config;
+}) {
+  try {
+    await updateAppConfigByKey({ key, value });
 
-//     if (!exists) {
-//       return {
-//         success: false,
-//         code: 1,
-//         error: `Configuration with key "${key}" not found`,
-//       };
-//     }
-
-//     const updatedConfig = await updateAppConfig(key, {
-//       value,
-//     });
-
-//     return {
-//       success: true,
-//       data: updatedConfig,
-//     };
-//   } catch {
-//     return {
-//       success: false,
-//       error: "Failed to update configuration",
-//     };
-//   }
-// }
+    return {
+      success: true,
+      message: "App Config updated successfully",
+    };
+  } catch (error) {
+    console.log("error", error);
+    return {
+      success: false,
+      message: "Failed to update App Config",
+    };
+  }
+}

@@ -1,3 +1,4 @@
+"use client";
 import Icon from "@/components/common/Icon";
 import { cn } from "@/lib/utils";
 import {
@@ -23,6 +24,7 @@ export const MenuItem: FC<IMenuItem & { pathname: string }> = ({
 }) => {
   const { label, icon, activeIcon, href, pathname, children = [] } = rest;
   const isActive = pathname.startsWith(href || "");
+
   if (type === "link") {
     return (
       <Link
