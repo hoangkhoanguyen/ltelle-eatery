@@ -4,17 +4,9 @@ import { splitTextByNewLine } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import React, { FC } from "react";
-// import { MENU } from "./header/DesktopMenu";
-
-// const SERVICES = [
-//   { label: "Private Event Catering" },
-//   { label: "Wine Pairing Dinners" },
-//   { label: "Corporate Events" },
-//   { label: "Fine Dining Experience" },
-//   { label: "Special Celebrations" },
-// ];
 
 const Footer: FC<{ configs: any }> = ({ configs }) => {
+  console.log("social", configs.socials);
   return (
     <footer className="bg-[#101828]">
       <div className="container py-10">
@@ -50,15 +42,6 @@ const Footer: FC<{ configs: any }> = ({ configs }) => {
                     <MediaIcon icon={social.icon} />
                   </Link>
                 ))}
-                {/* <Link href={"facebook.com"}>
-                  <MediaIcon icon="ph:facebook-logo" />
-                </Link>
-                <Link href={"instagram.com"}>
-                  <MediaIcon icon="ph:instagram-logo" />
-                </Link>
-                <Link href={"threads.com"}>
-                  <MediaIcon icon="ph:threads-logo" />
-                </Link> */}
               </div>
             </div>
           </div>

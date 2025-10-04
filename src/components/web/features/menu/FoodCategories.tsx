@@ -3,45 +3,59 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import React, { FC } from "react";
 import ProductCard from "../../shared/ProductCard";
+import SectionSubTitleFromConfigs from "../../shared/SectionSubTitleFromConfigs";
+import SectionTitleFromConfigs from "../../shared/SectionTitleFromConfigs";
 
-const categories = [
-  {
-    key: "all",
-    name: "All",
-  },
-  {
-    key: "main-course",
-    name: "Main Course",
-  },
-  {
-    key: "salad",
-    name: "Salad",
-  },
-  {
-    key: "noodles",
-    name: "Noodles",
-  },
-  {
-    key: "desserts",
-    name: "Desserts",
-  },
-];
+// const categories = [
+//   {
+//     key: "all",
+//     name: "All",
+//   },
+//   {
+//     key: "main-course",
+//     name: "Main Course",
+//   },
+//   {
+//     key: "salad",
+//     name: "Salad",
+//   },
+//   {
+//     key: "noodles",
+//     name: "Noodles",
+//   },
+//   {
+//     key: "desserts",
+//     name: "Desserts",
+//   },
+// ];
 
-const FoodCategories: FC<{ activeCategoryKey: string }> = ({
+const FoodCategories: FC<{ activeCategoryKey: string; configs: any }> = ({
   activeCategoryKey,
+  configs,
 }) => {
   return (
     <section className="pt-8 pb-24 bg-web-background-1">
       <div className="container">
         <h3 className="section-subtitle text-center mb-5">
-          L&#39;TELLE EATERY &bull; DISCOVER
+          <SectionSubTitleFromConfigs sub_title={configs.sub_title} />
         </h3>
-        <h2 className="text-center section-title flex gap-2 justify-center mb-5">
-          <span className="text-web-content-1">Food</span>
-          <span className="text-web-secondary-1">Categories</span>
+        <h2 className="text-center section-title flex flex-wrap items-center gap-2 justify-center mb-5">
+          <SectionTitleFromConfigs title={configs.title} />
         </h2>
         <div className="flex flex-wrap justify-center items-center gap-3 lg:gap-5 mb-10">
-          {categories.map((category) => (
+          <Link
+            scroll={false}
+            href={webRoutes.menu("all")}
+            className={cn(
+              "px-5 h-10 flex items-center  rounded-lg text-web-body-mobile lg:text-web-body",
+              activeCategoryKey === "all"
+                ? "text-web-background-1 bg-web-primary text-web-button-mobile lg:text-web-button"
+                : "text-web-content-2 border border-web-content-2",
+            )}
+          >
+            All
+          </Link>
+          {configs.categories_to_show.map((category: any) => (
             <Link
               scroll={false}
               href={webRoutes.menu(category.key)}
@@ -53,7 +67,7 @@ const FoodCategories: FC<{ activeCategoryKey: string }> = ({
                   : "text-web-content-2 border border-web-content-2",
               )}
             >
-              {category.name}
+              {category.label}
             </Link>
           ))}
         </div>

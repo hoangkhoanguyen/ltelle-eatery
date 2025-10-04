@@ -1,28 +1,28 @@
-import React from "react";
+import React, { FC } from "react";
+import SectionSubTitleFromConfigs from "../../shared/SectionSubTitleFromConfigs";
+import SectionTitleFromConfigs from "../../shared/SectionTitleFromConfigs";
+import { splitTextByNewLine } from "@/lib/utils";
 
-const AboutMenu = () => {
+const AboutMenu: FC<{ configs: any }> = ({ configs }) => {
   return (
     <section>
       <div className="container py-10 lg:pt-16 max-w-4xl">
         <h3 className="section-subtitle text-center mb-5">
-          L&#39;TELLE EATERY &bull; PASSION
+          <SectionSubTitleFromConfigs sub_title={configs.sub_title} />
         </h3>
-        <h2 className="section-title text-center mb-10 flex gap-2 justify-center">
-          <span className="text-web-content-1">Our Culinary</span>
-          <span className="text-web-secondary-1">Philosophy</span>
+        <h2 className="section-title text-center mb-10 flex flex-wrap items-center gap-2 justify-center">
+          <SectionTitleFromConfigs title={configs.title} />
         </h2>
-        <p className="text-center text-web-subtitle-mobile lg:text-web-subtitle text-web-content-2 mb-5">
-          At Le Bambou, we believe that exceptional cuisine begins with
-          exceptional ingredients. Our chef meticulously sources the finest
-          local and imported French ingredients, combining traditional
-          techniques with innovative presentations to create unforgettable
-          dining experiences.
-        </p>
-        <p className="text-web-body-mobile lg:text-web-body text-web-content-2 text-center">
-          Each dish tells a story of passion, craftsmanship, and our unwavering
-          commitment to culinary excellence that has made French cuisine
-          renowned worldwide.
-        </p>
+        <div className="flex flex-col items-center gap-5">
+          {splitTextByNewLine(configs.description).map((text, index) => (
+            <p
+              key={index}
+              className="text-center text-web-body-mobile lg:text-web-body text-web-content-2"
+            >
+              {text}
+            </p>
+          ))}
+        </div>
       </div>
     </section>
   );

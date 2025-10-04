@@ -1,37 +1,27 @@
 "use client";
-import React from "react";
+import React, { FC, ReactNode } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Autoplay, Pagination } from "swiper/modules";
-import Image from "next/image";
 
-const BannerSlider = () => {
+const BannerSlider: FC<{ children: ReactNode[]; autoplay: boolean }> = ({
+  children,
+  autoplay,
+}) => {
   return (
     <Swiper
       pagination={{
         clickable: true,
       }}
-      autoplay
+      autoplay={autoplay ? { delay: 3000 } : false}
       loop
       modules={[Pagination, Autoplay]}
       className="my-slider"
     >
-      <SwiperSlide>
-        <div className="relative w-full aspect-[21/9]">
-          <Image src="/assets/static/menu-banner.png" fill alt="Menu Banner" />
-        </div>
-      </SwiperSlide>
-      <SwiperSlide>
-        <div className="relative w-full aspect-[21/9]">
-          <Image src="/assets/static/menu-banner.png" fill alt="Menu Banner" />
-        </div>
-      </SwiperSlide>
-      <SwiperSlide>
-        <div className="relative w-full aspect-[21/9]">
-          <Image src="/assets/static/menu-banner.png" fill alt="Menu Banner" />
-        </div>
-      </SwiperSlide>
+      {children.map((child, index) => (
+        <SwiperSlide key={index}>{child}</SwiperSlide>
+      ))}
     </Swiper>
   );
 };
