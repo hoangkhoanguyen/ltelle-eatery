@@ -3,6 +3,7 @@ import React, { FC } from "react";
 import { Control, useFieldArray } from "react-hook-form";
 import SettingsListInput from "../elements/SettingsListInput";
 import SettingObjectField from "./SettingObjectField";
+import SettingImageField from "./SettingImageField";
 
 const SettingArrayField: FC<
   Omit<ArrayField, "type" | "key"> & { control: Control; name: string }
@@ -27,21 +28,30 @@ const SettingArrayField: FC<
             key={field.uid}
             className="p-4 border rounded-lg border-gray-200 bg-gray-100"
           >
-            <SettingObjectField
-              control={control}
-              name={`${name}.${index}`}
-              fields={itemType.fields}
-              needBox={itemType.needBox}
-            />
+            {itemType.type === "object" ? (
+              <SettingObjectField
+                control={control}
+                name={`${name}.${index}`}
+                fields={itemType.fields}
+                needBox={itemType.needBox}
+              />
+            ) : (
+              <SettingImageField control={control} name={`${name}.${index}`} />
+            )}
           </div>
         ) : (
-          <SettingObjectField
-            key={field.uid}
-            control={control}
-            name={`${name}.${index}`}
-            fields={itemType.fields}
-            needBox={itemType.needBox}
-          />
+          <>
+            {itemType.type === "object" ? (
+              <SettingObjectField
+                control={control}
+                name={`${name}.${index}`}
+                fields={itemType.fields}
+                needBox={itemType.needBox}
+              />
+            ) : (
+              <SettingImageField control={control} name={`${name}.${index}`} />
+            )}
+          </>
         ),
       )}
     </SettingsListInput>

@@ -41,7 +41,7 @@ export interface ObjectField {
 export interface ArrayField {
   type: "array";
   isEditableList: boolean;
-  itemType: ObjectField;
+  itemType: ObjectField | ImageField;
   newItem: any;
   needBox?: boolean;
 }
