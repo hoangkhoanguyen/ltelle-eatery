@@ -180,7 +180,7 @@ export const footerMeta: MetaValue = {
         {
           key: "address",
           label: "Address",
-          type: "text",
+          type: "textarea",
           description: "Địa chỉ liên hệ",
           isRequired: false,
         },
