@@ -4,8 +4,11 @@ import ProductCard from "../../shared/ProductCard";
 import Link from "next/link";
 import SectionTitleFromConfigs from "../../shared/SectionTitleFromConfigs";
 import SectionSubTitleFromConfigs from "../../shared/SectionSubTitleFromConfigs";
+import { splitTextByNewLine } from "@/lib/utils";
 
 const NewFood: FC<{ configs: any }> = ({ configs }) => {
+  if (!configs.isShow) return null;
+
   return (
     <section className="bg-web-secondary-2">
       <div className="py-10 pb-6 container">
@@ -15,16 +18,25 @@ const NewFood: FC<{ configs: any }> = ({ configs }) => {
         <h2 className="section-title text-center mb-2.5 text-web-content-1 flex flex-wrap items-center justify-center gap-x-2">
           <SectionTitleFromConfigs title={configs?.title} />
         </h2>
-        <p className="max-w-3xl text-center block mx-auto text-web-subtitle-mobile lg:text-web-subtitle text-web-content-2 mb-10">
-          Discover why travelers from around the world choose Le Bambou for
-          their finest dining experience in Ninh Binh.
-        </p>
+        <div className="flex flex-col items-stretch gap-2 mb-10">
+          {splitTextByNewLine(configs?.description).map(
+            (line: string, index: number) => (
+              <p
+                key={index}
+                className="max-w-3xl text-center block mx-auto text-web-subtitle-mobile lg:text-web-subtitle text-web-content-2"
+              >
+                {line}
+              </p>
+            ),
+          )}
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-5">
           <div className="col-span-1 md:col-span-2 relative border border-web-content-3 rounded-xl overflow-hidden">
             <div className="relative aspect-[3/2] lg:aspect-auto md:h-full">
               <Image
-                src="/assets/static/product-image.png"
-                alt="New Food"
+                src={configs?.banner?.url}
+                alt={configs?.banner?.alt || "New Food Banner"}
                 fill
                 className="object-cover"
               />
@@ -35,11 +47,10 @@ const NewFood: FC<{ configs: any }> = ({ configs }) => {
                   <div className="flex-1 flex flex-col items-stretch gap-2.5">
                     <div>
                       <h3 className="text-web-h4-mobile lg:text-web-h4 text-web-content-1 mb-1">
-                        Combo ABC
+                        {configs.label}
                       </h3>
                       <p className="text-web-caption-mobile lg:text-web-caption text-web-content-1">
-                        Nestled against the dramatic backdrop of limestone
-                        karsts and terraced fields.
+                        {configs.sub_label}
                       </p>
                     </div>
                     <Link
