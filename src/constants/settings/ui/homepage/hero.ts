@@ -10,13 +10,13 @@ const heroFields: FieldType[] = [
     isEditableList: true,
     isRequired: true,
     newItem: {
-      title: "",
+      text: "",
     },
     itemType: {
       type: "object",
       fields: [
         {
-          key: "title",
+          key: "text",
           type: "text",
           label: "Tiêu đề",
           description: "Tiêu đề hiển thị trên phần hero",
@@ -44,14 +44,14 @@ const heroFields: FieldType[] = [
 
 export const heroInitialValue: ConfigValue = {
   title: [
-    { title: "Where Frech" },
-    { title: "Culinary Art" },
+    { text: "Where Frech" },
+    { text: "Culinary Art" },
     {
-      title: "Meet Vietnamese Soul",
+      text: "Meet Vietnamese Soul",
     },
   ],
   image: {
-    url: "/assets/static/hero.jpg",
+    url: "",
     alt: "Hero Image",
   },
   isShowTitle: true,

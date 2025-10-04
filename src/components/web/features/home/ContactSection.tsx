@@ -1,7 +1,8 @@
 import Icon from "@/components/common/Icon";
-import { cn } from "@/lib/utils";
-import React, { PropsWithChildren } from "react";
+import { cn, splitTextByNewLine } from "@/lib/utils";
+import React, { FC, PropsWithChildren } from "react";
 import { Button } from "../../ui/button";
+import SectionTitleFromConfigs from "../../shared/SectionTitleFromConfigs";
 
 const openingHoursConfigs = [
   {
@@ -23,7 +24,7 @@ const openingHoursConfigs = [
   },
 ];
 
-export const ContactSection = () => {
+export const ContactSection: FC<{ configs: any }> = ({ configs }) => {
   return (
     <section className="bg-web-background-2 pt-10 pb-10 md:pb-12 lg:pb-14">
       <div className="container">
@@ -31,15 +32,11 @@ export const ContactSection = () => {
           visit us
         </h3>
 
-        <h2 className="text-web-h2-mobile text-center capitalize lg:text-web-h2 mb-5">
-          <span className="text-web-content-1">Find Us in</span>{" "}
-          <span className="text-web-secondary-1">Beautiful</span>{" "}
-          <span className="text-web-content-1">Ha Giang</span>
+        <h2 className="text-web-h2-mobile text-center capitalize lg:text-web-h2 mb-5 flex flex-row flex-wrap justify-center items-center gap-x-2">
+          <SectionTitleFromConfigs title={configs.title} />
         </h2>
         <p className="text-web-subtitle-mobile lg:text-web-subtitle mb-10 text-center block mx-auto max-w-3xl text-web-content-2">
-          Located in the heart of Ha Giang with stunning views of the
-          surrounding limestone mountains. Easily accessible from major hotels
-          and tourist attractions.
+          {configs.description}
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-6">
@@ -50,17 +47,22 @@ export const ContactSection = () => {
                   <CardTitle icon="ph:map-pin" title="Location" />
 
                   <div className="w-full">
-                    <p className="text-web-caption-mobile lg:text-web-caption text-web-content-2">
-                      08 Mai Hac De Street,
-                      <br /> Nguyen Trai Ward, Ha Giang Province <br /> Vietnam
-                      08000
-                    </p>
+                    {splitTextByNewLine(configs.location.address).map(
+                      (item, index) => (
+                        <p
+                          className="text-web-caption-mobile lg:text-web-caption text-web-content-2"
+                          key={index}
+                        >
+                          {item}
+                        </p>
+                      ),
+                    )}
                   </div>
                 </div>
 
                 <Button
                   as="a"
-                  href="https://google.com"
+                  href={configs.location.ggmap_link}
                   target="_blank"
                   rel="noreferrer"
                   variant="white"
@@ -89,7 +91,7 @@ export const ContactSection = () => {
                         Phone
                       </p>
                       <p className="text-web-content-2 text-web-caption-mobile lg:text-web-caption">
-                        +84 123 456 178
+                        {configs.contact_info.phone}
                       </p>
                     </div>
                     <div>
@@ -97,7 +99,7 @@ export const ContactSection = () => {
                         Email
                       </p>
                       <p className="text-web-content-2 text-web-caption-mobile lg:text-web-caption">
-                        info@gmail.com
+                        {configs.contact_info.email}
                       </p>
                     </div>
                   </div>
@@ -105,7 +107,7 @@ export const ContactSection = () => {
 
                 <Button
                   as="a"
-                  href="https://google.com"
+                  href={`https://wa.me/${configs.contact_info.whatsapp}`}
                   target="_blank"
                   rel="noreferrer"
                   variant="white"
@@ -123,7 +125,7 @@ export const ContactSection = () => {
                 <CardTitle icon="ph:clock" title="Opening Hours" />
               </div>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-7">
-                {openingHoursConfigs.map((config, index) => (
+                {configs.opening_hours.map((config: any, index: number) => (
                   <div
                     key={index}
                     className="flex flex-col items-stretch gap-5"
@@ -132,7 +134,7 @@ export const ContactSection = () => {
                       {config.title}
                     </p>
                     <ul className="text-web-content-2 text-web-caption-mobile lg:text-web-caption flex flex-col gap-2">
-                      {config.items.map((item, idx) => (
+                      {config.items.map((item: any, idx: number) => (
                         <li
                           key={idx}
                           className="flex justify-between items-center"

@@ -1,20 +1,20 @@
 import Icon from "@/components/common/Icon";
-import React from "react";
+import React, { FC } from "react";
 import { ReviewsSliders } from "./ReviewsSliders";
 import { Button } from "../../ui/button";
+import SectionSubTitleFromConfigs from "../../shared/SectionSubTitleFromConfigs";
+import SectionTitleFromConfigs from "../../shared/SectionTitleFromConfigs";
 
-export const ReviewsSection = () => {
+export const ReviewsSection: FC<{ configs: any }> = ({ configs }) => {
   return (
     <section className="bg-web-background-1">
       <div className="container py-10">
         <div className="mb-5 text-center">
           <h3 className="text-web-secondary-3 text-web-subtitle-mobile uppercase mb-5 lg:text-web-subtitle">
-            GUEST EXPERIENCE
+            <SectionSubTitleFromConfigs sub_title={configs.sub_title} />
           </h3>
-          <h2 className="text-web-h2-mobile capitalize lg:text-web-h2 flex flex-row flex-wrap justify-center gap-x-2">
-            <span className="text-web-content-1">What Our</span>{" "}
-            <span className="text-web-secondary-1">International</span>{" "}
-            <span className="text-web-primary w-full md:w-max">Guests Say</span>
+          <h2 className="text-web-h2-mobile capitalize lg:text-web-h2 flex flex-row flex-wrap justify-center items-center gap-x-2">
+            <SectionTitleFromConfigs title={configs.title} />
           </h2>
         </div>
 
@@ -29,8 +29,7 @@ export const ReviewsSection = () => {
         </div>
 
         <p className="max-w-3xl block mx-auto text-web-subtitle-mobile lg:text-web-subtitle text-web-content-2 text-center mb-10 md:mb-8 lg:mb-10">
-          Discover why travelers from around the world choose Le Bambou for
-          their finest dining experience in Ha Giang.
+          {configs.description}
         </p>
         <div className="mb-10 md:px-20 lg:px-0">
           <ReviewsSliders>

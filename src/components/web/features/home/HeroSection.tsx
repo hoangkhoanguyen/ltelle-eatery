@@ -1,26 +1,33 @@
 import Icon from "@/components/common/Icon";
-import React from "react";
+import React, { FC } from "react";
 import { Button } from "../../ui/button";
 import Image from "next/image";
 
-export const HeroSection = () => {
+export const HeroSection: FC<{ configs: any }> = ({ configs }) => {
   return (
     <section className="relative ">
       <div className="absolute w-full h-full top-0 left-0 z-0">
         <Image
-          src="/assets/static/hero.png"
+          src={configs.image.url}
           fill
           className="object-cover"
-          alt="Hero Image"
+          alt={configs.image.alt}
         />
       </div>
       <div className="relative container h-[calc(100vh-149px)] lg:h-[calc(100vh-146px)]">
-        <div className="h-full flex flex-col items-center justify-center md:px-10 lg:max-w-2xl mx-auto pt-2.5 pb-6 md:pt-10 lg:pt-6">
-          <h1 className="flex flex-col items-center text-web-h1-mobile lg:text-web-h1 text-web-background-1 text-center mb-2.5 md:mb-10">
-            <span>Where Frech</span>
-            <span className="text-web-secondary-1">Culinary Art</span>
-            <span>Meet Vietnamese Soul</span>
-          </h1>
+        <div className="h-full flex flex-col items-center justify-center md:px-10 lg:max-w-2xl mx-auto pt-2.5 pb-6 md:pt-10 lg:pt-6 gap-2.5 md:gap-10">
+          {configs.isShowTitle && (
+            <h1 className="flex flex-col items-center text-web-h1-mobile lg:text-web-h1 text-web-background-1 text-center">
+              {configs.title.map((item: any, index: number) => (
+                <span
+                  key={index}
+                  className={index % 2 === 0 ? "" : "text-web-secondary-1"}
+                >
+                  {item.text}
+                </span>
+              ))}
+            </h1>
+          )}
 
           <div className="flex flex-col md:flex-row gap-5 md:gap-11 items-stretch w-full md:px-2 mb-5 md:mb-20">
             <Button

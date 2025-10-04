@@ -7,7 +7,8 @@ import { Autoplay, FreeMode, Thumbs } from "swiper/modules";
 export const Gallery: FC<{
   children: ReactNode[];
   thumbs: ReactNode[];
-}> = ({ children, thumbs }) => {
+  autoplay?: boolean;
+}> = ({ children, thumbs, autoplay }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null);
 
   return (
@@ -15,10 +16,14 @@ export const Gallery: FC<{
       <Swiper
         className="mb-5"
         slidesPerView={1}
-        autoplay={{
-          delay: 3000,
-          disableOnInteraction: false,
-        }}
+        autoplay={
+          autoplay
+            ? {
+                delay: 3000,
+                disableOnInteraction: false,
+              }
+            : false
+        }
         loop
         thumbs={{ swiper: thumbsSwiper }}
         modules={[FreeMode, Thumbs, Autoplay]}

@@ -80,7 +80,7 @@ const fields: FieldType[] = [
           type: "text",
           label: "Icon",
           description:
-            "Icon hiển thị cho lý do (Sử dụng thư viện icon như Phosphor Icons, FontAwesome, v.v.)",
+            "Icon hiển thị cho lý do (Vào link https://icon-sets.iconify.design/ph để lấy tên icon)",
           isRequired: true,
           placeholder: "Nhập tên icon",
         },

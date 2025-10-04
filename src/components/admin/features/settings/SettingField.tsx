@@ -16,13 +16,37 @@ const SettingField: FC<{
 }> = ({ item, control, name }) => {
   switch (item.type) {
     case "text":
-      return <SettingTextField control={control} name={name} />;
+      return (
+        <SettingTextField
+          control={control}
+          name={name}
+          {...omit(item, "type", "key")}
+        />
+      );
     case "textarea":
-      return <SettingTextareaField control={control} name={name} />;
+      return (
+        <SettingTextareaField
+          control={control}
+          name={name}
+          {...omit(item, "type", "key")}
+        />
+      );
     case "boolean":
-      return <SettingBooleanField control={control} name={name} />;
+      return (
+        <SettingBooleanField
+          control={control}
+          name={name}
+          {...omit(item, "type", "key")}
+        />
+      );
     case "image":
-      return <SettingImageField control={control} name={name} />;
+      return (
+        <SettingImageField
+          control={control}
+          name={name}
+          {...omit(item, "type", "key")}
+        />
+      );
     case "object":
       return (
         <SettingObjectField

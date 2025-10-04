@@ -13,8 +13,8 @@ export const OurStorySection: FC<{ configs: any }> = ({ configs }) => {
             <div className="rounded-2xl overflow-hidden bg-web-secondary-2 py-4.5 px-4 md:px-6 md:py-8 lg:px-5 lg:py-6 lg:mt-11">
               <div className="relative aspect-[5/6] rounded-2xl overflow-hidden">
                 <Image
-                  src={"/assets/static/our-story.jpg"}
-                  alt="Our Story"
+                  src={configs.image.url}
+                  alt={configs.image.alt}
                   fill
                   className="object-cover"
                 />
@@ -24,12 +24,6 @@ export const OurStorySection: FC<{ configs: any }> = ({ configs }) => {
           <div className="order-2 lg:order-1">
             <div>
               <h3 className="text-web-secondary-3 text-web-subtitle-mobile uppercase mb-5 lg:text-web-subtitle">
-                {/* {configs.sub_title.map((item: any, index: number) => (
-                  <span key={index}>
-                    {index !== 0 && <span className="ms-1">&bull;</span>}{" "}
-                    {item.text}
-                  </span>
-                ))} */}
                 <SectionSubTitleFromConfigs sub_title={configs.sub_title} />
               </h3>
               <h2 className="text-web-h2-mobile capitalize mb-2 md:mb-9 lg:mb-5 lg:text-web-h2 flex flex-row gap-x-2 flex-wrap">

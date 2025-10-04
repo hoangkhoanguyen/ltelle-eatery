@@ -1,5 +1,4 @@
 import Icon from "@/components/common/Icon";
-import { ConfigValue } from "@/types/configs";
 import React, { FC } from "react";
 import SectionTitleFromConfigs from "./SectionTitleFromConfigs";
 import SectionSubTitleFromConfigs from "./SectionSubTitleFromConfigs";
@@ -10,18 +9,15 @@ export const WhyChooseUsSection: FC<{ configs?: any }> = ({
   return (
     <div className="container pt-10 pb-10 md:pt-12">
       <h3 className="section-subtitle mb-5 text-center">
-        {/* EXCELLENCE &bull; DISTINCTION &bull; QUALITY */}
         <SectionSubTitleFromConfigs sub_title={configs.sub_title} />
       </h3>
-      <h2 className="text-center flex flex-col items-center mb-5 section-title">
+      <h2 className="text-center flex flex-wrap justify-center gap-x-2 items-center mb-5 section-title">
         <SectionTitleFromConfigs title={configs.title} />
       </h2>
 
       <div className="mb-10 lg:max-w-2xl mx-auto">
         <p className="text-center text-web-content-2 text-web-subtitle-mobile lg:text-web-subtitle">
-          Discover what makes L’Telle Eater the premier French dining
-          destination in Ha Giang, where every detail is crafted to exceed your
-          expectations.
+          {configs.description}
         </p>
       </div>
 

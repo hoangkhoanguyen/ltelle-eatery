@@ -53,8 +53,8 @@ const fields: FieldType[] = [
   {
     key: "content",
     type: "textarea",
-    label: "Nội dung",
-    description: "Mỗi ",
+    label: "Nội dung hiển thị trong đoạn văn",
+    description: "Enter để xuống dòng",
     isRequired: true,
     placeholder: "Nhập nội dung",
   },

@@ -14,14 +14,14 @@ const HomePage = async () => {
 
   return (
     <div>
-      <HeroSection />
+      <HeroSection configs={homeConfig?.value.hero} />
       <OurStorySection configs={homeConfig?.value.our_story} />
       <section className="bg-web-secondary-2">
         <WhyChooseUsSection configs={homeConfig?.value.why_choose_us} />
       </section>
-      <GallerySection />
-      <ReviewsSection />
-      <ContactSection />
+      <GallerySection configs={homeConfig?.value.gallery} />
+      <ReviewsSection configs={homeConfig?.value.reviews} />
+      <ContactSection configs={homeConfig?.value.contact} />
     </div>
   );
 };
