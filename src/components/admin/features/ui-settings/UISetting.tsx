@@ -15,7 +15,6 @@ const UISetting: FC<{ data: ISetting; meta: MetaValue[] }> = ({
   useSetLoading(isPending);
 
   const onSubmit = (newConfig: any) => {
-    console.log("first", newConfig);
     mutate(
       { key: data.key, value: newConfig },
       {

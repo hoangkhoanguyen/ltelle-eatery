@@ -2,12 +2,11 @@
 import { NewUIConfigDB } from "@/db/schemas";
 import { initUIConfig, updateUIConfigByKey } from "@/services/ui-configs";
 import { Config } from "@/types/configs";
-import { revalidateTag } from "next/cache";
 
 export async function initUIConfigsAction(data: NewUIConfigDB) {
   try {
     await initUIConfig(data);
-    revalidateTag(`ui-${data.key}`);
+
     return {
       success: true,
       message: "UI Config initialized successfully",
@@ -28,9 +27,8 @@ export async function updateUIConfigsAction({
   value: Config;
 }) {
   try {
-    console.log("key, value", key, value);
     await updateUIConfigByKey({ key, value });
-    revalidateTag(`ui-${key}`);
+
     return {
       success: true,
       message: "UI Config updated successfully",

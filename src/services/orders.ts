@@ -50,8 +50,10 @@ export async function createOrder(
       .select()
       .from(customers)
       .where(
-        eq(customers.phone, orderData.customerPhone) &&
+        and(
+          eq(customers.phone, orderData.customerPhone),
           eq(customers.isActive, true),
+        ),
       )
       .limit(1);
 

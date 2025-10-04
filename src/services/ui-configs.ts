@@ -1,7 +1,7 @@
 import { getDb } from "@/db/drizzle";
 import { NewUIConfigDB, uiConfigs } from "@/db/schemas";
 import { Config } from "@/types/configs";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 
 export async function getUIConfigsByKey(key: string) {
   const db = getDb();
@@ -44,5 +44,5 @@ export async function updateUIConfigByKey({
   await db
     .update(uiConfigs)
     .set({ value, updatedAt: new Date() })
-    .where(eq(uiConfigs.key, key) && eq(uiConfigs.scope, "website"));
+    .where(and(eq(uiConfigs.key, key), eq(uiConfigs.scope, "website")));
 }
