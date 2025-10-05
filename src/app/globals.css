@@ -219,6 +219,10 @@ button:not(:disabled) {
   @apply text-web-content-1 text-web-caption-mobile lg:text-web-caption placeholder:text-web-content-3;
 }
 
+@utility web-input-error {
+  @apply border-web-error focus:outline-web-error focus-visible:outline-web-error;
+}
+
 @utility reservation-card-shadow {
   box-shadow: 0px 138px 55px 0px rgba(0, 0, 0, 0.01),
     0px 78px 47px 0px rgba(0, 0, 0, 0.04), 0px 35px 35px 0px rgba(0, 0, 0, 0.06),

@@ -4,6 +4,7 @@ import React, { FC, PropsWithChildren } from "react";
 import { Poppins } from "next/font/google";
 import localFont from "next/font/local";
 import { getUIConfigsByKey } from "@/services/ui-configs";
+import { WebsiteQueryProvider } from "@/providers/react-query-provider";
 
 const popinsSans = Poppins({
   variable: "--font-poppins-sans",
@@ -26,11 +27,13 @@ const Layout: FC<PropsWithChildren> = async ({ children }) => {
     <div
       className={`website ${popinsSans.variable} ${allogist.variable} antialiased font-poppins-sans bg-web-background-1`}
     >
-      <Header configs={configs?.value.header || {}} />
-      <main className="pt-[149px] lg:pt-[146px] min-h-[calc(100vh-149px)] lg:min-h-[calc(100vh-146px)]">
-        {children}
-      </main>
-      <Footer configs={configs?.value.footer || {}} />
+      <WebsiteQueryProvider>
+        <Header configs={configs?.value.header || {}} />
+        <main className="pt-[149px] lg:pt-[146px] min-h-[calc(100vh-149px)] lg:min-h-[calc(100vh-146px)]">
+          {children}
+        </main>
+        <Footer configs={configs?.value.footer || {}} />
+      </WebsiteQueryProvider>
     </div>
   );
 };

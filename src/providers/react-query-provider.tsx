@@ -17,3 +17,12 @@ export const AdminQueryProvider: FC<PropsWithChildren> = memo(
 );
 
 AdminQueryProvider.displayName = "AdminQueryProvider";
+
+export const WebsiteQueryProvider: FC<PropsWithChildren> = memo(
+  ({ children }) => {
+    const client = new QueryClient();
+    return <ReactQueryProvider client={client}>{children}</ReactQueryProvider>;
+  },
+);
+
+WebsiteQueryProvider.displayName = "WebsiteQueryProvider";

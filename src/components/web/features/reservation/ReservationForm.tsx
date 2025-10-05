@@ -1,9 +1,39 @@
+"use client";
 import Icon from "@/components/common/Icon";
 import React, { FC } from "react";
 import { Button } from "../../ui/button";
-import { splitTextByNewLine } from "@/lib/utils";
+import { cn, splitTextByNewLine } from "@/lib/utils";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createReservationSchema } from "@/validations/reservation";
+import { useMutation } from "@tanstack/react-query";
+import { createReservationAction } from "@/actions/web/reservations";
 
 const ReservationForm: FC<{ configs: any }> = ({ configs }) => {
+  const { handleSubmit, control } = useForm({
+    defaultValues: {
+      customerFullName: "",
+      customerPhone: "",
+      numberOfPeople: 1,
+      arrivalTime: "",
+      note: "",
+    },
+    resolver: zodResolver(createReservationSchema),
+  });
+
+  const { mutate } = useMutation({
+    mutationFn: createReservationAction,
+    onSuccess(data) {
+      // handle success, maybe show a toast or reset the form
+      console.log("Reservation created successfully", data);
+      if (data.success) {
+        alert(`Reservation successful! Your code is ${data.reservation!.code}`);
+      } else {
+        alert(data.error);
+      }
+    },
+  });
+
   return (
     <div className="reservation-card-shadow bg-white rounded-xl p-5 @container">
       <div className="grid grid-cols-1 @md:grid-cols-2 gap-5">
@@ -44,17 +74,53 @@ const ReservationForm: FC<{ configs: any }> = ({ configs }) => {
             <label className="web-reservation-label">
               Preferred Date Time *
             </label>
-            <input type="datetime-local" className="web-input" />
+            <Controller
+              control={control}
+              name="arrivalTime"
+              render={({ field, fieldState: { error } }) => (
+                <>
+                  <input
+                    type="datetime-local"
+                    min={new Date().toISOString().slice(0, 16)}
+                    className={cn("web-input", !!error && " web-input-error")}
+                    {...field}
+                  />
+                  {error?.message && (
+                    <p className="text-web-error text-xs mt-1">
+                      {error.message}
+                    </p>
+                  )}
+                </>
+              )}
+            />
           </div>
         </div>
 
         <div className="col-span-1">
           <div>
             <label className="web-reservation-label">Number of Guests *</label>
-            <input
-              type="number"
-              className="web-input"
-              placeholder="Enter number of guests"
+            <Controller
+              control={control}
+              name="numberOfPeople"
+              render={({
+                field: { value, onChange },
+                fieldState: { error },
+              }) => (
+                <>
+                  <input
+                    type="number"
+                    className={cn("web-input", !!error && " web-input-error")}
+                    placeholder="Enter number of guests"
+                    value={value}
+                    onChange={(e) => onChange(parseInt(e.target.value))}
+                  />
+                  {error?.message && (
+                    <p className="text-web-error text-xs mt-1">
+                      {error.message}
+                    </p>
+                  )}
+                </>
+              )}
             />
           </div>
         </div>
@@ -65,7 +131,7 @@ const ReservationForm: FC<{ configs: any }> = ({ configs }) => {
           <div className="flex items-center gap-2">
             <Icon icon="ph:phone" className="text-2xl text-web-secondary-1" />
             <h4 className="text-web-h4-mobile lg:text-web-h4 text-web-primary">
-              Customer Details
+              Contact Details
             </h4>
           </div>
         </div>
@@ -73,10 +139,24 @@ const ReservationForm: FC<{ configs: any }> = ({ configs }) => {
         <div className="col-span-1 @md:col-span-2">
           <div>
             <label className="web-reservation-label">Full Name *</label>
-            <input
-              type="text"
-              className="web-input"
-              placeholder="Enter your full name"
+            <Controller
+              control={control}
+              name="customerFullName"
+              render={({ field, fieldState: { error } }) => (
+                <>
+                  <input
+                    type="text"
+                    className={cn("web-input", !!error && " web-input-error")}
+                    placeholder="Enter your full name"
+                    {...field}
+                  />
+                  {error?.message && (
+                    <p className="text-web-error text-xs mt-1">
+                      {error.message}
+                    </p>
+                  )}
+                </>
+              )}
             />
           </div>
         </div>
@@ -86,10 +166,24 @@ const ReservationForm: FC<{ configs: any }> = ({ configs }) => {
             <label className="web-reservation-label">
               Phone Number at Vietnam *
             </label>
-            <input
-              type="tel"
-              className="web-input"
-              placeholder="Enter your phone number"
+            <Controller
+              control={control}
+              name="customerPhone"
+              render={({ field, fieldState: { error } }) => (
+                <>
+                  <input
+                    type="tel"
+                    className={cn("web-input", !!error && " web-input-error")}
+                    placeholder="Enter your phone number"
+                    {...field}
+                  />
+                  {error?.message && (
+                    <p className="text-web-error text-xs mt-1">
+                      {error.message}
+                    </p>
+                  )}
+                </>
+              )}
             />
           </div>
         </div>
@@ -113,11 +207,28 @@ const ReservationForm: FC<{ configs: any }> = ({ configs }) => {
             <label className="web-reservation-label">
               Additional Information (Optional)
             </label>
-            <textarea
-              rows={4}
-              className="web-input bg-web-background-2"
-              placeholder="Tell us about dietary restrictions, celebrations, seating preferences, or any other special requirements..."
-            ></textarea>
+            <Controller
+              control={control}
+              name="note"
+              render={({ field, fieldState: { error } }) => (
+                <>
+                  <textarea
+                    rows={4}
+                    className={cn(
+                      "web-input bg-web-background-2",
+                      !!error && " web-input-error",
+                    )}
+                    placeholder="Tell us about dietary restrictions, celebrations, seating preferences, or any other special requirements..."
+                    {...field}
+                  ></textarea>
+                  {error?.message && (
+                    <p className="text-web-error text-xs mt-1">
+                      {error.message}
+                    </p>
+                  )}
+                </>
+              )}
+            />
           </div>
         </div>
 
@@ -126,6 +237,10 @@ const ReservationForm: FC<{ configs: any }> = ({ configs }) => {
           <Button
             className="w-full rounded-lg py-4 text-web-button-mobile lg:text-web-button"
             variant={"primary"}
+            type="button"
+            onClick={handleSubmit((data) => {
+              mutate(data);
+            })}
           >
             Submit Reservation Request
           </Button>

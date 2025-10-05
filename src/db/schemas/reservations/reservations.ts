@@ -1,4 +1,5 @@
 import { dbSchema } from "@/db/schema";
+import { InferEnum } from "drizzle-orm";
 import {
   integer,
   serial,
@@ -6,33 +7,31 @@ import {
   uuid,
   varchar,
   timestamp,
+  pgEnum,
 } from "drizzle-orm/pg-core";
 
-// export const reservationStatusEnum = pgEnum("status", [
-//   "scheduled", // Đã đặt thành công
-//   "confirmed", // Đã xác nhận lại
-//   "seated", // Đã nhận bàn
-//   "completed", // Hoàn thành
-//   "cancelled", // Đã hủy
-//   "no_show", // Không đến
-// ]);
+export const reservationStatusEnum = pgEnum("status", [
+  "scheduled", // Đã đặt thành công
+  "confirmed", // Đã xác nhận lại
+  "seated", // Đã nhận bàn
+  "completed", // Hoàn thành
+  "cancelled", // Đã hủy
+  "no_show", // Không đến
+]);
 
-export const reservationsSchema = dbSchema.table("reservations", {
+export const reservations = dbSchema.table("reservations", {
   id: serial("id").primaryKey(),
   uuid: uuid("uuid").notNull().defaultRandom().unique(),
   code: varchar("code", { length: 50 }).notNull().unique(),
-  customerFirstName: varchar("customer_first_name", { length: 255 }).notNull(),
-  customerLastName: varchar("customer_last_name", { length: 255 }).notNull(),
+  customerFullName: varchar("customer_full_name", { length: 255 }).notNull(),
   customerPhone: varchar("customer_phone", { length: 20 }).notNull(),
   note: text("note").notNull().default(""),
   internalNote: text("internal_note").notNull().default(""),
   numberOfPeople: integer("number_of_people").notNull().default(1),
-  arrivalTime: timestamp("arrival_time").notNull(),
-  status: varchar("status", {
-    length: 20,
-  })
-    .notNull()
-    .default("scheduled"),
+  arrivalTime: timestamp("arrival_time", {
+    withTimezone: true,
+  }).notNull(),
+  status: reservationStatusEnum().default("scheduled").notNull(),
   createdAt: timestamp("created_at", {
     withTimezone: true,
   })
@@ -44,3 +43,8 @@ export const reservationsSchema = dbSchema.table("reservations", {
     .notNull()
     .defaultNow(),
 });
+
+export type ReservationDB = typeof reservations.$inferSelect;
+export type NewReservationDB = typeof reservations.$inferInsert;
+
+export type ReservationStatus = InferEnum<typeof reservationStatusEnum>;
