@@ -10,8 +10,8 @@ const Footer: FC<{ configs: any }> = ({ configs }) => {
   return (
     <footer className="bg-[#101828]">
       <div className="container py-10">
-        <div className="grid grid-cols-1 lg:grid-cols-6 gap-10 lg:gap-5">
-          <div className="col-span-1 lg:col-span-2">
+        <div className="grid grid-cols-1 lg:grid-cols-8 gap-10 lg:gap-5">
+          <div className="col-span-1 lg:col-span-3">
             <div className="flex flex-col gap-5">
               <Link href={webRoutes.home()} className="flex items-center gap-1">
                 <div className="w-12 aspect-square rounded-full bg-web-secondary-2 flex justify-center items-center">
@@ -64,7 +64,7 @@ const Footer: FC<{ configs: any }> = ({ configs }) => {
             </ul>
           </div>
 
-          <div className="col-span-1">
+          <div className="col-span-1 lg:col-span-2">
             <p className="mb-5 text-web-background-1 text-web-h4-mobile lg:text-web-h4 capitalize">
               Our Services
             </p>
@@ -80,7 +80,7 @@ const Footer: FC<{ configs: any }> = ({ configs }) => {
           </div>
 
           <div className="col-span-1 lg:col-span-2">
-            <div className="flex flex-col gap-5 lg:ps-20">
+            <div className="flex flex-col gap-5">
               <p className="text-web-background-1 text-web-h4-mobile lg:text-web-h4 capitalize">
                 Contact Information
               </p>
@@ -157,11 +157,11 @@ const Footer: FC<{ configs: any }> = ({ configs }) => {
             </div>
           </div>
 
-          <div className="col-span-1 lg:col-span-6">
+          <div className="col-span-1 lg:col-span-8">
             <div className="h-[1px] bg-web-background-1"></div>
           </div>
 
-          <div className="col-span-1 lg:col-span-6">
+          <div className="col-span-1 lg:col-span-8">
             <div className="flex flex-col lg:flex-row justify-between gap-2.5">
               <p className="text-web-background-3 text-web-h4-mobile lg:text-web-h4 text-start md:text-center lg:text-start">
                 &copy; 2025 L&#39;TELLE EATER Restaurant. All rights reserved.
