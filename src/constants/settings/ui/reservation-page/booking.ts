@@ -35,11 +35,7 @@ export const bookingInitConfigValue: ConfigValue = {
     phone: "0123456789",
     email: "khoadeptrai@gmail.com",
   },
-  note: [
-    {
-      text: "Please arrive 10 minutes before your reservation time.",
-    },
-  ],
+  note: "Please arrive 10 minutes before your reservation time.",
 };
 
 export const bookingMeta: MetaValue = {
@@ -193,6 +189,14 @@ export const bookingMeta: MetaValue = {
           placeholder: "Nhập email",
         },
       ],
+    },
+    {
+      key: "note",
+      type: "textarea",
+      label: "Ghi chú",
+      description: "Ghi chú hiển thị bên dưới trong form đặt bàn",
+      isRequired: false,
+      placeholder: "Nhập ghi chú",
     },
   ],
 };
