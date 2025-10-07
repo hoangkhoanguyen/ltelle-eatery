@@ -35,7 +35,7 @@ const InternalNote: FC<{
       {canEdit && (
         <LayoutWithRef ref={ref} Component={Modal} afterClose={onAfterClose}>
           <div className="card p-5 bg-white w-xs sm:w-sm md:w-md lg:w-2xl">
-            <h2 className="card-title">Edit Internal Note</h2>
+            <h2 className="card-title mb-2">Edit Internal Note</h2>
             <Textarea
               rows={5}
               value={note}
@@ -52,6 +52,7 @@ const InternalNote: FC<{
                 color="primary"
                 onClick={() => {
                   onSubmit(note);
+                  ref.current?.close();
                 }}
               >
                 Save

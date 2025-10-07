@@ -10,13 +10,14 @@ export const ADMIN_ROUTE = {
   reservation: "/admin/reservations/[id]",
   orders: "/admin/orders",
   order: "/admin/orders/[id]",
+  settings: "/admin/settings/[setting_type]/[key]",
   refreshTokenApi: "/admin/api/refresh-token",
   imagesApi: "/admin/api/images",
   categoriesApi: "/admin/api/categories",
   productsApi: "/admin/api/products",
   allProductApi: "/admin/api/products/all",
   ordersApi: "/admin/api/orders",
-  settings: "/admin/settings/[setting_type]/[key]",
+  reservationsApi: "/admin/api/reservations",
 } as const;
 
 export const WEB_ROUTE = {
@@ -126,7 +127,12 @@ export const adminRoutes = {
       skipEmptyString: true,
       skipNull: true,
     })}`,
-
+  reservationApi: (query: any) =>
+    `${ADMIN_ROUTE.reservationsApi}?${queryString.stringify(query, {
+      arrayFormat: "comma",
+      skipEmptyString: true,
+      skipNull: true,
+    })}`,
   settings: (setting_type: string, key?: string) =>
     typeof key === "undefined"
       ? generateRoute("admin", "settings", { setting_type, key: "" }).slice(

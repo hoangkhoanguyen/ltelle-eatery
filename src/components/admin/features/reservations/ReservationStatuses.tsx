@@ -1,20 +1,21 @@
 "use client";
 import React, { ComponentProps, FC, useMemo } from "react";
 import { Button } from "../../ui/button";
-import useUpdateOrderStatus from "@/hooks/admin/features/orders/useUpdateOrderStatus";
 import StatusItem from "../../shared/StatusItem";
-import { ReservationStatus } from "@/types/reservations";
+import { EReservationStatus } from "@/types/reservations";
 import { STATUS_RENDER } from "@/constants/reservation";
+import useUpdateReservationStatus from "@/hooks/admin/features/reservations/useUpdateReservationStatus";
+import { useSetLoading } from "@/hooks/admin/loading";
 
 const ReservationStatuses: FC<{
-  historyStatus: ReservationStatus[];
-  status: ReservationStatus;
-  orderId: number;
-}> = ({ historyStatus, status, orderId }) => {
-  const { mutate, isPending } = useUpdateOrderStatus();
+  historyStatus: EReservationStatus[];
+  status: EReservationStatus;
+  reservationId: number;
+}> = ({ historyStatus, status, reservationId }) => {
+  const { mutate, isPending } = useUpdateReservationStatus();
 
-  const handleStatusChange = (newStatus: ReservationStatus) => {
-    // mutate({ orderId, status: newStatus });
+  const handleStatusChange = (newStatus: EReservationStatus) => {
+    mutate({ reservationId, status: newStatus });
   };
 
   const statuses = useMemo((): ComponentProps<typeof StatusItem>[] => {
@@ -26,8 +27,8 @@ const ReservationStatuses: FC<{
         icon: STATUS_RENDER[status].icon,
         label: STATUS_RENDER[status].label,
         color:
-          status === ReservationStatus.cancelled ||
-          status === ReservationStatus.no_show
+          status === EReservationStatus.cancelled ||
+          status === EReservationStatus.no_show
             ? "error"
             : "primary",
       });
@@ -38,8 +39,8 @@ const ReservationStatuses: FC<{
       icon: STATUS_RENDER[status].icon,
       label: STATUS_RENDER[status].label,
       color:
-        status === ReservationStatus.cancelled ||
-        status === ReservationStatus.no_show
+        status === EReservationStatus.cancelled ||
+        status === EReservationStatus.no_show
           ? "error"
           : "primary",
     });
@@ -50,8 +51,8 @@ const ReservationStatuses: FC<{
         icon: STATUS_RENDER[status].icon,
         label: STATUS_RENDER[status].label,
         color:
-          status === ReservationStatus.cancelled ||
-          status === ReservationStatus.no_show
+          status === EReservationStatus.cancelled ||
+          status === EReservationStatus.no_show
             ? "error"
             : "primary",
       });
@@ -59,6 +60,8 @@ const ReservationStatuses: FC<{
 
     return result;
   }, [status, historyStatus]);
+
+  useSetLoading(isPending);
 
   return (
     <div className="card bg-white p-5">

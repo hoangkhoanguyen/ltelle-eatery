@@ -6,7 +6,6 @@ import Link from "next/link";
 import React, { FC } from "react";
 
 const Footer: FC<{ configs: any }> = ({ configs }) => {
-  console.log("social", configs.socials);
   return (
     <footer className="bg-[#101828]">
       <div className="container py-10">

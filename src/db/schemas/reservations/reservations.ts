@@ -1,5 +1,5 @@
 import { dbSchema } from "@/db/schema";
-import { InferEnum } from "drizzle-orm";
+import { InferEnum, relations } from "drizzle-orm";
 import {
   integer,
   serial,
@@ -9,6 +9,7 @@ import {
   timestamp,
   pgEnum,
 } from "drizzle-orm/pg-core";
+import { reservationStatusHistory } from "./reservation-status-history";
 
 export const reservationStatusEnum = pgEnum("status", [
   "scheduled", // Đã đặt thành công
@@ -43,6 +44,10 @@ export const reservations = dbSchema.table("reservations", {
     .notNull()
     .defaultNow(),
 });
+
+export const reservationsRelations = relations(reservations, ({ many }) => ({
+  statusHistory: many(reservationStatusHistory),
+}));
 
 export type ReservationDB = typeof reservations.$inferSelect;
 export type NewReservationDB = typeof reservations.$inferInsert;

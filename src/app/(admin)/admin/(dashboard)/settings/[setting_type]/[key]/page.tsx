@@ -28,8 +28,6 @@ const page = async ({
 
   if (config) return <SettingComponent data={config} meta={meta} />;
 
-  console.log("initConfigs", initConfigs);
-
   if (initConfigs) {
     return <InitSettingComponent initConfigs={initConfigs} />;
   }

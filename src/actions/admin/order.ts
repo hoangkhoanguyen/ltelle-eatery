@@ -1,7 +1,5 @@
 "use server";
-
 import { updateOrderInternalNote, updateOrderStatus } from "@/services/orders";
-import { revalidatePath } from "next/cache";
 
 export async function updateOrderStatusAction({
   orderId,
@@ -13,7 +11,6 @@ export async function updateOrderStatusAction({
   try {
     const updatedOrder = await updateOrderStatus(orderId, status);
 
-    revalidatePath("/admin/orders");
     return {
       success: true,
       data: { updatedOrder },
@@ -36,7 +33,6 @@ export async function updateOrderInternalNoteAction({
   try {
     const updatedOrder = await updateOrderInternalNote(orderId, internalNote);
 
-    revalidatePath("/admin/orders");
     return {
       success: true,
       data: { updatedOrder },

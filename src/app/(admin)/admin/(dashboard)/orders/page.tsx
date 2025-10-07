@@ -81,7 +81,7 @@ const ProductPage = () => {
       <Pagination
         className="self-center"
         currentPage={query.page}
-        totalPages={data?.total || 0}
+        totalPages={data ? Math.ceil(data.total / query.limit) : 0}
         onPageChange={(page) => {
           setQuery({
             page,

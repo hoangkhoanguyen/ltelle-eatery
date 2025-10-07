@@ -1,30 +1,32 @@
 "use client";
-import CreateProduct from "@/components/admin/features/products/CreateProduct";
-import ProductFilter from "@/components/admin/features/products/ProductFilter";
-import ProductTable from "@/components/admin/features/products/ProductTable";
-import FilterTag from "@/components/admin/shared/FilterTag";
 import Header from "@/components/admin/shared/header/Header";
 import SearchInput from "@/components/admin/shared/SearchInput";
 import Pagination from "@/components/admin/ui/table/Pagination";
-import useFetchProducts from "@/hooks/admin/features/products/useFetchProducts";
-import useProductsParams from "@/hooks/admin/features/products/useProductsParams";
-import { AdminProductTable } from "@/types/products";
+import useOrdersParams from "@/hooks/admin/features/orders/useOrdersParams";
 import React, { useMemo } from "react";
+import useFetchReservation from "@/hooks/admin/features/reservations/useFetchReservation";
+import {
+  AdminReservationTable,
+  EReservationStatus,
+} from "@/types/reservations";
+import ReservationTable from "@/components/admin/features/reservations/ReservationTable";
+import ReservationFilter from "@/components/admin/features/reservations/ReservationFilter";
 
 const ProductPage = () => {
-  const { query, setQuery } = useProductsParams();
+  const { query, setQuery } = useOrdersParams();
+  const { data, refetch, isPending, isRefetching } = useFetchReservation(query);
 
-  const { data, refetch, isPending, isRefetching } = useFetchProducts(query);
-
-  const convertedData: AdminProductTable[] = useMemo(
-    () =>
-      data?.products.map((item) => ({
+  const convertedData = useMemo(
+    (): AdminReservationTable[] =>
+      data?.reservations.map((item) => ({
         id: item.id,
-        title: item.title,
-        price: item.price,
-        category: item.category.name,
-        imageUrl: item.images[0]?.url,
-        isActive: item.isActive,
+        code: item.code,
+        customerName: item.customerFullName,
+        customerPhone: item.customerPhone,
+        arrivalTime: item.arrivalTime,
+        status: item.status as EReservationStatus,
+        createdAt: new Date(item.createdAt).toISOString(),
+        note: item.note,
       })) || [],
     [data],
   );
@@ -32,21 +34,27 @@ const ProductPage = () => {
   return (
     <div className="container px-5 pb-5 mx-auto flex flex-col gap-4 min-h-screen">
       <Header
-        title="Danh sách sản phẩm"
+        title="Reservation List"
         center={
           <div className="flex-1 px-7">
-            <SearchInput className="input-sm" onSubmit={() => {}} />
+            <SearchInput
+              className="input-sm"
+              onSubmit={(search) => {
+                setQuery({
+                  search,
+                });
+              }}
+            />
           </div>
         }
         actions={
           <div className="flex gap-2">
-            <CreateProduct />
-            <ProductFilter />
+            <ReservationFilter query={query} setQuery={setQuery} />
           </div>
         }
       />
       <div className="flex gap-2 flex-wrap">
-        {query.isActive !== null && (
+        {/* {query.isActive !== null && (
           <FilterTag
             onRemove={() =>
               setQuery({
@@ -56,10 +64,10 @@ const ProductPage = () => {
             label="Trạng thái"
             value={query.isActive ? "Đang hoạt động" : "Ngưng hoạt động"}
           />
-        )}
+        )} */}
       </div>
 
-      <ProductTable
+      <ReservationTable
         data={convertedData}
         onReloadData={() => {
           refetch();

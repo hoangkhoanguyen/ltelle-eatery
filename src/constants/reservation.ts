@@ -1,89 +1,96 @@
 import { Button } from "@/components/admin/ui/button";
-import { ReservationStatus } from "@/types/reservations";
+import { EReservationStatus } from "@/types/reservations";
 import { ComponentProps } from "react";
 
 export const STATUS_RENDER: Record<
-  ReservationStatus,
+  EReservationStatus,
   {
     label: string;
     icon: string;
-    restStatus: ReservationStatus[];
+    restStatus: EReservationStatus[];
     buttons: (ComponentProps<typeof Button> & {
-      nextStatus: ReservationStatus;
+      nextStatus: EReservationStatus;
     })[];
+    color: string;
   }
 > = {
-  [ReservationStatus.scheduled]: {
+  [EReservationStatus.scheduled]: {
     label: "Scheduled",
     icon: "streamline-pixel:interface-essential-waiting-hourglass-loading",
     restStatus: [
-      ReservationStatus.confirmed,
-      ReservationStatus.seated,
-      ReservationStatus.completed,
+      EReservationStatus.confirmed,
+      EReservationStatus.seated,
+      EReservationStatus.completed,
     ],
     buttons: [
       {
         color: "primary",
         children: "Confirm",
-        nextStatus: ReservationStatus.confirmed,
+        nextStatus: EReservationStatus.confirmed,
       },
       {
         color: "error",
         children: "Cancel",
-        nextStatus: ReservationStatus.cancelled,
+        nextStatus: EReservationStatus.cancelled,
       },
     ],
+    color: "badge-warning",
   },
-  [ReservationStatus.confirmed]: {
+  [EReservationStatus.confirmed]: {
     label: "Confirmed",
     icon: "icon-park-outline:loading-one",
-    restStatus: [ReservationStatus.seated, ReservationStatus.completed],
+    restStatus: [EReservationStatus.seated, EReservationStatus.completed],
     buttons: [
       {
         color: "primary",
         children: "Check In",
-        nextStatus: ReservationStatus.seated,
+        nextStatus: EReservationStatus.seated,
       },
       {
         color: "error",
         children: "No Show",
-        nextStatus: ReservationStatus.no_show,
+        nextStatus: EReservationStatus.no_show,
       },
       {
         color: "error",
         children: "Cancel",
-        nextStatus: ReservationStatus.cancelled,
+        nextStatus: EReservationStatus.cancelled,
       },
     ],
+    color: "badge-info",
   },
-  [ReservationStatus.seated]: {
+  [EReservationStatus.seated]: {
     label: "Seated",
-    icon: "iconamoon:check-bold",
-    restStatus: [ReservationStatus.completed],
+    icon: "ph:seat",
+    restStatus: [EReservationStatus.completed],
     buttons: [
       {
         color: "primary",
         children: "Complete",
-        nextStatus: ReservationStatus.completed,
+        nextStatus: EReservationStatus.completed,
       },
     ],
+    color: "badge-success",
   },
-  [ReservationStatus.completed]: {
+  [EReservationStatus.completed]: {
     label: "Completed",
     icon: "iconamoon:check-bold",
     restStatus: [],
     buttons: [],
+    color: "badge-success",
   },
-  [ReservationStatus.cancelled]: {
+  [EReservationStatus.cancelled]: {
     label: "Cancelled",
     icon: "iconoir:cancel",
     restStatus: [],
     buttons: [],
+    color: "badge-danger",
   },
-  [ReservationStatus.no_show]: {
+  [EReservationStatus.no_show]: {
     label: "No Show",
     icon: "iconoir:cancel",
     restStatus: [],
     buttons: [],
+    color: "badge-dark",
   },
 };
