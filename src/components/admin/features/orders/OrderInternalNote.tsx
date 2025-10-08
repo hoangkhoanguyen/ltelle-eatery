@@ -3,11 +3,14 @@ import React, { FC } from "react";
 import { AdminOrderDetails } from "@/types/orders";
 import useUpdateOrderInternalNote from "@/hooks/admin/features/orders/useUpdateOrderInternalNote";
 import InternalNote from "../../shared/InternalNote";
+import { useSetLoading } from "@/hooks/admin/loading";
 
 const OrderInternalNote: FC<{
   data: Pick<AdminOrderDetails, "internalNote" | "id">;
 }> = ({ data }) => {
   const { mutate, isPending } = useUpdateOrderInternalNote();
+
+  useSetLoading(isPending);
 
   return (
     <>

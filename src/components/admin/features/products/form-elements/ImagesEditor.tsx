@@ -3,17 +3,18 @@ import { useImgLibraryContext } from "@/components/admin/shared/image-library/Im
 import Icon from "@/components/common/Icon";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import { useProductDetailsContext } from "../ProductDetailsProvider";
 import { useFieldArray } from "react-hook-form";
 import { Button } from "@/components/admin/ui/button";
-import { deleteProductImagesAction } from "@/actions/admin/product";
 import { toast } from "sonner";
+import useDeleteProductImages from "@/hooks/admin/features/products/useDeleteProductImages";
+import { useSetLoading } from "@/hooks/admin/loading";
 
 const ImagesEditor = () => {
   const [selectedImages, setSelectedImages] = useState<number[]>([]);
 
-  const [isDeleting, setDeleting] = useState(false);
+  const { mutate: deleteImages, isPending } = useDeleteProductImages();
 
   const { openLibrary } = useImgLibraryContext();
 
@@ -56,25 +57,18 @@ const ImagesEditor = () => {
       onDeleteSuccess();
       return;
     }
-    setDeleting(true);
-    // call server actions
-    const result = await deleteProductImagesAction(savedIds);
 
-    // on success
-    if (result.success) {
-      onDeleteSuccess();
-      setDeleting(false);
-      return;
-    }
+    deleteImages(savedIds, {
+      onSuccess(data) {
+        if (data.success) {
+          onDeleteSuccess();
+          return;
+        }
 
-    // TODO: toast
-
-    // giữ lại image cũ
-    setSelectedImages((p) => p.filter((item) => fields[item].id));
-
-    // remove in control
-    remove(selectedImages.filter((item) => !fields[item].id));
-    setDeleting(false);
+        setSelectedImages((p) => p.filter((item) => fields[item].id));
+        remove(selectedImages.filter((item) => !fields[item].id));
+      },
+    });
   };
 
   const onClickImage = (index: number) => {
@@ -83,7 +77,7 @@ const ImagesEditor = () => {
     );
   };
 
-  const isProcessing = useMemo(() => isDeleting, [isDeleting]);
+  useSetLoading(isPending);
 
   return (
     <div className="card bg-white">
@@ -92,7 +86,7 @@ const ImagesEditor = () => {
           <p className="card-title">Hình ảnh sản phẩm</p>
 
           <Button
-            disabled={selectedImages.length === 0 || isProcessing}
+            disabled={selectedImages.length === 0 || isPending}
             onClick={onRemoveImages}
             color="error"
           >
@@ -111,7 +105,7 @@ const ImagesEditor = () => {
               <ImageItem
                 url={field.url}
                 onClick={() => {
-                  if (!isProcessing) onClickImage(index);
+                  if (!isPending) onClickImage(index);
                 }}
                 isSelected={selectedImages.includes(index)}
               />
@@ -120,7 +114,7 @@ const ImagesEditor = () => {
           <div className="col-span-1 row-span-1 aspect-square">
             <button
               type="button"
-              disabled={selectedImages.length > 0 || isProcessing}
+              disabled={selectedImages.length > 0 || isPending}
               onClick={onOpenLibrary}
               className={cn(
                 "w-full h-full border-dashed border border-gray-300 hover:bg-gray-200 duration-200",

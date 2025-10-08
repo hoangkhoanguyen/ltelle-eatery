@@ -40,36 +40,12 @@ export default function ProductDetailsProvider({
   );
 
   const onSubmit = handleSubmit(({ ...rest }) => {
-    mutate(
-      {
-        id,
-        data: {
-          ...rest,
-        },
+    mutate({
+      id,
+      data: {
+        ...rest,
       },
-      {
-        onSuccess() {
-          toast.success("Lưu sản phẩm thành công");
-          // onUpdateFormData({
-          //   title: data.product!.title,
-          //   slug: data.product!.slug,
-          //   categoryId: data.product!.category.id,
-          //   isActive: data.product!.isActive,
-          //   allergenInfo: data.product!.allergenInfo,
-          //   subDescription: data.product!.subDescription,
-          //   description: data.product!.description,
-          //   price: data.product!.price,
-          //   addons: data.product!.addons.map((item) =>
-          //     pick(item, "id", "name", "isActive", "price"),
-          //   ),
-          //   images: data.product!.images.map((item) => pick(item, "id", "url")),
-          //   relatedProducts: data.product!.relatedProducts.map((item) =>
-          //     pick(item, "id", "title"),
-          //   ),
-          // });
-        },
-      },
-    );
+    });
   });
 
   const onReset = useCallback(() => {

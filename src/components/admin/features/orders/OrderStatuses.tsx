@@ -4,6 +4,7 @@ import React, { ComponentProps, FC, useMemo } from "react";
 import { Button } from "../../ui/button";
 import useUpdateOrderStatus from "@/hooks/admin/features/orders/useUpdateOrderStatus";
 import StatusItem from "../../shared/StatusItem";
+import { useSetLoading } from "@/hooks/admin/loading";
 
 const STATUS_RENDER: Record<
   OrderStatus,
@@ -119,6 +120,8 @@ const OrderStatuses: FC<{
 
     return result;
   }, [status, historyStatus]);
+
+  useSetLoading(isPending);
 
   return (
     <div className="card bg-white p-5">
