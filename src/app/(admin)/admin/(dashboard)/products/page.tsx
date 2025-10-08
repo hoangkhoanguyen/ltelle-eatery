@@ -25,6 +25,7 @@ const ProductPage = () => {
         category: item.category.name,
         imageUrl: item.images[0]?.url,
         isActive: item.isActive,
+        slug: item.slug,
       })) || [],
     [data],
   );

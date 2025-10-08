@@ -6,9 +6,14 @@ import SectionTitleFromConfigs from "../../shared/SectionTitleFromConfigs";
 import SectionSubTitleFromConfigs from "../../shared/SectionSubTitleFromConfigs";
 import { splitTextByNewLine } from "@/lib/utils";
 import { webRoutes } from "@/constants/route";
+import { getProductBySlug } from "@/services/products";
 
-const NewFood: FC<{ configs: any }> = ({ configs }) => {
+const NewFood: FC<{ configs: any }> = async ({ configs }) => {
   if (!configs.isShow) return null;
+
+  const product = await getProductBySlug(configs?.product_slug);
+
+  if (!product) return null;
 
   return (
     <section className="bg-web-secondary-2">
@@ -72,7 +77,7 @@ const NewFood: FC<{ configs: any }> = ({ configs }) => {
             </div>
           </div>
 
-          <ProductCard />
+          <ProductCard product={product} />
         </div>
       </div>
     </section>

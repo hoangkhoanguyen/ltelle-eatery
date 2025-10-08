@@ -49,6 +49,17 @@ export default function ProductTable({
     columnHelper.accessor("title", {
       header: "Tên",
     }),
+    columnHelper.accessor("slug", {
+      header: "Đường dẫn",
+      cell: (props) => {
+        const slug = props.getValue();
+        return (
+          <span className="font-mono text-sm text-gray-600 bg-gray-100 px-2 py-1 rounded">
+            {slug}
+          </span>
+        );
+      },
+    }),
     columnHelper.accessor("category", {
       header: "Nhóm",
     }),

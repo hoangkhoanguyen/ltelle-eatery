@@ -51,6 +51,7 @@ export interface AdminProductTable {
   category: string;
   imageUrl?: string;
   isActive: boolean;
+  slug: string;
 }
 
 export interface AdminProductAddons {

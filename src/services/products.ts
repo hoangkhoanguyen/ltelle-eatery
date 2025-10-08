@@ -604,3 +604,50 @@ export async function getProductsByCategorySlug(
 
   return formattedProducts;
 }
+
+/**
+ * Lấy thông tin product theo slug cho việc hiển thị card
+ */
+export async function getProductBySlug(slug: string) {
+  const db = getDb();
+
+  const product = await db.query.products.findFirst({
+    where: and(eq(products.slug, slug), eq(products.isActive, true)),
+    columns: {
+      id: true,
+      title: true,
+      slug: true,
+      subDescription: true,
+      price: true,
+    },
+    with: {
+      images: {
+        columns: {
+          url: true,
+        },
+        orderBy: [asc(productImages.sortOrder)],
+        limit: 1,
+      },
+      category: {
+        columns: {
+          id: true,
+          name: true,
+          slug: true,
+        },
+      },
+    },
+  });
+
+  if (!product) return null;
+
+  // Format data for product card
+  return {
+    id: product.id,
+    slug: product.slug,
+    title: product.title,
+    subDescription: product.subDescription || "",
+    price: product.price,
+    imageUrl: product.images[0]?.url || "",
+    category: product.category.name,
+  };
+}
