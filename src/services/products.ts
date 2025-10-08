@@ -14,8 +14,9 @@ import {
   ProductImageDB,
   UpdateProductAddOnDB,
   UpdateProductImageDB,
+  WebProduct,
 } from "@/types/products";
-import { eq, inArray, count, ilike, and, or, desc, ne } from "drizzle-orm";
+import { eq, inArray, count, ilike, and, or, desc, ne, asc } from "drizzle-orm";
 
 export async function addProductCategory(categoryData: NewProductCategoryDB) {
   const db = getDb();
@@ -423,7 +424,7 @@ export async function getCategoryWithProducts(id: number) {
       products: {
         with: {
           images: {
-            where: eq(productImages.isPrimary, true),
+            orderBy: [asc(productImages.sortOrder)],
             limit: 1,
           },
         },
@@ -498,4 +499,108 @@ export async function isExistingCategoryName(name: string, excludeId?: number) {
   });
 
   return !!category;
+}
+
+/**
+ * Lấy danh sách sản phẩm theo category slug
+ */
+export async function getProductsByCategorySlug(
+  categorySlug: string,
+): Promise<WebProduct[]> {
+  const db = getDb();
+
+  if (categorySlug === "all") {
+    // Lấy tất cả sản phẩm active
+    const productsList = await db.query.products.findMany({
+      where: eq(products.isActive, true),
+      columns: {
+        id: true,
+        title: true,
+        slug: true,
+        subDescription: true,
+        price: true,
+      },
+      with: {
+        images: {
+          columns: {
+            url: true,
+          },
+          orderBy: [asc(productImages.sortOrder)],
+          limit: 1,
+        },
+        category: {
+          columns: {
+            name: true,
+          },
+        },
+      },
+      orderBy: [desc(products.createdAt)],
+    });
+
+    // Format data for product cards
+    const formattedProducts: WebProduct[] = productsList.map((product) => ({
+      id: product.id,
+      slug: product.slug,
+      title: product.title,
+      subDescription: product.subDescription || "",
+      price: product.price,
+      imageUrl: product.images[0]?.url || "",
+      category: product.category?.name || "",
+    }));
+
+    return formattedProducts;
+  }
+
+  // Tìm category theo slug
+  const category = await db.query.productCategories.findFirst({
+    where: and(
+      eq(productCategories.slug, categorySlug),
+      eq(productCategories.isActive, true),
+    ),
+    columns: {
+      id: true,
+      name: true,
+      slug: true,
+    },
+  });
+
+  if (!category) return [];
+
+  // Lấy tất cả sản phẩm active của category
+  const productsList = await db.query.products.findMany({
+    where: and(
+      eq(products.categoryId, category.id),
+      eq(products.isActive, true),
+    ),
+    columns: {
+      id: true,
+      title: true,
+      slug: true,
+      subDescription: true,
+      price: true,
+    },
+    with: {
+      images: {
+        columns: {
+          url: true,
+        },
+        orderBy: [asc(productImages.sortOrder)],
+        limit: 1,
+      },
+    },
+    orderBy: [desc(products.createdAt)],
+  });
+
+  // Format data for product cards
+  const formattedProducts: WebProduct[] = productsList.map((product) => ({
+    id: product.id,
+    slug: product.slug,
+    title: product.title,
+    subDescription: product.subDescription || "",
+    price: product.price,
+    imageUrl: product.images[0]?.url || "",
+    category: category.name,
+  }));
+
+  return formattedProducts;
 }

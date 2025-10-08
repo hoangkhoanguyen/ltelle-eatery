@@ -109,9 +109,9 @@ export interface WebProduct {
   title: string;
   slug: string;
   price: number;
-  imageUrl?: string;
+  imageUrl: string;
   subDescription: string;
-  category: WebProductCategory;
+  category: string;
 }
 
 export interface WebProductImage {

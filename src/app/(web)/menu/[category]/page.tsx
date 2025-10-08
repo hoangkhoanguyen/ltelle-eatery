@@ -44,7 +44,7 @@ const page = async ({ params }: { params: Promise<{ category: string }> }) => {
         configs={configs?.food_categories}
         activeCategoryKey={category}
       />
-      <NewFood configs={configs?.new_product} />
+      {configs.new_product.isShow && <NewFood configs={configs?.new_product} />}
       <section className="bg-web-background-1">
         <WhyChooseUsSection configs={configs?.why_choose_us} />
       </section>

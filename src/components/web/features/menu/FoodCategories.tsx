@@ -5,34 +5,18 @@ import React, { FC } from "react";
 import ProductCard from "../../shared/ProductCard";
 import SectionSubTitleFromConfigs from "../../shared/SectionSubTitleFromConfigs";
 import SectionTitleFromConfigs from "../../shared/SectionTitleFromConfigs";
+import { getProductsByCategorySlug } from "@/services/products";
 
-// const categories = [
-//   {
-//     key: "all",
-//     name: "All",
-//   },
-//   {
-//     key: "main-course",
-//     name: "Main Course",
-//   },
-//   {
-//     key: "salad",
-//     name: "Salad",
-//   },
-//   {
-//     key: "noodles",
-//     name: "Noodles",
-//   },
-//   {
-//     key: "desserts",
-//     name: "Desserts",
-//   },
-// ];
-
-const FoodCategories: FC<{ activeCategoryKey: string; configs: any }> = ({
+const FoodCategories: FC<{ activeCategoryKey: string; configs: any }> = async ({
   activeCategoryKey,
   configs,
 }) => {
+  const products = await getProductsByCategorySlug(activeCategoryKey);
+
+  const categoryLabel = configs.categories_to_show.find(
+    (category: any) => category.key === activeCategoryKey,
+  )?.label;
+
   return (
     <section className="pt-8 pb-24 bg-web-background-1">
       <div className="container">
@@ -72,15 +56,13 @@ const FoodCategories: FC<{ activeCategoryKey: string; configs: any }> = ({
           ))}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-x-2 md:gap-y-5 lg:gap-x-5 lg:gap-y-16">
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          {products.map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              categoryLabel={categoryLabel || ""}
+            />
+          ))}
         </div>
       </div>
     </section>
