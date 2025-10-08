@@ -9,7 +9,7 @@ const RelatedProducts = () => {
           You also like
         </h2>
         <div>
-          <RelatedProductsSlider />
+          <RelatedProductsSlider>{[]}</RelatedProductsSlider>
         </div>
       </div>
     </section>

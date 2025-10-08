@@ -1,11 +1,12 @@
 "use client";
-import React from "react";
+import React, { FC } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import ProductCard from "../../shared/ProductCard";
 import "swiper/css";
 import { Autoplay } from "swiper/modules";
 
-const RelatedProductsSlider = () => {
+const RelatedProductsSlider: FC<{ children: React.ReactNode[] }> = ({
+  children,
+}) => {
   return (
     <Swiper
       autoplay={{ delay: 3000 }}
@@ -25,7 +26,10 @@ const RelatedProductsSlider = () => {
         },
       }}
     >
-      <SwiperSlide>
+      {children.map((child, index) => (
+        <SwiperSlide key={index}>{child}</SwiperSlide>
+      ))}
+      {/* <SwiperSlide>
         <ProductCard />
       </SwiperSlide>
       <SwiperSlide>
@@ -36,7 +40,7 @@ const RelatedProductsSlider = () => {
       </SwiperSlide>
       <SwiperSlide>
         <ProductCard />
-      </SwiperSlide>
+      </SwiperSlide> */}
     </Swiper>
   );
 };
