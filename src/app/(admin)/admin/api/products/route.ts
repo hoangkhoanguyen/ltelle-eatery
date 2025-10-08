@@ -13,9 +13,7 @@ async function getProductsApi(req: NextRequest) {
   const page = req.nextUrl.searchParams.get("page");
   const limit = req.nextUrl.searchParams.get("limit");
   const search = req.nextUrl.searchParams.get("search");
-  const { success, data, error } = schema.safeParse({ page, limit, search });
-
-  console.log("error", error);
+  const { success, data } = schema.safeParse({ page, limit, search });
 
   if (!success)
     return NextResponse.json({
