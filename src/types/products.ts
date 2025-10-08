@@ -63,6 +63,7 @@ export interface AdminProductAddons {
 export interface AdminProductCategory {
   id: number;
   name: string;
+  slug: string;
   isActive: boolean;
   description: string | null;
 }

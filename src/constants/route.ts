@@ -6,6 +6,7 @@ export const ADMIN_ROUTE = {
   products: "/admin/products",
   product: "/admin/products/[id]",
   productCreate: "/admin/products/create",
+  categories: "/admin/categories",
   reservations: "/admin/reservations",
   reservation: "/admin/reservations/[id]",
   orders: "/admin/orders",
@@ -99,6 +100,8 @@ export const adminRoutes = {
       ? ADMIN_ROUTE.product
       : generateRoute("admin", "product", { id }),
   productCreate: () => ADMIN_ROUTE.productCreate,
+  // danh mục
+  categories: () => ADMIN_ROUTE.categories,
   // đặt bàn
   reservations: () => ADMIN_ROUTE.reservations,
   reservation: (id?: string | number) =>
@@ -113,7 +116,14 @@ export const adminRoutes = {
       : generateRoute("admin", "order", { id }),
   refreshTokenApi: () => ADMIN_ROUTE.refreshTokenApi,
   imagesApi: () => ADMIN_ROUTE.imagesApi,
-  categoriesApi: () => ADMIN_ROUTE.categoriesApi,
+  categoriesApi: (query?: any) =>
+    query
+      ? `${ADMIN_ROUTE.categoriesApi}?${queryString.stringify(query, {
+          arrayFormat: "comma",
+          skipEmptyString: true,
+          skipNull: true,
+        })}`
+      : ADMIN_ROUTE.categoriesApi,
   productsApi: (query: any) =>
     `${ADMIN_ROUTE.productsApi}?${queryString.stringify(query, {
       arrayFormat: "comma",

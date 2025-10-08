@@ -15,7 +15,7 @@ import {
   UpdateProductAddOnDB,
   UpdateProductImageDB,
 } from "@/types/products";
-import { eq, inArray } from "drizzle-orm";
+import { eq, inArray, count, ilike, and, or, desc, ne } from "drizzle-orm";
 
 export async function addProductCategory(categoryData: NewProductCategoryDB) {
   const db = getDb();
@@ -50,7 +50,7 @@ export async function getAdminProductTable({
 }: {
   limit?: number;
   page?: number;
-  search?: string;
+  search?: string | null;
 }) {
   const db = getDb();
   const offset = limit * (page - 1);
@@ -342,4 +342,160 @@ export async function isExistingSlug(slug: string) {
   });
 
   return !!product;
+}
+
+// === CATEGORY SERVICES ===
+
+/**
+ * Lấy danh sách category có phân trang và search
+ */
+export async function getAdminCategoriesTable({
+  limit = 20,
+  page = 1,
+  search,
+  isActive,
+}: {
+  limit?: number;
+  page?: number;
+  search?: string | null;
+  isActive?: boolean | null;
+}) {
+  const db = getDb();
+  const offset = limit * (page - 1);
+
+  const buildWhereConditions = (fields: any, operators: any) => {
+    const conditions = [];
+    const { ilike, eq, and, or } = operators;
+
+    if (search) {
+      conditions.push(
+        or(
+          ilike(fields.name, `%${search}%`),
+          ilike(fields.description, `%${search}%`),
+        ),
+      );
+    }
+
+    if (isActive !== null && isActive !== undefined) {
+      conditions.push(eq(fields.isActive, isActive));
+    }
+
+    return conditions.length > 0 ? and(...conditions) : undefined;
+  };
+
+  const [categoriesList, [{ count: totalCount }]] = await Promise.all([
+    db.query.productCategories.findMany({
+      where: buildWhereConditions,
+      limit,
+      offset,
+      orderBy: [desc(productCategories.createdAt)],
+    }),
+    db
+      .select({ count: count(productCategories.id) })
+      .from(productCategories)
+      .where(
+        buildWhereConditions(productCategories, {
+          ilike,
+          eq,
+          and,
+          or,
+        }),
+      ),
+  ]);
+
+  return {
+    categories: categoriesList,
+    total: totalCount,
+    page,
+    limit,
+  };
+}
+
+/**
+ * Lấy chi tiết category kèm danh sách sản phẩm
+ */
+export async function getCategoryWithProducts(id: number) {
+  const db = getDb();
+
+  const category = await db.query.productCategories.findFirst({
+    where: eq(productCategories.id, id),
+    with: {
+      products: {
+        with: {
+          images: {
+            where: eq(productImages.isPrimary, true),
+            limit: 1,
+          },
+        },
+        orderBy: [desc(products.createdAt)],
+      },
+    },
+  });
+
+  return category;
+}
+
+/**
+ * Update category
+ */
+export async function updateProductCategory(
+  id: number,
+  categoryData: Partial<NewProductCategoryDB>,
+) {
+  const db = getDb();
+
+  const [updatedCategory] = await db
+    .update(productCategories)
+    .set({
+      ...categoryData,
+      updatedAt: new Date(),
+    })
+    .where(eq(productCategories.id, id))
+    .returning();
+
+  return updatedCategory;
+}
+
+/**
+ * Kiểm tra xem slug category có tồn tại không
+ */
+export async function isExistingCategorySlug(slug: string, excludeId?: number) {
+  const db = getDb();
+
+  const conditions = [eq(productCategories.slug, slug)];
+
+  if (excludeId) {
+    conditions.push(ne(productCategories.id, excludeId));
+  }
+
+  const category = await db.query.productCategories.findFirst({
+    where: and(...conditions),
+    columns: {
+      id: true,
+    },
+  });
+
+  return !!category;
+}
+
+/**
+ * Kiểm tra xem name category có tồn tại không
+ */
+export async function isExistingCategoryName(name: string, excludeId?: number) {
+  const db = getDb();
+
+  const conditions = [eq(productCategories.name, name)];
+
+  if (excludeId) {
+    conditions.push(ne(productCategories.id, excludeId));
+  }
+
+  const category = await db.query.productCategories.findFirst({
+    where: and(...conditions),
+    columns: {
+      id: true,
+    },
+  });
+
+  return !!category;
 }

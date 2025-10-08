@@ -6,14 +6,16 @@ import z from "zod";
 const schema = z.object({
   page: z.coerce.number().default(1),
   limit: z.coerce.number().positive().max(50).default(10),
-  search: z.string(),
+  search: z.string().optional().nullable(),
 });
 
 async function getProductsApi(req: NextRequest) {
   const page = req.nextUrl.searchParams.get("page");
   const limit = req.nextUrl.searchParams.get("limit");
   const search = req.nextUrl.searchParams.get("search");
-  const { success, data } = schema.safeParse({ page, limit, search });
+  const { success, data, error } = schema.safeParse({ page, limit, search });
+
+  console.log("error", error);
 
   if (!success)
     return NextResponse.json({

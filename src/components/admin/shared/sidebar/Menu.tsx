@@ -15,6 +15,13 @@ const menuItems: IMenuItem[] = [
     type: "link",
   },
   {
+    label: "Categories",
+    href: adminRoutes.categories(),
+    icon: "material-symbols:category-outline",
+    activeIcon: "material-symbols:category",
+    type: "link",
+  },
+  {
     label: "Orders",
     href: adminRoutes.orders(),
     icon: "bx:food-menu",

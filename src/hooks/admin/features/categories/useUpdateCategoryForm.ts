@@ -1,19 +1,20 @@
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { AdminCreateProductCategoryForm } from "@/types/products";
 import { productCategorySchema } from "@/validations/product";
 
-const useCreateCategoryForm = () => {
+const useUpdateCategoryForm = (
+  defaultValues?: AdminCreateProductCategoryForm,
+) => {
   return useForm<AdminCreateProductCategoryForm>({
-    mode: "onSubmit",
     resolver: zodResolver(productCategorySchema),
-    defaultValues: {
+    defaultValues: defaultValues || {
       name: "",
       slug: "",
       description: "",
-      isActive: true, // Mặc định active khi tạo mới
+      isActive: true,
     },
   });
 };
 
-export default useCreateCategoryForm;
+export default useUpdateCategoryForm;

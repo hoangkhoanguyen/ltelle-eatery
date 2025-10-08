@@ -7,18 +7,23 @@ import { Button } from "@/components/admin/ui/button";
 import { Input, InputWithLabel, SlugInput } from "../../ui/form";
 import WithError from "../../ui/form/WithError";
 import { AdminCreateProductCategoryForm } from "@/types/products";
-import useAddProductCategory from "@/hooks/admin/features/categories/useAddProductCategory";
-import { toast } from "sonner";
 import { generateSlug } from "@/lib/utils";
+import { useCreateCategory } from "@/hooks/admin/features/categories";
 
 interface Props {
-  onSuccess(id: number): void;
+  onSuccess?: (categoryId?: number) => void;
 }
 
 const CreateCategory = memo(
   forwardRef<LayoutRef, Props>(({ onSuccess }, ref) => {
-    const { control, reset, handleSubmit, getValues } = useCreateCategoryForm();
-    const { mutate } = useAddProductCategory();
+    const {
+      control,
+      reset,
+      handleSubmit,
+      getValues,
+      formState: { isDirty },
+    } = useCreateCategoryForm();
+    const { mutate, isPending } = useCreateCategory();
 
     const onAfterClose = useCallback(() => {
       reset();
@@ -27,11 +32,9 @@ const CreateCategory = memo(
     const onSubmit = (data: AdminCreateProductCategoryForm) => {
       mutate(data, {
         onSuccess(result) {
-          toast.success("Thêm nhóm món ăn thành công");
-          onSuccess(result.newCategory.id);
-        },
-        onError() {
-          toast.success("Có lỗi xảy ra");
+          if (result.success) {
+            onSuccess?.(result.data?.newCategory?.id);
+          }
         },
       });
     };
@@ -78,8 +81,12 @@ const CreateCategory = memo(
               )}
             />
             <div className="card-actions justify-end mt-2">
-              <Button onClick={handleSubmit(onSubmit)} color="success">
-                Thêm
+              <Button
+                onClick={handleSubmit(onSubmit)}
+                color="success"
+                disabled={isPending || !isDirty}
+              >
+                {isPending ? "Đang thêm..." : "Thêm"}
               </Button>
             </div>
           </div>

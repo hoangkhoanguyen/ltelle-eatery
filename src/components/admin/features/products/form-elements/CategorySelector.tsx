@@ -13,8 +13,10 @@ const CategorySelector: FC<Editor> = ({ onChange, value, error }) => {
   const { data = [] } = useFetchAllCategories();
 
   const onSuccess = useCallback(
-    (id: number) => {
-      onChange(id);
+    (categoryId?: number) => {
+      if (categoryId) {
+        onChange(categoryId);
+      }
       modalRef.current?.close();
     },
     [onChange],
