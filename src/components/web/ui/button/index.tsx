@@ -30,7 +30,7 @@ export const Buttons = () => {
           Home
         </Button>
       </div>
-      <QuantityButtons />
+      <QuantityButtons quantity={1} onChangeQuantity={() => {}} />
     </div>
   );
 };
