@@ -1,0 +1,123 @@
+import Icon from "@/components/common/Icon";
+import React, { FC, ReactNode } from "react";
+import { Button } from "../../ui/button";
+import ReservationInformation from "./ReservationInformation";
+import { ReservationDB } from "@/db/schemas";
+import moment from "moment";
+import Link from "next/link";
+import { webRoutes } from "@/constants/route";
+
+const ReservationSubmitSuccess: FC<{
+  configs: any;
+  reservation: ReservationDB;
+}> = ({ configs, reservation }) => {
+  return (
+    <section>
+      <div className="container py-10">
+        <div className="grid grid-cols-1 gap-5 mb-10">
+          <div>
+            <h3 className="text-web-h2-mobile lg:text-web-h2 text-web-primary">
+              {configs.success_title || "Reservation Submitted Successfully!"}
+            </h3>
+          </div>
+          <div>
+            <p className="text-web-subtitle-mobile lg:text-web-subtitle text-web-content-2">
+              {configs.success_description ||
+                "Thank you for choosing our restaurant. We have received your reservation request and will get back to you shortly to confirm the details."}
+            </p>
+          </div>
+          <Card>
+            <CardTitle label="Make a Reservation" icon="ph:calendar-blank" />
+            <ul className="flex flex-col gap-5">
+              <InfoItem
+                label="Reservation Code"
+                value={`#${reservation.code}`}
+              />
+              <InfoItem
+                label="Preferred Date"
+                value={moment(reservation.arrivalTime).format("MMMM D, YYYY")}
+              />
+              <InfoItem
+                label="Preferred Time"
+                value={moment(reservation.arrivalTime).format("h:mm A")}
+              />
+              <InfoItem
+                label="Number of Guests"
+                value={reservation.numberOfPeople}
+              />
+            </ul>
+          </Card>
+
+          <Card>
+            <CardTitle label="Contact Information" icon="ph:phone" />
+            <ul className="flex flex-col gap-5">
+              <InfoItem
+                label="Full name"
+                value={`${reservation.customerFullName}`}
+              />
+              <InfoItem
+                label="Phone Number in Vietnam"
+                value={`${reservation.customerPhone}`}
+              />
+            </ul>
+          </Card>
+
+          <Card>
+            <CardTitle label="Special requests" icon="ph:chat-circle" />
+            <div className="w-full p-2.5 rounded-lg bg-web-background-2 border border-web-content-3">
+              <p className="text-web-body-mobile lg:text-web-body text-web-content-2">
+                {reservation.note || "No special requests"}
+              </p>
+            </div>
+          </Card>
+        </div>
+        <div className="lg:hidden fixed z-40 bottom-0 left-0 w-full bg-white px-3 py-2.5 border-t border-web-content-3">
+          <Button
+            as={Link}
+            href={webRoutes.home()}
+            variant={"primary"}
+            className="w-full"
+          >
+            Back to home
+          </Button>
+        </div>
+        <ReservationInformation configs={configs} />
+      </div>
+    </section>
+  );
+};
+
+export default ReservationSubmitSuccess;
+
+function Card({ children }: { children: ReactNode }) {
+  return (
+    <div className="rounded-lg bg-web-secondary-2 border border-web-content-3 p-5 flex flex-col items-stretch gap-10">
+      {children}
+    </div>
+  );
+}
+
+function CardTitle({ label, icon }: { label: string; icon: string }) {
+  return (
+    <div className="flex items-center gap-2">
+      <Icon icon={icon} className="text-2xl text-web-secondary-1" />
+
+      <h3 className="text-web-subtitle-mobile lg:text-web-subtitle text-web-content-1 capitalize">
+        {label}
+      </h3>
+    </div>
+  );
+}
+
+function InfoItem({ label, value }: { label: string; value: string | number }) {
+  return (
+    <li className="flex flex-col gap-1">
+      <span className="text-web-h4-mobile lg:text-web-h4 text-web-content-2 capitalize">
+        {label}
+      </span>
+      <span className="text-web-caption-mobile lg:text-web-caption text-web-content-2">
+        {value}
+      </span>
+    </li>
+  );
+}

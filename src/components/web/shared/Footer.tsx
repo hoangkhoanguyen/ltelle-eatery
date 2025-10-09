@@ -8,7 +8,7 @@ import React, { FC } from "react";
 const Footer: FC<{ configs: any }> = ({ configs }) => {
   return (
     <footer className="bg-[#101828]">
-      <div className="container py-10">
+      <div className="container py-10 pb-20 lg:pb-10">
         <div className="grid grid-cols-1 lg:grid-cols-8 gap-10 lg:gap-5">
           <div className="col-span-1 lg:col-span-3">
             <div className="flex flex-col gap-5">

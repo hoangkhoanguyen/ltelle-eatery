@@ -36,6 +36,9 @@ export const bookingInitConfigValue: ConfigValue = {
     email: "khoadeptrai@gmail.com",
   },
   note: "Please arrive 10 minutes before your reservation time.",
+  success_title: "Reservation Submitted Successfully!",
+  success_description:
+    "Thank you for choosing our restaurant. We have received your reservation request and will get back to you shortly to confirm the details.",
 };
 
 export const bookingMeta: MetaValue = {
@@ -197,6 +200,22 @@ export const bookingMeta: MetaValue = {
       description: "Ghi chú hiển thị bên dưới trong form đặt bàn",
       isRequired: false,
       placeholder: "Nhập ghi chú",
+    },
+    {
+      key: "success_title",
+      type: "text",
+      label: "Tiêu đề thành công",
+      description: "Tiêu đề hiển thị khi đặt bàn thành công",
+      isRequired: true,
+      placeholder: "Nhập tiêu đề thành công",
+    },
+    {
+      key: "success_description",
+      type: "textarea",
+      label: "Mô tả thành công",
+      description: "Mô tả hiển thị khi đặt bàn thành công",
+      isRequired: true,
+      placeholder: "Nhập mô tả thành công",
     },
   ],
 };

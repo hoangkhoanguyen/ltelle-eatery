@@ -8,8 +8,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createReservationSchema } from "@/validations/reservation";
 import { useMutation } from "@tanstack/react-query";
 import { createReservationAction } from "@/actions/web/reservations";
+import { toast } from "sonner";
+import { ReservationDB } from "@/db/schemas";
 
-const ReservationForm: FC<{ configs: any }> = ({ configs }) => {
+const ReservationForm: FC<{
+  configs: any;
+  onSuccess(newData: ReservationDB): void;
+}> = ({ configs, onSuccess }) => {
   const { handleSubmit, control } = useForm({
     defaultValues: {
       customerFullName: "",
@@ -24,12 +29,13 @@ const ReservationForm: FC<{ configs: any }> = ({ configs }) => {
   const { mutate } = useMutation({
     mutationFn: createReservationAction,
     onSuccess(data) {
-      // handle success, maybe show a toast or reset the form
-      console.log("Reservation created successfully", data);
       if (data.success) {
-        alert(`Reservation successful! Your code is ${data.reservation!.code}`);
+        toast.success(
+          `Reservation successful! Your code is ${data.reservation!.code}`,
+        );
+        onSuccess(data.reservation!);
       } else {
-        alert(data.error);
+        toast.error(data.error);
       }
     },
   });
