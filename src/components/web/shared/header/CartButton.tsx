@@ -1,10 +1,13 @@
+"use client";
 import Icon from "@/components/common/Icon";
 import { webRoutes } from "@/constants/route";
+import { useCartStore } from "@/hooks/web/cart/store";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
 
 const CartButton = () => {
+  const cartItemCount = useCartStore((state) => state.context.cart.length);
   return (
     <Link href={webRoutes.cart()} className="relative">
       <Icon icon={"ph:shopping-bag"} className="text-web-content-1 w-11 h-11" />
@@ -15,7 +18,7 @@ const CartButton = () => {
           "bg-web-secondary-3  text-web-background-1 text-web-h4",
         )}
       >
-        9+
+        {cartItemCount > 9 ? "9+" : cartItemCount}
       </span>
     </Link>
   );

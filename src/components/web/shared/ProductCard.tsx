@@ -33,7 +33,7 @@ const ProductCard: FC<{ product: WebProduct; categoryLabel?: string }> = ({
           <span className="text-web-h4-mobile lg:text-web-h4 text-web-primary">
             {product.price.toLocaleString()} VND
           </span>
-          <QuickCartButton />
+          <QuickCartButton data={{ id: product.id, title: product.title }} />
         </div>
       </div>
     </div>

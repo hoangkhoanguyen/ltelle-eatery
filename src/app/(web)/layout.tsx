@@ -6,6 +6,8 @@ import localFont from "next/font/local";
 import { getUIConfigsByKey } from "@/services/ui-configs";
 import { WebsiteQueryProvider } from "@/providers/react-query-provider";
 import AnimationHeaderScroll from "@/components/web/shared/header/AnimationHeaderScroll";
+import { Toaster } from "sonner";
+import Icon from "@/components/common/Icon";
 
 const popinsSans = Poppins({
   variable: "--font-poppins-sans",
@@ -32,11 +34,28 @@ const Layout: FC<PropsWithChildren> = async ({ children }) => {
         <AnimationHeaderScroll>
           <Header configs={configs?.value.header || {}} />
         </AnimationHeaderScroll>
-        {/* <main className=" min-h-[calc(100vh-149px)] lg:min-h-[calc(100vh-146px)]"> */}
         <main className="pt-[149px] lg:pt-[146px] min-h-[calc(100vh-149px)] lg:min-h-[calc(100vh-146px)]">
           {children}
         </main>
         <Footer configs={configs?.value.footer || {}} />
+        <Toaster
+          visibleToasts={3}
+          position="top-right"
+          icons={{
+            success: (
+              <Icon
+                icon="ph:check-circle-fill"
+                className="text-xl text-web-secondary-1"
+              />
+            ),
+            error: (
+              <Icon
+                icon="ph:x-circle-fill"
+                className="text-xl text-web-error"
+              />
+            ),
+          }}
+        />
       </WebsiteQueryProvider>
     </div>
   );

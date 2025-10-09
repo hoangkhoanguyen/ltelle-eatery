@@ -1,5 +1,5 @@
 "use client";
-import { throttle } from "@/lib/utils";
+import { throttle } from "lodash";
 import React, {
   FC,
   PropsWithChildren,

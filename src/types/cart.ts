@@ -4,8 +4,9 @@ export interface CartItemAddon {
 }
 
 export interface CartItem {
-  id: number;
+  id: string;
+  productId: number;
   quantity: number;
-  addons?: CartItemAddon[];
-  notes?: string;
+  addons: CartItemAddon[];
+  notes: string;
 }

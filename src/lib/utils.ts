@@ -108,28 +108,3 @@ export function formatCurrency(
 export function splitTextByNewLine(text: string) {
   return text.split(/\r?\n/);
 }
-
-export function throttle<T extends (...args: any[]) => void>(
-  callback: T,
-  delay: number,
-): (...args: Parameters<T>) => void {
-  let lastCall = 0;
-  let timeoutId: ReturnType<typeof setTimeout> | null = null;
-  let lastArgs: any[] | null = null;
-
-  return function (...args: Parameters<T>) {
-    const now = Date.now();
-    if (now - lastCall >= delay) {
-      lastCall = now;
-      callback(...args);
-    } else {
-      if (timeoutId) clearTimeout(timeoutId);
-      lastArgs = args;
-      timeoutId = setTimeout(() => {
-        lastCall = Date.now();
-        if (lastArgs) callback(...lastArgs);
-        lastArgs = null;
-      }, delay - (now - lastCall));
-    }
-  };
-}
