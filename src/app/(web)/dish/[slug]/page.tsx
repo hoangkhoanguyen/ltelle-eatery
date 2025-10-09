@@ -8,6 +8,8 @@ import {
 import { redirect } from "next/navigation";
 import React, { FC } from "react";
 
+export const dynamic = "force-dynamic";
+
 const page: FC<{ params: Promise<{ slug: string }> }> = async ({ params }) => {
   const { slug } = await params;
 
@@ -20,8 +22,6 @@ const page: FC<{ params: Promise<{ slug: string }> }> = async ({ params }) => {
   const relatedProducts = await getMultipleProductsByIds(
     product.relatedProductIds,
   );
-
-  console.log("okay", product);
 
   return (
     <div>
