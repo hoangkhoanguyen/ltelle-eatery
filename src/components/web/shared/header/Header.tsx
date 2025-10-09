@@ -7,7 +7,7 @@ import MobileMenu from "./MobileMenu";
 export default function Header({ configs }: { configs: any }) {
   return (
     <>
-      <header className="fixed top-0 start-0 end-0 z-50">
+      <header className="w-full">
         <div className="bg-web-background-1 border-b border-web-content-3">
           <div className="container">
             {/* upper header */}

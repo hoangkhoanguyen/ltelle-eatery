@@ -5,6 +5,7 @@ import { Poppins } from "next/font/google";
 import localFont from "next/font/local";
 import { getUIConfigsByKey } from "@/services/ui-configs";
 import { WebsiteQueryProvider } from "@/providers/react-query-provider";
+import AnimationHeaderScroll from "@/components/web/shared/header/AnimationHeaderScroll";
 
 const popinsSans = Poppins({
   variable: "--font-poppins-sans",
@@ -28,7 +29,10 @@ const Layout: FC<PropsWithChildren> = async ({ children }) => {
       className={`website ${popinsSans.variable} ${allogist.variable} antialiased font-poppins-sans bg-web-background-1`}
     >
       <WebsiteQueryProvider>
-        <Header configs={configs?.value.header || {}} />
+        <AnimationHeaderScroll>
+          <Header configs={configs?.value.header || {}} />
+        </AnimationHeaderScroll>
+        {/* <main className=" min-h-[calc(100vh-149px)] lg:min-h-[calc(100vh-146px)]"> */}
         <main className="pt-[149px] lg:pt-[146px] min-h-[calc(100vh-149px)] lg:min-h-[calc(100vh-146px)]">
           {children}
         </main>
