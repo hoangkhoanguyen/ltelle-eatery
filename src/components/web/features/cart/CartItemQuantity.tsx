@@ -1,8 +1,10 @@
-import React from "react";
+import React, { FC } from "react";
 import QuantityEditor from "../../shared/QuantityEditor";
 
-const CartItemQuantity = () => {
-  return <QuantityEditor />;
+const CartItemQuantity: FC<{ price: number }> = ({ price }) => {
+  return (
+    <QuantityEditor price={price} quantity={1} onChangeQuantity={() => {}} />
+  );
 };
 
 export default CartItemQuantity;

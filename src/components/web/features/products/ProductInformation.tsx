@@ -1,95 +1,65 @@
-import React from "react";
+import React, { FC } from "react";
 import ProductImagesSlider from "./ProductImagesSlider";
 import Image from "next/image";
 import ProductQuantityEditor from "./ProductQuantityEditor";
 import ProductAddOns from "./ProductAddOns";
 import AddToCartButton from "./AddToCartButton";
+import { WebProductDetails } from "@/types/products";
+import { formatCurrencyWebsite } from "@/lib/utils";
+import ProductEditorProvider from "./ProductEditorProvider";
 
-const images = [
-  {
-    id: 1,
-    src: "/assets/static/product-image.png",
-  },
-  {
-    id: 2,
-    src: "/assets/static/product-image.png",
-  },
-  {
-    id: 3,
-    src: "/assets/static/product-image.png",
-  },
-  {
-    id: 4,
-    src: "/assets/static/product-image.png",
-  },
-  {
-    id: 5,
-    src: "/assets/static/product-image.png",
-  },
-  {
-    id: 6,
-    src: "/assets/static/product-image.png",
-  },
-  {
-    id: 7,
-    src: "/assets/static/product-image.png",
-  },
-  {
-    id: 8,
-    src: "/assets/static/product-image.png",
-  },
-];
-
-const ProductInformation = () => {
+const ProductInformation: FC<{ product: WebProductDetails }> = ({
+  product,
+}) => {
   return (
-    <>
+    <ProductEditorProvider product={product}>
       <section className="bg-web-background-1">
         <div className="container">
           <div className="pb-10 lg:pt-10">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
               <ProductImagesSlider
-                thumbs={images.map((image) => (
+                thumbs={product.images.map((image) => (
                   <div
                     key={image.id}
                     className="relative w-full aspect-square rounded-xs overflow-hidden"
                   >
                     <Image
                       fill
-                      src={image.src}
-                      alt={`Product Image ${image.id}`}
+                      src={image.url}
+                      alt={product.title}
                       className="object-cover"
                     />
                   </div>
                 ))}
               >
-                {images.map((image) => (
+                {product.images.map((image) => (
                   <div key={image.id} className="relative w-full aspect-square">
                     <Image
                       fill
-                      src={image.src}
-                      alt={`Product Image ${image.id}`}
+                      src={image.url}
+                      alt={product.title}
                       className="object-cover"
                     />
                   </div>
                 ))}
               </ProductImagesSlider>
               <div>
-                <p className="text-web-body-mobile lg:text-web-body text-web-secondary-3 mb-2.5">
-                  Starter
+                <p className="text-web-body-mobile lg:text-web-body text-web-secondary-3 mb-2.5 capitalize">
+                  {product.category}
                 </p>
                 <h1 className="text-web-h3-mobile lg:text-web-h3 text-web-content-1 mb-5">
-                  Caesar salad
+                  {product.title}
                 </h1>
                 <p className="text-web-h2-mobile lg:text-web-h2 text-web-secondary-1 mb-5">
-                  180.000 VND
+                  {formatCurrencyWebsite(product.price)}
                 </p>
                 <aside className="rounded-lg bg-web-secondary-2 p-3 mb-5">
                   <h2 className="text-web-h4-mobile lg:text-web-h4 text-web-content-2 mb-2">
                     Allergen Information
                   </h2>
                   <p className="text-web-content-2 text-web-caption-mobile lg:text-web-caption">
-                    Contains: gluten, eggs, cheese, Crisp romain, luten, eggs,
-                    cheese, Crisp romain, luten, eggs, cheese, Crisp romain
+                    {product.allergenInfo ||
+                      "No allergen information provided."}
                   </p>
                 </aside>
                 <hr className="border-web-content-3 mb-5" />
@@ -120,7 +90,7 @@ const ProductInformation = () => {
           </div>
         </div>
       </section>
-    </>
+    </ProductEditorProvider>
   );
 };
 

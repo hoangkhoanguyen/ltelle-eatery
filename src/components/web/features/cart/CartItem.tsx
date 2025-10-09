@@ -35,7 +35,7 @@ const CartItem = () => {
           </div>
         </div>
         <div className="flex flex-col items-stretch gap-5">
-          <CartItemQuantity />
+          <CartItemQuantity price={180000} />
           <CardItemAddons />
           <hr className="border-web-content-3" />
           <CartItemTotalPrice />

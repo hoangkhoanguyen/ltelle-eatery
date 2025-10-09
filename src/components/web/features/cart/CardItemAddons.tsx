@@ -2,7 +2,7 @@ import React from "react";
 import AddonsEditor from "../../shared/AddonsEditor";
 
 const CardItemAddons = () => {
-  return <AddonsEditor />;
+  return <AddonsEditor addons={[]} onChangeQuantity={() => {}} />;
 };
 
 export default CardItemAddons;

@@ -651,3 +651,69 @@ export async function getProductBySlug(slug: string) {
     category: product.category.name,
   };
 }
+
+export async function getProductDetailsBySlug(slug: string) {
+  const db = getDb();
+
+  const product = await db.query.products.findFirst({
+    where: and(eq(products.slug, slug), eq(products.isActive, true)),
+    columns: {
+      id: true,
+      title: true,
+      description: true,
+      slug: true,
+      subDescription: true,
+      price: true,
+      allergenInfo: true,
+      relatedProductIds: true,
+    },
+    with: {
+      category: {
+        columns: {
+          id: true,
+          name: true,
+          slug: true,
+        },
+      },
+      images: {
+        orderBy: [asc(productImages.sortOrder)],
+      },
+      addons: {
+        where: eq(productAddons.isActive, true),
+        orderBy: [asc(productAddons.sortOrder)],
+      },
+    },
+  });
+
+  return product;
+}
+
+export async function getMultipleProductsByIds(ids: number[]) {
+  const db = getDb();
+  return await db.query.products.findMany({
+    where: and(eq(products.isActive, true), inArray(products.id, ids)),
+    columns: {
+      id: true,
+      title: true,
+      slug: true,
+      subDescription: true,
+      price: true,
+    },
+    with: {
+      images: {
+        columns: {
+          url: true,
+        },
+        orderBy: [asc(productImages.sortOrder)],
+        limit: 1,
+      },
+      category: {
+        columns: {
+          id: true,
+          name: true,
+          slug: true,
+        },
+      },
+    },
+  });
+}

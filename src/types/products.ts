@@ -127,10 +127,9 @@ export interface WebProductAddons {
   price: number;
 }
 
-export interface WebProductDetails extends WebProduct {
+export interface WebProductDetails extends Omit<WebProduct, "imageUrl"> {
   images: WebProductImage[];
   description: string | null;
   allergenInfo: string | null;
   addons: WebProductAddons[];
-  relatedProducts: WebProduct[];
 }

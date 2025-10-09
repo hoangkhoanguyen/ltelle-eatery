@@ -4,6 +4,7 @@ import QuickCartButton from "./QuickCartButton";
 import Link from "next/link";
 import { webRoutes } from "@/constants/route";
 import { WebProduct } from "@/types/products";
+import { formatCurrencyWebsite } from "@/lib/utils";
 
 const ProductCard: FC<{ product: WebProduct; categoryLabel?: string }> = ({
   product,
@@ -20,7 +21,7 @@ const ProductCard: FC<{ product: WebProduct; categoryLabel?: string }> = ({
             {categoryLabel || product.category}
           </p>
           <Link
-            href={webRoutes.dish("caesar-salad")}
+            href={webRoutes.dish(product.slug)}
             className="text-web-h3-mobile lg:text-web-h3 text-web-content-1 mb-2.5 line-clamp-1"
           >
             {product.title}
@@ -31,7 +32,7 @@ const ProductCard: FC<{ product: WebProduct; categoryLabel?: string }> = ({
         </div>
         <div className="flex justify-between items-center">
           <span className="text-web-h4-mobile lg:text-web-h4 text-web-primary">
-            {product.price.toLocaleString()} VND
+            {formatCurrencyWebsite(product.price)}
           </span>
           <QuickCartButton data={{ id: product.id, title: product.title }} />
         </div>

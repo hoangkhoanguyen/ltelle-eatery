@@ -1,7 +1,9 @@
-import React from "react";
+import React, { FC } from "react";
 import RelatedProductsSlider from "./RelatedProductsSlider";
+import { WebProduct } from "@/types/products";
+import ProductCard from "../../shared/ProductCard";
 
-const RelatedProducts = () => {
+const RelatedProducts: FC<{ products: WebProduct[] }> = ({ products }) => {
   return (
     <section className="bg-web-background-2">
       <div className="container py-10">
@@ -9,7 +11,11 @@ const RelatedProducts = () => {
           You also like
         </h2>
         <div>
-          <RelatedProductsSlider>{[]}</RelatedProductsSlider>
+          <RelatedProductsSlider>
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </RelatedProductsSlider>
         </div>
       </div>
     </section>

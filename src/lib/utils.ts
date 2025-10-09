@@ -108,3 +108,7 @@ export function formatCurrency(
 export function splitTextByNewLine(text: string) {
   return text.split(/\r?\n/);
 }
+
+export function formatCurrencyWebsite(amount: number) {
+  return `${amount.toLocaleString("vi-VN")} VND`;
+}
