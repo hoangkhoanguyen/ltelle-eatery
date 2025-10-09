@@ -2,6 +2,7 @@ import React from "react";
 import { HeaderContacts } from "./HeaderContacts";
 import Logo from "./Logo";
 import DesktopMenu from "./DesktopMenu";
+import MobileMenu from "./MobileMenu";
 
 export default function Header({ configs }: { configs: any }) {
   return (
@@ -28,6 +29,7 @@ export default function Header({ configs }: { configs: any }) {
             </div>
           </div>
         </div>
+        <MobileMenu menu={configs.nav_bar} />
       </header>
     </>
   );

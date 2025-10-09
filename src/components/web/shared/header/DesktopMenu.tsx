@@ -1,37 +1,13 @@
-// import { webRoutes } from "@/constants/route";
 import Link from "next/link";
 import React, { FC } from "react";
 import CartButton from "./CartButton";
-import MobileMenu from "./MobileMenu";
+import MobileMenuButton from "./MobileMenuButton";
 
 interface IMenuItem {
   href: string;
   label: string;
   title: string;
 }
-
-// export const MENU: IMenuItem[] = [
-//   {
-//     href: webRoutes.home(),
-//     label: "Home",
-//     title: "Welcome to Our Table",
-//   },
-//   {
-//     href: webRoutes.menu("all"),
-//     label: "Menu",
-//     title: "Our Dishes & Drinks",
-//   },
-//   {
-//     href: webRoutes.reservation(),
-//     label: "Reservations",
-//     title: "Book Your Table",
-//   },
-//   {
-//     href: webRoutes.contact(),
-//     label: "Contact",
-//     title: "Get in Touch",
-//   },
-// ];
 
 const DesktopMenu: FC<{ menus: IMenuItem[] }> = ({ menus }) => {
   return (
@@ -45,7 +21,7 @@ const DesktopMenu: FC<{ menus: IMenuItem[] }> = ({ menus }) => {
           ))}
         </ul>
       </nav>
-      <MobileMenu />
+      <MobileMenuButton />
       <CartButton />
     </div>
   );
