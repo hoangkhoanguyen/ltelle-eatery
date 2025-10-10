@@ -689,6 +689,7 @@ export async function getProductDetailsBySlug(slug: string) {
 }
 
 export async function getMultipleProductsByIds(ids: number[]) {
+  if (!ids.length) return []; // Tránh query không cần thiết
   const db = getDb();
   return await db.query.products.findMany({
     where: and(eq(products.isActive, true), inArray(products.id, ids)),
@@ -716,4 +717,66 @@ export async function getMultipleProductsByIds(ids: number[]) {
       },
     },
   });
+}
+
+export async function getProductsDetailsByIds(ids: number[]): Promise<
+  (Pick<
+    WebProduct,
+    "id" | "category" | "imageUrl" | "price" | "slug" | "title"
+  > & {
+    addons: Pick<ProductAddOnDB, "id" | "name" | "price">[];
+  })[]
+> {
+  if (!ids.length) return []; // Tránh query không cần thiết
+
+  const db = getDb();
+
+  const productList = await db.query.products.findMany({
+    where: and(eq(products.isActive, true), inArray(products.id, ids)),
+    columns: {
+      id: true,
+      title: true,
+      price: true,
+      slug: true,
+    },
+    with: {
+      images: {
+        columns: {
+          url: true,
+          altText: true,
+        },
+        orderBy: [asc(productImages.sortOrder)],
+        limit: 1,
+      },
+      category: {
+        columns: {
+          id: true,
+          name: true,
+          slug: true,
+        },
+      },
+      addons: {
+        where(fields, operators) {
+          const { eq } = operators;
+          return eq(fields.isActive, true);
+        },
+        orderBy: [asc(productAddons.sortOrder)],
+        columns: {
+          id: true,
+          name: true,
+          price: true,
+        },
+      },
+    },
+  });
+
+  return productList.map((product) => ({
+    id: product.id,
+    slug: product.slug,
+    title: product.title,
+    price: product.price,
+    imageUrl: product.images[0]?.url || "",
+    category: product.category?.name || "",
+    addons: product.addons,
+  }));
 }

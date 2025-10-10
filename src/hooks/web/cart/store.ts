@@ -37,8 +37,8 @@ export const useCartStore = create<CartSlice>()(
           set((state) => ({
             context: {
               cart: [
-                ...state.context.cart,
                 { ...item, id: crypto.randomUUID() },
+                ...state.context.cart,
               ],
               length: state.context.cart.length + 1,
             },
@@ -61,6 +61,8 @@ export const useCartStore = create<CartSlice>()(
           }));
         },
         updateQuantity(id, quantity) {
+          if (quantity < 1) return;
+          console.log("quantity", quantity);
           set((state) => ({
             context: {
               ...state.context,

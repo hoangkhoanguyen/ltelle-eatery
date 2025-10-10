@@ -1,7 +1,11 @@
+"use client";
 import React from "react";
 import CartSubmit from "./CartSubmit";
+import { useCartContext } from "./CartProvider";
+import { formatCurrencyWebsite } from "@/lib/utils";
 
 const CartSummary = () => {
+  const { totalPrice } = useCartContext();
   return (
     <div>
       <hr className="border-t border-web-content-3 mb-1" />
@@ -14,7 +18,7 @@ const CartSummary = () => {
               Subtotal
             </span>
             <span className="uppercase text-web-h2-mobile lg:text-web-h2 text-web-secondary-1">
-              250.000 vnd
+              {formatCurrencyWebsite(totalPrice)}
             </span>
           </div>
           <p className="text-web-caption-mobile lg:text-web-caption text-web-content-1">

@@ -1,18 +1,20 @@
 import Image from "next/image";
-import React from "react";
+import React, { FC } from "react";
 import CartItemQuantity from "./CartItemQuantity";
 import CardItemAddons from "./CardItemAddons";
 import CartItemTotalPrice from "./CartItemTotalPrice";
 import CartItemNote from "./CartItemNote";
+import { CartItemDisplay } from "@/types/cart";
+import { formatCurrencyWebsite } from "@/lib/utils";
 
-const CartItem = () => {
+const CartItem: FC<{ item: CartItemDisplay }> = ({ item }) => {
   return (
     <div className="border-t border-web-content-3 pt-5">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-5">
         <div className="flex items-start gap-5">
           <div className="w-40 aspect-square relative overflow-hidden">
             <Image
-              src="/assets/static/product-image.png"
+              src={item.imageUrl}
               alt="Product Image"
               layout="fill"
               objectFit="cover"
@@ -21,27 +23,31 @@ const CartItem = () => {
 
           <div className="flex flex-col gap-2.5">
             <h3 className="text-web-body-mobile lg:text-web-body text-web-secondary-3 capitalize">
-              Starter
+              {item.category}
             </h3>
             <h2 className="text-web-h3-mobile lg:text-web-h3 text-web-content-1 capitalize">
-              Caesar Salad
+              {item.title}
             </h2>
             <p className="text-web-h4-mobile lg:text-web-h4">
               <span className="text-web-content-1">Price:</span>{" "}
               <span className="text-web-secondary-1 uppercase">
-                180.000 vnd
+                {formatCurrencyWebsite(item.price)}
               </span>
             </p>
           </div>
         </div>
         <div className="flex flex-col items-stretch gap-5">
-          <CartItemQuantity price={180000} />
-          <CardItemAddons />
+          <CartItemQuantity
+            price={item.price}
+            quantity={item.quantity}
+            id={item.id}
+          />
+          <CardItemAddons cartId={item.id} cartAddons={item.addons} />
           <hr className="border-web-content-3" />
-          <CartItemTotalPrice />
+          <CartItemTotalPrice totalPrice={item.totalPrice} />
         </div>
       </div>
-      <CartItemNote />
+      <CartItemNote cartId={item.id} note={item.notes} />
     </div>
   );
 };

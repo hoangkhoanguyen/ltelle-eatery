@@ -30,6 +30,7 @@ export const WEB_ROUTE = {
   reservation: "/reservation",
   contact: "/contact",
   cart: "/cart",
+  productsByIdsApi: "/api/products/ids",
 } as const;
 
 export const ROUTES = {
@@ -160,4 +161,10 @@ export const webRoutes = {
   reservation: () => WEB_ROUTE.reservation,
   contact: () => WEB_ROUTE.contact,
   cart: () => WEB_ROUTE.cart,
+  productsByIdsApi: (query: any) =>
+    `${WEB_ROUTE.productsByIdsApi}?${queryString.stringify(query, {
+      arrayFormat: "comma",
+      skipEmptyString: true,
+      skipNull: true,
+    })}`,
 };

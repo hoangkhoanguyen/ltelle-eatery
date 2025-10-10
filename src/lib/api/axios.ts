@@ -5,6 +5,7 @@ import axios, {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from "axios";
+import { th } from "zod/v4/locales";
 
 let refreshTokenPromise: any;
 
@@ -74,3 +75,7 @@ const adminApi = new HttpClient(
 ).instance;
 
 export default adminApi;
+
+export const webApi = new HttpClient("/", () => async (error: unknown) => {
+  throw error;
+}).instance;
