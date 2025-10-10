@@ -1,14 +1,14 @@
 import CheckoutForm from "@/components/web/features/checkout/CheckoutForm";
-import CheckoutItems from "@/components/web/features/checkout/CheckoutItems";
 import CheckoutProvider from "@/components/web/features/checkout/CheckoutProvider";
 import CheckoutSummary from "@/components/web/features/checkout/CheckoutSummary";
-import Note from "@/components/web/features/checkout/Note";
 import { getAppConfigsByKey } from "@/services/configs";
 import React from "react";
 
+export const dynamic = "force-dynamic";
+
 const page = async () => {
   const order = await getAppConfigsByKey("order");
-  console.log(order);
+
   return (
     <CheckoutProvider shippingRules={order?.value.shipping.rules}>
       <div className="container py-10">
