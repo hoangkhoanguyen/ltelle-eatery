@@ -1,4 +1,7 @@
+import InitSetting from "@/components/admin/features/settings/InitSetting";
+import SettingEditor from "@/components/admin/features/settings/SettingEditor";
 import { adminConfigs } from "@/constants/settings";
+import { getConfigsByKey } from "@/services/configs";
 import React from "react";
 
 const page = async ({
@@ -13,23 +16,19 @@ const page = async ({
     return <div>Invalid setting type {setting_type}</div>;
   }
 
-  const { getConfigsByKey, InitSettingComponent, SettingComponent } = settings;
+  const config = await getConfigsByKey(key, setting_type);
 
-  if (!getConfigsByKey || !InitSettingComponent || !SettingComponent) {
-    return <div>Settings not properly configured for {setting_type}</div>;
-  }
-
-  const config = await getConfigsByKey(key);
+  console.log("config", config);
 
   const meta = settings.meta[key as keyof typeof settings.meta];
 
   const initConfigs =
     settings.initConfigs?.[key as keyof typeof settings.initConfigs];
 
-  if (config) return <SettingComponent data={config} meta={meta} />;
+  if (config) return <SettingEditor data={config} meta={meta} />;
 
   if (initConfigs) {
-    return <InitSettingComponent initConfigs={initConfigs} />;
+    return <InitSetting initConfigs={initConfigs} />;
   }
 
   return <div>No configuration found for key: {key}</div>;

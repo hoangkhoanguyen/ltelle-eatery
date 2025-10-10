@@ -1,5 +1,5 @@
 import { persist } from "zustand/middleware";
-import { CartItem } from "@/types/cart";
+import { CartItem, CartItemDisplay } from "@/types/cart";
 import { create } from "zustand";
 import { toast } from "sonner";
 import { capitalize } from "lodash";
@@ -10,6 +10,7 @@ export interface CartItemsSlice {
 }
 
 export interface CartActionsSlice {
+  syncCart: () => void;
   addToCart: (item: Omit<CartItem, "id">, productName: string) => void;
   removeFromCart: (id: string) => void;
   clearCart: () => void;
@@ -21,6 +22,10 @@ export interface CartActionsSlice {
 export type CartSlice = {
   context: CartItemsSlice;
   actions: CartActionsSlice;
+  display: {
+    cartItems: CartItemDisplay[];
+    totalPrice: number;
+  };
 };
 
 const CART_STORAGE_KEY = "cart";
@@ -32,7 +37,15 @@ export const useCartStore = create<CartSlice>()(
         cart: [],
         length: 0,
       },
+      display: {
+        cartItems: [],
+        totalPrice: 0,
+      },
       actions: {
+        syncCart() {
+          const cart = get().context.cart;
+          console.log("cart", cart);
+        },
         addToCart: (item, productName) => {
           set((state) => ({
             context: {

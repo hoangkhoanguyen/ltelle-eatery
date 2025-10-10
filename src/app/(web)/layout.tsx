@@ -3,11 +3,12 @@ import Header from "@/components/web/shared/header/Header";
 import React, { FC, PropsWithChildren } from "react";
 import { Poppins } from "next/font/google";
 import localFont from "next/font/local";
-import { getUIConfigsByKey } from "@/services/ui-configs";
+
 import { WebsiteQueryProvider } from "@/providers/react-query-provider";
 import AnimationHeaderScroll from "@/components/web/shared/header/AnimationHeaderScroll";
 import { Toaster } from "sonner";
 import Icon from "@/components/common/Icon";
+import { getUIConfigsByKey } from "@/services/configs";
 
 const popinsSans = Poppins({
   variable: "--font-poppins-sans",

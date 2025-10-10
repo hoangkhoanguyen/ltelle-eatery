@@ -1,3 +1,14 @@
+CREATE TYPE "public"."status" AS ENUM('scheduled', 'confirmed', 'seated', 'completed', 'cancelled', 'no_show');--> statement-breakpoint
+CREATE TABLE "dev"."configs" (
+	"key" varchar(255) PRIMARY KEY NOT NULL,
+	"title" varchar(255) NOT NULL,
+	"config_type" varchar(20) NOT NULL,
+	"value" jsonb NOT NULL,
+	"description" text,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
 CREATE TABLE "dev"."users" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"username" varchar(100) NOT NULL,
@@ -9,8 +20,8 @@ CREATE TABLE "dev"."users" (
 	"avatar" text,
 	"role" varchar(50) DEFAULT 'user' NOT NULL,
 	"is_active" boolean DEFAULT true NOT NULL,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
 	CONSTRAINT "users_username_unique" UNIQUE("username"),
 	CONSTRAINT "users_email_unique" UNIQUE("email")
 );
@@ -20,8 +31,8 @@ CREATE TABLE "dev"."refresh_tokens" (
 	"user_id" integer NOT NULL,
 	"refresh_token" text NOT NULL,
 	"is_valid" boolean DEFAULT true NOT NULL,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "dev"."products" (
@@ -35,18 +46,20 @@ CREATE TABLE "dev"."products" (
 	"price" real DEFAULT 0 NOT NULL,
 	"related_product_ids" jsonb DEFAULT '[]'::jsonb NOT NULL,
 	"is_active" boolean DEFAULT false NOT NULL,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
 	CONSTRAINT "products_slug_unique" UNIQUE("slug")
 );
 --> statement-breakpoint
 CREATE TABLE "dev"."product_categories" (
 	"id" serial PRIMARY KEY NOT NULL,
+	"slug" varchar(255) NOT NULL,
 	"name" varchar(255) NOT NULL,
 	"is_active" boolean DEFAULT false NOT NULL,
 	"description" varchar(1024),
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
+	CONSTRAINT "product_categories_slug_unique" UNIQUE("slug")
 );
 --> statement-breakpoint
 CREATE TABLE "dev"."product_images" (
@@ -56,8 +69,8 @@ CREATE TABLE "dev"."product_images" (
 	"product_id" integer NOT NULL,
 	"is_primary" boolean DEFAULT false NOT NULL,
 	"sort_order" integer DEFAULT 0 NOT NULL,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "dev"."product_addons" (
@@ -67,8 +80,8 @@ CREATE TABLE "dev"."product_addons" (
 	"sort_order" integer DEFAULT 0 NOT NULL,
 	"price" real DEFAULT 0 NOT NULL,
 	"is_active" boolean DEFAULT true NOT NULL,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "dev"."customers" (
@@ -79,8 +92,8 @@ CREATE TABLE "dev"."customers" (
 	"last_used_address" text,
 	"last_used_order_type" varchar(20),
 	"is_active" boolean DEFAULT true NOT NULL,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "dev"."order_item_addons" (
@@ -91,8 +104,8 @@ CREATE TABLE "dev"."order_item_addons" (
 	"price" real NOT NULL,
 	"quantity" integer NOT NULL,
 	"total_price" real NOT NULL,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "dev"."order_items" (
@@ -104,8 +117,8 @@ CREATE TABLE "dev"."order_items" (
 	"quantity" integer NOT NULL,
 	"total_price" real NOT NULL,
 	"note" text DEFAULT '' NOT NULL,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "dev"."orders" (
@@ -124,7 +137,7 @@ CREATE TABLE "dev"."orders" (
 	"status" varchar(20) DEFAULT 'pending' NOT NULL,
 	"payment_method" varchar(50) NOT NULL,
 	"shipping_fee" real DEFAULT 0 NOT NULL,
-	"created_at" timestamp DEFAULT now() NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "orders_uuid_unique" UNIQUE("uuid"),
 	CONSTRAINT "orders_code_unique" UNIQUE("code")
@@ -135,45 +148,32 @@ CREATE TABLE "dev"."order_status_history" (
 	"order_id" integer NOT NULL,
 	"previous_status" varchar(50) NOT NULL,
 	"new_status" varchar(50) NOT NULL,
-	"created_at" timestamp DEFAULT now() NOT NULL
-);
---> statement-breakpoint
-CREATE TABLE "dev"."app_configs" (
-	"key" varchar(255) PRIMARY KEY NOT NULL,
-	"value" jsonb NOT NULL,
-	"category" varchar(100) NOT NULL,
-	"description" text,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL
-);
---> statement-breakpoint
-CREATE TABLE "dev"."ui_configs" (
-	"key" varchar(255) NOT NULL,
-	"scope" varchar(50) NOT NULL,
-	"value" jsonb NOT NULL,
-	"category" varchar(100) NOT NULL,
-	"description" text,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL,
-	CONSTRAINT "ui_configs_key_scope_pk" PRIMARY KEY("key","scope")
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "dev"."reservations" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"uuid" uuid DEFAULT gen_random_uuid() NOT NULL,
 	"code" varchar(50) NOT NULL,
-	"customer_first_name" varchar(255) NOT NULL,
-	"customer_last_name" varchar(255) NOT NULL,
+	"customer_full_name" varchar(255) NOT NULL,
 	"customer_phone" varchar(20) NOT NULL,
 	"note" text DEFAULT '' NOT NULL,
 	"internal_note" text DEFAULT '' NOT NULL,
 	"number_of_people" integer DEFAULT 1 NOT NULL,
-	"arrival_time" timestamp NOT NULL,
-	"status" varchar(20) DEFAULT 'scheduled' NOT NULL,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL,
+	"arrival_time" timestamp with time zone NOT NULL,
+	"status" "status" DEFAULT 'scheduled' NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
 	CONSTRAINT "reservations_uuid_unique" UNIQUE("uuid"),
 	CONSTRAINT "reservations_code_unique" UNIQUE("code")
+);
+--> statement-breakpoint
+CREATE TABLE "dev"."reservation_status_history" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"reservation_id" integer NOT NULL,
+	"previous_status" varchar(50) NOT NULL,
+	"new_status" varchar(50) NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 ALTER TABLE "dev"."product_addons" ADD CONSTRAINT "product_addons_product_id_products_id_fk" FOREIGN KEY ("product_id") REFERENCES "dev"."products"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
@@ -181,4 +181,5 @@ ALTER TABLE "dev"."order_item_addons" ADD CONSTRAINT "order_item_addons_addon_id
 ALTER TABLE "dev"."order_item_addons" ADD CONSTRAINT "order_item_addons_order_item_id_order_items_id_fk" FOREIGN KEY ("order_item_id") REFERENCES "dev"."order_items"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "dev"."order_items" ADD CONSTRAINT "order_items_product_id_products_id_fk" FOREIGN KEY ("product_id") REFERENCES "dev"."products"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "dev"."order_items" ADD CONSTRAINT "order_items_order_id_orders_id_fk" FOREIGN KEY ("order_id") REFERENCES "dev"."orders"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "dev"."order_status_history" ADD CONSTRAINT "order_status_history_order_id_orders_id_fk" FOREIGN KEY ("order_id") REFERENCES "dev"."orders"("id") ON DELETE no action ON UPDATE no action;
+ALTER TABLE "dev"."order_status_history" ADD CONSTRAINT "order_status_history_order_id_orders_id_fk" FOREIGN KEY ("order_id") REFERENCES "dev"."orders"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "dev"."reservation_status_history" ADD CONSTRAINT "reservation_status_history_reservation_id_reservations_id_fk" FOREIGN KEY ("reservation_id") REFERENCES "dev"."reservations"("id") ON DELETE no action ON UPDATE no action;

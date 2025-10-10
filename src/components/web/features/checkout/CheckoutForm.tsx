@@ -1,57 +1,187 @@
 "use client";
-import React from "react";
+import React, { FC } from "react";
 import { RadioItem } from "../../ui/form";
+import { useCheckoutContext } from "./CheckoutProvider";
+import { Controller, useWatch } from "react-hook-form";
+import { Button } from "../../ui/button";
+import { cn, formatCurrencyWebsite } from "@/lib/utils";
+import { EShippingMethod } from "@/types/app-configs";
+import Icon from "@/components/common/Icon";
+import Link from "next/link";
+import { webRoutes } from "@/constants/route";
 
-const CheckoutForm = () => {
+const CheckoutForm: FC<{ shippingMethods: any }> = ({ shippingMethods }) => {
+  const { control, onCheckout, totalPrice } = useCheckoutContext();
+
+  const shippingMethod = useWatch({
+    control,
+    name: "shippingMethod",
+  });
+
   return (
     <div className="grid grid-cols-1 gap-10">
       <div className="grid grid-cols-1 gap-5">
         <h2 className="text-web-h2-mobile lg:text-web-h2 text-web-content-1">
           Contact
         </h2>
-        <input
-          type="tel"
-          className="web-input"
-          placeholder="Phone number in Vietnam"
+
+        <Controller
+          control={control}
+          name="customerPhone"
+          render={({ field, fieldState: { error } }) => (
+            <div>
+              <input
+                {...field}
+                type="tel"
+                className={cn("web-input", !!error && " web-input-error")}
+                placeholder="Phone number in Vietnam"
+              />
+              {error?.message && (
+                <p className="text-web-error text-xs mt-1">{error.message}</p>
+              )}
+            </div>
+          )}
         />
-        <input type="text" className="web-input" placeholder="First name" />
-        <input type="text" className="web-input" placeholder="Last name" />
+        <Controller
+          control={control}
+          name="customerFirstName"
+          render={({ field, fieldState: { error } }) => (
+            <div>
+              <input
+                {...field}
+                type="text"
+                className={cn("web-input", !!error && " web-input-error")}
+                placeholder="First name"
+              />
+              {error?.message && (
+                <p className="text-web-error text-xs mt-1">{error.message}</p>
+              )}
+            </div>
+          )}
+        />
+        <Controller
+          control={control}
+          name="customerLastName"
+          render={({ field, fieldState: { error } }) => (
+            <div>
+              <input
+                {...field}
+                type="text"
+                className={cn("web-input", !!error && " web-input-error")}
+                placeholder="Last name"
+              />
+              {error?.message && (
+                <p className="text-web-error text-xs mt-1">{error.message}</p>
+              )}
+            </div>
+          )}
+        />
+
         <h2 className="text-web-h2-mobile lg:text-web-h2 text-web-content-1">
           Payment Method
         </h2>
-        <RadioItem checked={true} onChange={() => {}} label="Only Cash" />
+        <Controller
+          control={control}
+          name="paymentMethod"
+          render={({ field }) => (
+            <RadioItem
+              checked={field.value === "cash"}
+              onChange={() => field.onChange("cash")}
+              label="Only Cash"
+            />
+          )}
+        />
       </div>
 
       <div className="grid grid-cols-1 gap-5">
         <h2 className="text-web-h2-mobile lg:text-web-h2 text-web-content-1">
           Shipping Method
         </h2>
-        <div className="flex flex-col gap-10">
-          <div className="flex flex-col gap-5">
-            <p className="text-web-subtitle-mobile lg:text-web-subtitle text-web-content-2">
-              We will free shipping for orders over 500,000 VND and within a
-              radius of 5km, greater than 5km we will support you 30,000 VND. If
-              the order is under 500,000 VND we will charge 30,000 VND for
-              shipping fee.
-            </p>
-            <RadioItem
-              checked={true}
-              onChange={() => {}}
-              label="Door-to-door Delivery"
-            />
-          </div>
-          <div className="flex flex-col gap-5">
-            <p className="text-web-subtitle-mobile lg:text-web-subtitle text-web-content-2">
-              When you select this option, restaurant staff will contact you to
-              ask for your pick-up time.
-            </p>
-            <RadioItem
-              checked={true}
-              onChange={() => {}}
-              label="Pick up restaurant"
-            />
-          </div>
+        <Controller
+          control={control}
+          name="shippingMethod"
+          render={({ field: { value, onChange } }) => (
+            <div className="flex flex-col gap-10">
+              {shippingMethods.map((method: any) => (
+                <div className="flex flex-col gap-5" key={method.method}>
+                  <p className="text-web-subtitle-mobile lg:text-web-subtitle text-web-content-2">
+                    {method.description}
+                  </p>
+                  <RadioItem
+                    checked={value === method.method}
+                    onChange={() => onChange(method.method)}
+                    label={method.label}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+        />
+      </div>
+
+      {shippingMethod === EShippingMethod.door2door && (
+        <div className="grid grid-cols-1 gap-5">
+          <h2 className="text-web-h2-mobile lg:text-web-h2 text-web-content-1">
+            Delivery
+          </h2>
+          <p className="text-web-subtitle-mobile lg:text-web-subtitle text-web-content-2">
+            We will deliver within a 10km radius. If your address is too far
+            from the restaurant, we will call to confirm with you.
+          </p>
+          <Controller
+            control={control}
+            name="deliveryAddress"
+            render={({ field, fieldState: { error } }) => (
+              <div>
+                <input
+                  {...field}
+                  type="text"
+                  className={cn("web-input", !!error && " web-input-error")}
+                  placeholder="Delivery address"
+                />
+                {error?.message && (
+                  <p className="text-web-error text-xs mt-1">{error.message}</p>
+                )}
+              </div>
+            )}
+          />
+
+          <Controller
+            control={control}
+            name="addressNote"
+            render={({ field, fieldState: { error } }) => (
+              <div>
+                <input
+                  {...field}
+                  type="text"
+                  className={cn("web-input", !!error && " web-input-error")}
+                  placeholder="Apartment, Homestay, etc (optional)"
+                />
+                {error?.message && (
+                  <p className="text-web-error text-xs mt-1">{error.message}</p>
+                )}
+              </div>
+            )}
+          />
         </div>
+      )}
+      <div className="py-2 border-t border-web-content-3 flex items-stretch gap-4">
+        <Button
+          as={Link}
+          href={webRoutes.menu("")}
+          variant={"secondary1"}
+          startIcon={<Icon icon="ph:fork-knife-fill" className="text-2xl" />}
+          className="gap-1 flex-col text-web-background-1 text-web-button-mobile lg:text-web-button"
+        >
+          Menu
+        </Button>
+        <Button
+          onClick={onCheckout}
+          className="w-full text-web-button-mobile lg:text-web-button py-5 text-web-background-1"
+          variant={"secondary1"}
+        >
+          Complete the Order &bull; {formatCurrencyWebsite(totalPrice)}
+        </Button>
       </div>
     </div>
   );

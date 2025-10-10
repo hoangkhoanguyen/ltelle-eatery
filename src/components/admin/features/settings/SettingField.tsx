@@ -8,6 +8,7 @@ import SettingBooleanField from "./fields/SettingBooleanField";
 import SettingTextareaField from "./fields/SettingTextareaField";
 import SettingArrayField from "./fields/SettingArrayField";
 import { omit } from "lodash";
+import SettingNumberField from "./fields/SettingNumberField";
 
 const SettingField: FC<{
   item: FieldType;
@@ -18,6 +19,14 @@ const SettingField: FC<{
     case "text":
       return (
         <SettingTextField
+          control={control}
+          name={name}
+          {...omit(item, "type", "key")}
+        />
+      );
+    case "number":
+      return (
+        <SettingNumberField
           control={control}
           name={name}
           {...omit(item, "type", "key")}

@@ -4,7 +4,7 @@ import DefaultBookingSection from "@/components/web/features/reservation/Default
 import SectionSubTitleFromConfigs from "@/components/web/shared/SectionSubTitleFromConfigs";
 import SectionTitleFromConfigs from "@/components/web/shared/SectionTitleFromConfigs";
 import { Button } from "@/components/web/ui/button";
-import { getUIConfigsByKey } from "@/services/ui-configs";
+import { getUIConfigsByKey } from "@/services/configs";
 import Image from "next/image";
 import React from "react";
 

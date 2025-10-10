@@ -8,12 +8,12 @@ import {
   varchar,
 } from "drizzle-orm/pg-core";
 
-export const uiConfigs = dbSchema.table(
-  "ui_configs",
+export const configs = dbSchema.table(
+  "configs",
   {
     key: varchar("key", { length: 255 }).notNull(),
     title: varchar("title", { length: 255 }).notNull(),
-    scope: varchar("scope", { length: 50 }).notNull(),
+    config_type: varchar("config_type", { length: 20 }).notNull(), // 'app' | 'ui'
     value: jsonb("value").$type<Config>().notNull(),
     description: text("description"),
     createdAt: timestamp("created_at", {
@@ -28,12 +28,15 @@ export const uiConfigs = dbSchema.table(
       .defaultNow(),
   },
   (table) => ({
-    pk: primaryKey({ columns: [table.key, table.scope] }),
+    pk: primaryKey({
+      name: "pk_configs",
+      columns: [table.key, table.config_type],
+    }),
   }),
 );
 
-export type UIConfigDB = typeof uiConfigs.$inferSelect;
-export type NewUIConfigDB = typeof uiConfigs.$inferInsert;
-export type UpdateUIConfigDB = Partial<
-  Omit<UIConfigDB, "key" | "scope" | "createdAt" | "updatedAt">
+export type ConfigDB = typeof configs.$inferSelect;
+export type NewConfigDB = typeof configs.$inferInsert;
+export type UpdateConfigDB = Partial<
+  Omit<ConfigDB, "key" | "createdAt" | "updatedAt">
 >;

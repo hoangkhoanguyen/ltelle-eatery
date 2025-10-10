@@ -1,4 +1,4 @@
-import { Config } from "./configs";
+import { Config, ConfigValue } from "./configs";
 
 export interface CommonField {
   key: string;
@@ -69,4 +69,5 @@ export interface ISetting {
   key: string;
   description?: string | null;
   value: Config;
+  config_type: string;
 }

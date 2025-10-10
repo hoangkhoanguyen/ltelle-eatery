@@ -1,3 +1,4 @@
+import { MetaValue } from "@/types/settings";
 import { homepageMeta, initialHomepageConfig } from "./homepage";
 import { initialLayoutConfig, layoutMeta } from "./layout";
 import { initialMenuPageConfig, menuPageMeta } from "./menu-page";
@@ -32,7 +33,7 @@ export const initUIConfigs = {
   reservation_page: initialReservationPageConfig,
 };
 
-export const uiMeta = {
+export const uiMeta: Record<string, MetaValue[]> = {
   homepage: homepageMeta,
   layout: layoutMeta,
   menu_page: menuPageMeta,

@@ -88,7 +88,7 @@ export const headerMeta: MetaValue = {
             key: "title",
             type: "text",
             label: "Tiêu đề",
-            description: "Tiêu đề hiển thị trên thanh điều hướng",
+            description: "Tốt cho SEO",
             isRequired: true,
             placeholder: "Nhập tiêu đề (Dùng để SEO)",
           },

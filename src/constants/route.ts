@@ -30,6 +30,7 @@ export const WEB_ROUTE = {
   reservation: "/reservation",
   contact: "/contact",
   cart: "/cart",
+  checkout: "/checkout",
   productsByIdsApi: "/api/products/ids",
 } as const;
 
@@ -167,4 +168,5 @@ export const webRoutes = {
       skipEmptyString: true,
       skipNull: true,
     })}`,
+  checkout: () => WEB_ROUTE.checkout,
 };

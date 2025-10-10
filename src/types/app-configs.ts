@@ -1,5 +1,4 @@
-export interface ShippingFeeConfig {
-  amount: number;
-  minOrderValue: number;
-  description: string;
+export enum EShippingMethod {
+  door2door = "door2door",
+  pickup = "pickup",
 }

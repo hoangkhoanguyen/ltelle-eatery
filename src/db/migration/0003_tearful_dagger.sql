@@ -1,2 +1,0 @@
-ALTER TABLE "dev"."product_categories" ADD COLUMN "slug" varchar(255) NOT NULL;--> statement-breakpoint
-ALTER TABLE "dev"."product_categories" ADD CONSTRAINT "product_categories_slug_unique" UNIQUE("slug");

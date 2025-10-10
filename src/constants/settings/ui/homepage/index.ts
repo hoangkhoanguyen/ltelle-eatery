@@ -1,6 +1,6 @@
 import { MetaValue } from "@/types/settings";
 import { heroInitialValue, heroMeta } from "./hero";
-import { NewUIConfigDB } from "@/db/schemas";
+import { NewConfigDB } from "@/db/schemas";
 import { ourStoryInitialValue, ourStoryMeta } from "./our-story";
 import { whyChooseUsInitialValue, whyChooseUsMeta } from "./why-choose-us";
 import { galleryInitValue, galleryMeta } from "./gallery";
@@ -16,10 +16,10 @@ export const homepageMeta: MetaValue[] = [
   contactMeta,
 ];
 
-export const initialHomepageConfig: NewUIConfigDB = {
+export const initialHomepageConfig: NewConfigDB = {
   key: "homepage",
   title: "Cấu hình trang chủ",
-  scope: "website",
+  config_type: "ui",
   description: "Cấu hình các phần giao diện của trang chủ",
   value: {
     hero: heroInitialValue,

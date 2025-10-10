@@ -3,7 +3,7 @@ import { MetaValue } from "@/types/settings";
 import { introductionInitValue, introductionMeta } from "./introduction";
 import { foodCategoriesInitValue, foodCategoriesMeta } from "./food-categories";
 import { newProductInitValue, newProductMeta } from "./new-product";
-import { NewUIConfigDB } from "@/db/schemas";
+import { NewConfigDB } from "@/db/schemas";
 import { whyChooseUsInitialValue, whyChooseUsMeta } from "./why-choose-us";
 
 export const menuPageMeta: MetaValue[] = [
@@ -14,10 +14,10 @@ export const menuPageMeta: MetaValue[] = [
   whyChooseUsMeta,
 ];
 
-export const initialMenuPageConfig: NewUIConfigDB = {
+export const initialMenuPageConfig: NewConfigDB = {
   key: "menu_page",
   title: "Cấu hình trang Menu",
-  scope: "website",
+  config_type: "ui",
   description: "Cấu hình các phần giao diện của trang Menu",
   value: {
     hero: heroInitValue,
