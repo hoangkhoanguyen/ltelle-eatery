@@ -11,7 +11,7 @@ import Link from "next/link";
 import { webRoutes } from "@/constants/route";
 
 const CheckoutForm: FC<{ shippingMethods: any }> = ({ shippingMethods }) => {
-  const { control, onCheckout, totalPrice } = useCheckoutContext();
+  const { control, onCheckout, totalPrice, cartItems } = useCheckoutContext();
 
   const shippingMethod = useWatch({
     control,
@@ -177,6 +177,7 @@ const CheckoutForm: FC<{ shippingMethods: any }> = ({ shippingMethods }) => {
           Menu
         </Button>
         <Button
+          disabled={cartItems.length === 0}
           onClick={onCheckout}
           className="w-full text-web-button-mobile lg:text-web-button py-5 text-web-background-1"
           variant={"secondary1"}

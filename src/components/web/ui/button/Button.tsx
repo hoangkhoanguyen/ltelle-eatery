@@ -6,7 +6,8 @@ const buttonVariants = cva("", {
   variants: {
     variant: {
       primary: "text-web-background-1 bg-web-primary",
-      secondary1: "text-web-content-1 bg-web-secondary-1",
+      secondary1:
+        "text-web-content-1 bg-web-secondary-1 disabled:bg-web-secondary-1/40",
       secondary2: "text-web-content-1 bg-web-secondary-2",
       white:
         "text-web-content-1 bg-web-background-1 border border-web-background-2 disabled:text-web-content-3 disabled:border-web-content-3",
