@@ -165,7 +165,8 @@ const CheckoutForm: FC<{ shippingMethods: any }> = ({ shippingMethods }) => {
           />
         </div>
       )}
-      <div className="py-2 border-t border-web-content-3 flex items-stretch gap-4">
+
+      <div className="py-2 border-t border-web-content-3 items-stretch gap-4 flex fixed bottom-0 left-0 right-0 bg-web-background-1 px-3 lg:px-0 lg:relative lg:inset-0">
         <Button
           as={Link}
           href={webRoutes.menu("")}

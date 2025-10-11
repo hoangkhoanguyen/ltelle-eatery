@@ -1,8 +1,11 @@
+"use client";
 import React from "react";
 import { Button } from "../../ui/button";
 import Icon from "@/components/common/Icon";
+import { useCheckoutContext } from "./CheckoutProvider";
 
 const Note = () => {
+  const {} = useCheckoutContext();
   return (
     <div className="bg-web-secondary-2 lg:bg-web-background-1 rounded-lg p-5">
       <p className="text-web-h4-mobile lg:text-web-h4 text-web-content-2">

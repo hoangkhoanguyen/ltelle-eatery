@@ -1,23 +1,25 @@
-import { webRoutes } from "@/constants/route";
-import { webApi } from "@/lib/api/axios";
-import { ProductAddOnDB, WebProduct } from "@/types/products";
-import { useQuery } from "@tanstack/react-query";
+import { getCartProductsByIdsAction } from "@/actions/web/cart";
+import { useMutation } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 const useGetProductsDetailsByIds = ({ ids }: { ids: number[] }) => {
-  return useQuery({
-    queryKey: ["web", "products", "details", "by-ids", { ids }],
-    queryFn: (): Promise<{
-      products: (Pick<
-        WebProduct,
-        "id" | "category" | "imageUrl" | "price" | "slug" | "title"
-      > & {
-        addons: Pick<ProductAddOnDB, "id" | "name" | "price">[];
-      })[];
-    }> => webApi.get(webRoutes.productsByIdsApi({ ids })),
-    select(data) {
-      return data.products;
-    },
+  const {
+    mutate,
+    isPending,
+    data = [],
+  } = useMutation({
+    mutationKey: ["get-cart-products-by-ids", { ids }],
+    mutationFn: getCartProductsByIdsAction,
   });
+
+  useEffect(() => {
+    if (ids.length === 0) {
+      return;
+    }
+    mutate({ ids });
+  }, [ids, mutate]);
+
+  return { data, isLoading: isPending };
 };
 
 export default useGetProductsDetailsByIds;
