@@ -809,7 +809,7 @@ export const getProductDetailsBySlugCached = createDynamicCachedFunction(
   getProductDetailsBySlug,
   (slug) => ["products", "details", "slug", slug],
   (slug) => [CACHE_TAGS.PRODUCTS.BY_SLUG(slug)],
-  CACHE_DURATIONS.REALTIME,
+  CACHE_DURATIONS.SHORT,
 );
 
 export const getProductsByCategorySlugCached = createDynamicCachedFunction(
