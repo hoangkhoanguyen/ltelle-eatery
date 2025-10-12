@@ -7,6 +7,8 @@ import { WhyChooseUsSection } from "@/components/web/shared/WhyChooseUsSection";
 import { getUIConfigsByKeyCached } from "@/services/configs";
 import React from "react";
 
+export const dynamic = "force-dynamic";
+
 const HomePage = async () => {
   const homeConfig = await getUIConfigsByKeyCached("homepage");
 
