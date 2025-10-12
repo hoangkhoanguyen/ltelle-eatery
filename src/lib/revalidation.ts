@@ -94,7 +94,7 @@ export const revalidateHelpers = {
   reservationStatusChanged: () => revalidateAction("RESERVATION_STATUS_UPDATE"),
 
   // ==================== SPECIFIC CACHE INVALIDATION ====================
-  
+
   // Images
   imageUploaded: (productId?: number) => {
     revalidateAction("IMAGE_UPLOAD");
@@ -102,7 +102,7 @@ export const revalidateHelpers = {
       revalidateTags([`products:item:${productId}`]);
     }
   },
-  
+
   imageDeleted: (productId?: number) => {
     revalidateAction("IMAGE_DELETE");
     if (productId) {
@@ -117,14 +117,14 @@ export const revalidateHelpers = {
       revalidateTags([`products:item:${productId}`]);
     }
   },
-  
+
   addonUpdated: (productId?: number) => {
     revalidateAction("ADDON_UPDATE");
     if (productId) {
       revalidateTags([`products:item:${productId}`]);
     }
   },
-  
+
   addonDeleted: (productId?: number) => {
     revalidateAction("ADDON_DELETE");
     if (productId) {
@@ -142,18 +142,18 @@ export const revalidateHelpers = {
       revalidateTags([
         `categories:item:${categoryId}`,
         `products:item:${productId}`,
-        `products:category:${categoryId}`
+        `products:category:${categoryId}`,
       ]);
     }
   },
-  
+
   categoryProductRemoved: (categoryId?: number, productId?: number) => {
     revalidateAction("CATEGORY_PRODUCT_REMOVE");
     if (categoryId && productId) {
       revalidateTags([
         `categories:item:${categoryId}`,
         `products:item:${productId}`,
-        `products:category:${categoryId}`
+        `products:category:${categoryId}`,
       ]);
     }
   },
@@ -166,7 +166,7 @@ export const revalidateHelpers = {
   fullRefresh: () => revalidateAction("FULL_REFRESH"),
 
   // ==================== DYNAMIC TAG INVALIDATION ====================
-  
+
   // Invalidate specific product by ID
   invalidateProduct: (productId: number) => {
     revalidateTags([`products:item:${productId}`]);

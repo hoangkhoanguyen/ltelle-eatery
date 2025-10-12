@@ -22,9 +22,9 @@ export const REVALIDATION_MAP = {
     CACHE_TAGS.PRODUCTS.ADMIN_LIST,
     CACHE_TAGS.PRODUCTS.DETAILS,
     CACHE_TAGS.PRODUCTS.RELATED,
-    CACHE_TAGS.CATEGORIES.ALL,           // Categories might be affected
-    CACHE_TAGS.CATEGORIES.ACTIVE,        // Category lists
-    CACHE_TAGS.LAYOUT.WEB,              // Layout might show product info
+    CACHE_TAGS.CATEGORIES.ALL, // Categories might be affected
+    CACHE_TAGS.CATEGORIES.ACTIVE, // Category lists
+    CACHE_TAGS.LAYOUT.WEB, // Layout might show product info
   ],
 
   PRODUCT_DELETE: [
@@ -33,7 +33,7 @@ export const REVALIDATION_MAP = {
     CACHE_TAGS.PRODUCTS.ADMIN_LIST,
     CACHE_TAGS.PRODUCTS.DETAILS,
     CACHE_TAGS.PRODUCTS.RELATED,
-    CACHE_TAGS.CATEGORIES.ALL,           // Category counts affected
+    CACHE_TAGS.CATEGORIES.ALL, // Category counts affected
     CACHE_TAGS.CATEGORIES.ACTIVE,
     CACHE_TAGS.LAYOUT.WEB,
   ],
@@ -164,7 +164,7 @@ export const REVALIDATION_MAP = {
 
   // ==================== CART ACTIONS ====================
   CART_UPDATE: [
-    CACHE_TAGS.PRODUCTS.ALL,  // Cart validation might need product data
+    CACHE_TAGS.PRODUCTS.ALL, // Cart validation might need product data
   ],
 
   // ==================== CATEGORY RELATION ACTIONS ====================

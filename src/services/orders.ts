@@ -401,7 +401,7 @@ export async function updateOrderInternalNote(
 export const getAdminOrderByIdCached = createDynamicCachedFunction(
   getAdminOrderById,
   (id) => ["orders", "admin", "item", id.toString()],
-  (id) => [CACHE_TAGS.ORDERS.BY_ID(id)]
+  (id) => [CACHE_TAGS.ORDERS.BY_ID(id)],
 );
 
 // ==================== ADMIN CACHED VERSIONS ====================
@@ -409,14 +409,16 @@ export const getAdminOrderByIdCached = createDynamicCachedFunction(
 export const getAdminOrderTableCached = createDynamicCachedFunction(
   getAdminOrderTable,
   (params) => [
-    'admin', 'orders', 'table', 
-    (params.limit || 20).toString(), 
-    (params.page || 1).toString(), 
-    params.search || 'null',
-    params.start_date || 'null',
-    params.end_date || 'null',
-    (params.status || []).join(',') || 'null',
-    (params.order_type || []).join(',') || 'null'
+    "admin",
+    "orders",
+    "table",
+    (params.limit || 20).toString(),
+    (params.page || 1).toString(),
+    params.search || "null",
+    params.start_date || "null",
+    params.end_date || "null",
+    (params.status || []).join(",") || "null",
+    (params.order_type || []).join(",") || "null",
   ],
-  () => [CACHE_TAGS.ORDERS.ADMIN_LIST]
+  () => [CACHE_TAGS.ORDERS.ADMIN_LIST],
 );

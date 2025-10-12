@@ -839,24 +839,34 @@ export const getProductsDetailsByIdsCached = createDynamicCachedFunction(
 
 export const getAdminProductTableCached = createDynamicCachedFunction(
   getAdminProductTable,
-  (params) => ['admin', 'products', 'table', (params.limit || 20).toString(), (params.page || 1).toString(), params.search || 'null'],
-  () => [CACHE_TAGS.PRODUCTS.ADMIN_LIST, CACHE_TAGS.CATEGORIES.ALL]
+  (params) => [
+    "admin",
+    "products",
+    "table",
+    (params.limit || 20).toString(),
+    (params.page || 1).toString(),
+    params.search || "null",
+  ],
+  () => [CACHE_TAGS.PRODUCTS.ADMIN_LIST, CACHE_TAGS.CATEGORIES.ALL],
 );
 
 export const getAdminProductByIdCached = createDynamicCachedFunction(
   getAdminProductById,
-  (id) => ['admin', 'products', 'item', id.toString()],
-  (id) => [CACHE_TAGS.PRODUCTS.BY_ID(id)]
+  (id) => ["admin", "products", "item", id.toString()],
+  (id) => [CACHE_TAGS.PRODUCTS.BY_ID(id)],
 );
 
 export const getAdminProductDetailsByIdCached = createDynamicCachedFunction(
   getAdminProductDetailsById,
-  (id) => ['admin', 'products', 'details', id.toString()],
-  (id) => [CACHE_TAGS.PRODUCTS.BY_ID(id)]
+  (id) => ["admin", "products", "details", id.toString()],
+  (id) => [CACHE_TAGS.PRODUCTS.BY_ID(id)],
 );
 
 export const getCategoryWithProductsCached = createDynamicCachedFunction(
   getCategoryWithProducts,
-  (id) => ['admin', 'categories', 'with-products', id.toString()],
-  (id) => [CACHE_TAGS.CATEGORIES.BY_ID(id), CACHE_TAGS.PRODUCTS.BY_CATEGORY(id)]
+  (id) => ["admin", "categories", "with-products", id.toString()],
+  (id) => [
+    CACHE_TAGS.CATEGORIES.BY_ID(id),
+    CACHE_TAGS.PRODUCTS.BY_CATEGORY(id),
+  ],
 );

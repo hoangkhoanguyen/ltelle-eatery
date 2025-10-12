@@ -174,7 +174,7 @@ export const getReservationByUuidCached = createDynamicCachedFunction(
 export const getAdminReservationByIdCached = createDynamicCachedFunction(
   getAdminReservationById,
   (id) => ["reservations", "admin", "item", id.toString()],
-  (id) => [CACHE_TAGS.RESERVATIONS.BY_ID(id)]
+  (id) => [CACHE_TAGS.RESERVATIONS.BY_ID(id)],
 );
 
 // ==================== ADMIN CACHED VERSIONS ====================
@@ -182,11 +182,13 @@ export const getAdminReservationByIdCached = createDynamicCachedFunction(
 export const getAdminReservationTableCached = createDynamicCachedFunction(
   getAdminReservationTable,
   (params) => [
-    'admin', 'reservations', 'table',
+    "admin",
+    "reservations",
+    "table",
     (params.limit || 20).toString(),
     (params.page || 1).toString(),
-    params.search || 'null',
-    (params.status || []).join(',') || 'null'
+    params.search || "null",
+    (params.status || []).join(",") || "null",
   ],
-  () => [CACHE_TAGS.RESERVATIONS.ADMIN_LIST]
+  () => [CACHE_TAGS.RESERVATIONS.ADMIN_LIST],
 );
