@@ -26,6 +26,7 @@ export const dynamic = "force-dynamic";
 
 const Layout: FC<PropsWithChildren> = async ({ children }) => {
   console.log("env", getEnv());
+
   const configs = await getUIConfigsByKeyCached("layout");
 
   return (
