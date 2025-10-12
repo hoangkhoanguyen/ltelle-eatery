@@ -17,6 +17,12 @@ import {
   WebProduct,
 } from "@/types/products";
 import { eq, inArray, count, ilike, and, or, desc, ne, asc } from "drizzle-orm";
+import {
+  createCachedFunction,
+  createDynamicCachedFunction,
+  CACHE_DURATIONS,
+} from "@/lib/cache-utils";
+import { CACHE_TAGS } from "@/constants/cache";
 
 export async function addProductCategory(categoryData: NewProductCategoryDB) {
   const db = getDb();
@@ -609,6 +615,7 @@ export async function getProductsByCategorySlug(
  * Lấy thông tin product theo slug cho việc hiển thị card
  */
 export async function getProductBySlug(slug: string) {
+  console.log("get product by slug called");
   const db = getDb();
 
   const product = await db.query.products.findFirst({
@@ -780,3 +787,57 @@ export async function getProductsDetailsByIds(ids: number[]): Promise<
     addons: product.addons,
   }));
 }
+
+// ==================== CACHED VERSIONS ====================
+
+export const getAllProductCategoriesCached = createCachedFunction(
+  getAllProductCategories,
+  ["products", "categories", "all"],
+  [CACHE_TAGS.CATEGORIES.ALL],
+  CACHE_DURATIONS.LONG,
+);
+
+export const getProductBySlugCached = createDynamicCachedFunction(
+  getProductBySlug,
+  (slug) => ["products", "item", "slug", slug],
+  (slug) => [CACHE_TAGS.PRODUCTS.BY_SLUG(slug)],
+  CACHE_DURATIONS.LONG,
+);
+
+export const getProductDetailsBySlugCached = createDynamicCachedFunction(
+  getProductDetailsBySlug,
+  (slug) => ["products", "details", "slug", slug],
+  (slug) => [CACHE_TAGS.PRODUCTS.BY_SLUG(slug)],
+  CACHE_DURATIONS.LONG,
+);
+
+export const getProductsByCategorySlugCached = createDynamicCachedFunction(
+  getProductsByCategorySlug,
+  (categorySlug) => ["products", "category", categorySlug],
+  (categorySlug) => [
+    CACHE_TAGS.PRODUCTS.BY_CATEGORY_SLUG(categorySlug),
+    CACHE_TAGS.PRODUCTS.LIST,
+  ],
+  CACHE_DURATIONS.MEDIUM,
+);
+
+export const getAllProductsCached = createCachedFunction(
+  getAllProducts,
+  ["products", "all"],
+  [CACHE_TAGS.PRODUCTS.ALL],
+  CACHE_DURATIONS.MEDIUM,
+);
+
+export const getMultipleProductsByIdsCached = createDynamicCachedFunction(
+  getMultipleProductsByIds,
+  (ids) => ["products", "multiple", ids.sort().join(",")],
+  (ids) => [CACHE_TAGS.PRODUCTS.ALL],
+  CACHE_DURATIONS.LONG,
+);
+
+export const getProductsDetailsByIdsCached = createDynamicCachedFunction(
+  getProductsDetailsByIds,
+  (ids) => ["products", "details", "multiple", ids.sort().join(",")],
+  (ids) => [CACHE_TAGS.PRODUCTS.ALL],
+  CACHE_DURATIONS.LONG,
+);

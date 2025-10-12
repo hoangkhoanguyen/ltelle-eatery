@@ -26,6 +26,11 @@ import {
   inArray,
   and,
 } from "drizzle-orm";
+import {
+  createDynamicCachedFunction,
+  CACHE_DURATIONS,
+} from "@/lib/cache-utils";
+import { CACHE_TAGS } from "@/constants/cache";
 
 export type CreateOrderRequest = {
   orderData: Omit<NewOrderDB, "code">;
@@ -393,3 +398,12 @@ export async function updateOrderInternalNote(
 
   return updatedOrder;
 }
+
+// ==================== CACHED VERSIONS ====================
+
+export const getAdminOrderByIdCached = createDynamicCachedFunction(
+  getAdminOrderById,
+  (id) => ["orders", "admin", "item", id.toString()],
+  (id) => [CACHE_TAGS.ORDERS.BY_ID(id)],
+  CACHE_DURATIONS.SHORT,
+);

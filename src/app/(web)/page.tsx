@@ -4,13 +4,13 @@ import { HeroSection } from "@/components/web/features/home/HeroSection";
 import { OurStorySection } from "@/components/web/features/home/OurStorySection";
 import { ReviewsSection } from "@/components/web/features/home/ReviewsSection";
 import { WhyChooseUsSection } from "@/components/web/shared/WhyChooseUsSection";
-import { getUIConfigsByKey } from "@/services/configs";
+import { getUIConfigsByKeyCached } from "@/services/configs";
 import React from "react";
 
 export const dynamic = "force-dynamic";
 
 const HomePage = async () => {
-  const homeConfig = await getUIConfigsByKey("homepage");
+  const homeConfig = await getUIConfigsByKeyCached("homepage");
 
   return (
     <div>

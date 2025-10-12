@@ -1,7 +1,11 @@
 import { getDb } from "@/db/drizzle";
 import { ConfigDB, configs, NewConfigDB } from "@/db/schemas";
-import { ConfigValue } from "@/types/configs";
 import { and, eq } from "drizzle-orm";
+import {
+  createDynamicCachedFunction,
+  CACHE_DURATIONS,
+} from "@/lib/cache-utils";
+import { CACHE_TAGS } from "@/constants/cache";
 
 export async function getConfigsByKey(key: string, configType: string) {
   const db = getDb();
@@ -53,6 +57,30 @@ export async function updateConfigByKey({
 export async function getUIConfigsByKey(key: string) {
   return getConfigsByKey(key, "ui");
 }
+
 export async function getAppConfigsByKey(key: string) {
   return getConfigsByKey(key, "app");
 }
+
+// ==================== CACHED VERSIONS ====================
+
+export const getConfigsByKeyCached = createDynamicCachedFunction(
+  getConfigsByKey,
+  (key, configType) => ["config", configType, key],
+  (key, configType) => [CACHE_TAGS.CONFIGS.BY_KEY(key, configType)],
+  CACHE_DURATIONS.LONG,
+);
+
+export const getUIConfigsByKeyCached = createDynamicCachedFunction(
+  getUIConfigsByKey,
+  (key) => ["config", "ui", key],
+  (key) => [CACHE_TAGS.CONFIGS.BY_KEY(key, "ui")],
+  CACHE_DURATIONS.LONG,
+);
+
+export const getAppConfigsByKeyCached = createDynamicCachedFunction(
+  getAppConfigsByKey,
+  (key) => ["config", "app", key],
+  (key) => [CACHE_TAGS.CONFIGS.BY_KEY(key, "app")],
+  CACHE_DURATIONS.LONG,
+);
