@@ -89,13 +89,11 @@ const UpdateCategory = memo(
           },
         },
         {
-          onSuccess() {
-            toast.success("Cập nhật danh mục thành công");
-            onSuccess?.();
-            modalRef.current?.close();
-          },
-          onError() {
-            toast.error("Có lỗi xảy ra khi cập nhật danh mục");
+          onSuccess({ success }) {
+            if (success) {
+              onSuccess?.();
+              modalRef.current?.close();
+            }
           },
         },
       );
