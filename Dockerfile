@@ -18,6 +18,28 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+# Accept build arguments for environment variables
+ARG DB_HOST
+ARG DB_PORT  
+ARG DB_USERNAME
+ARG DB_PASSWORD
+ARG DB_NAME
+ARG ACCESS_TOKEN_JWT_SECRET
+ARG ACCESS_TOKEN_JWT_EXPIRES_IN
+ARG REFRESH_TOKEN_JWT_SECRET
+ARG REFRESH_TOKEN_JWT_EXPIRES_IN
+
+# Set environment variables for the build process
+ENV DB_HOST=$DB_HOST
+ENV DB_PORT=$DB_PORT
+ENV DB_USERNAME=$DB_USERNAME
+ENV DB_PASSWORD=$DB_PASSWORD
+ENV DB_NAME=$DB_NAME
+ENV ACCESS_TOKEN_JWT_SECRET=$ACCESS_TOKEN_JWT_SECRET
+ENV ACCESS_TOKEN_JWT_EXPIRES_IN=$ACCESS_TOKEN_JWT_EXPIRES_IN
+ENV REFRESH_TOKEN_JWT_SECRET=$REFRESH_TOKEN_JWT_SECRET
+ENV REFRESH_TOKEN_JWT_EXPIRES_IN=$REFRESH_TOKEN_JWT_EXPIRES_IN
+
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry during the build.
