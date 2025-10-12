@@ -7,8 +7,6 @@ import { getUIConfigsByKeyCached } from "@/services/configs";
 import Image from "next/image";
 import React from "react";
 
-export const dynamic = "force-dynamic";
-
 const page = async ({ params }: { params: Promise<{ category: string }> }) => {
   const { category } = await params;
 

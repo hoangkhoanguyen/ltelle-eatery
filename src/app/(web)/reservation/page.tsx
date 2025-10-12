@@ -3,8 +3,6 @@ import { getUIConfigsByKeyCached } from "@/services/configs";
 import Image from "next/image";
 import React from "react";
 
-export const dynamic = "force-dynamic";
-
 const page = async () => {
   const configsDb = await getUIConfigsByKeyCached("reservation_page");
 
