@@ -9,6 +9,7 @@ import AnimationHeaderScroll from "@/components/web/shared/header/AnimationHeade
 import { Toaster } from "sonner";
 import Icon from "@/components/common/Icon";
 import { getUIConfigsByKeyCached } from "@/services/configs";
+import { getEnv } from "@/lib/env";
 
 const popinsSans = Poppins({
   variable: "--font-poppins-sans",
@@ -25,6 +26,7 @@ const allogist = localFont({
 export const dynamic = "force-dynamic";
 
 const Layout: FC<PropsWithChildren> = async ({ children }) => {
+  console.log("env", getEnv());
   const configs = await getUIConfigsByKeyCached("layout");
 
   return (
