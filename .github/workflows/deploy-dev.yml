@@ -38,6 +38,8 @@ jobs:
             "ACCESS_TOKEN_JWT_EXPIRES_IN=${{ secrets.DEV_ACCESS_TOKEN_JWT_EXPIRES_IN }}"
             "REFRESH_TOKEN_JWT_SECRET=${{ secrets.DEV_REFRESH_TOKEN_JWT_SECRET }}"
             "REFRESH_TOKEN_JWT_EXPIRES_IN=${{ secrets.DEV_REFRESH_TOKEN_JWT_EXPIRES_IN }}"
+            "TEST_SECRET=${{ secrets.TEST_SECRET }}"
+            "TEST_ENV=development_from_dockerfile"
 
       - name: Deploy to VPS via SSH
         uses: appleboy/ssh-action@v1

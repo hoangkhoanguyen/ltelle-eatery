@@ -25,7 +25,9 @@ const allogist = localFont({
 // export const dynamic = "force-dynamic";
 
 const Layout: FC<PropsWithChildren> = async ({ children }) => {
-  console.log("env", getEnv());
+  // console.log("env", getEnv());
+  console.log("envvvvvvvv", process.env.TEST_ENV);
+  console.log("SECRETTTTT", process.env.TEST_SECRET);
 
   const configs = await getUIConfigsByKeyCached("layout");
 
