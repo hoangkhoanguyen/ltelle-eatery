@@ -1,5 +1,5 @@
 "use server";
-import { createOrder } from "@/services/orders";
+import { createOrder, validateOrderData } from "@/services/orders";
 import {
   NewOrderDB,
   NewOrderItemAddonDB,
@@ -13,6 +13,15 @@ export async function createOrderAction(data: {
   })[];
 }) {
   try {
+    const isValidOrderData = await validateOrderData(data.orderItems);
+
+    if (!isValidOrderData) {
+      return {
+        success: false,
+        error: "Invalid order data",
+      };
+    }
+
     const createdOrder = await createOrder(data);
 
     return {

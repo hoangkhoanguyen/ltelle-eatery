@@ -24,7 +24,7 @@ export const orderItems = dbSchema.table(
     }).notNull(),
     price: real("price").notNull(),
     quantity: integer("quantity").notNull(),
-    totalPrice: real("total_price").notNull(),
+    totalPrice: real("total_price").notNull(), // quantity * price + total addons
     note: text("note").notNull().default(""),
     createdAt: timestamp("created_at", {
       withTimezone: true,

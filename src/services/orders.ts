@@ -5,6 +5,7 @@ import {
   orderItemAddons,
   customers,
   orderStatusHistory,
+  products,
 } from "@/db/schemas";
 import {
   OrderDB,
@@ -35,8 +36,64 @@ export type CreateOrderRequest = {
 
 export type CreateOrderResponse = {
   order: OrderDB;
-  items: (OrderItemDB & { addons: OrderItemAddonDB[] })[];
+  items: (OrderItemDB & {
+    addons: OrderItemAddonDB[];
+    productImageUrl: string;
+    productSlug: string;
+  })[];
 };
+
+export async function validateOrderData(
+  orderItems: CreateOrderRequest["orderItems"],
+) {
+  // Validate product price, active
+  // Validate addon price, active, check if addon belongs to product
+
+  const db = getDb();
+
+  const productIds = Array.from(
+    new Set(orderItems.map((item) => item.productId)),
+  );
+
+  const productsList = await db.query.products.findMany({
+    where: inArray(products.id, productIds),
+    with: { addons: true },
+  });
+
+  const productMap = new Map<number, (typeof productsList)[0]>();
+  for (const product of productsList) {
+    productMap.set(product.id, product);
+  }
+
+  for (const item of orderItems) {
+    const product = productMap.get(item.productId);
+
+    if (!product || !product.isActive) {
+      return false;
+    }
+
+    if (item.price !== product.price) {
+      return false;
+    }
+
+    if (item.addons && item.addons.length > 0) {
+      const addonDbMap = new Map<number, (typeof product.addons)[0]>();
+      for (const addonDb of product.addons) {
+        addonDbMap.set(addonDb.id, addonDb);
+      }
+
+      for (const addon of item.addons) {
+        const addonDb = addonDbMap.get(addon.addonId);
+
+        if (!addonDb || !addonDb.isActive || addon.price !== addonDb.price) {
+          return false;
+        }
+      }
+    }
+  }
+
+  return true;
+}
 
 export async function createOrder(
   request: CreateOrderRequest,
@@ -46,6 +103,7 @@ export async function createOrder(
   return await db.transaction(async (tx) => {
     const { orderData, orderItems: itemsData } = request;
 
+    // 0. Upsert customer information
     const [customer] = await tx
       .select()
       .from(customers)
@@ -98,7 +156,7 @@ export async function createOrder(
       })
       .returning();
 
-    const createdItems: (OrderItemDB & { addons: OrderItemAddonDB[] })[] = [];
+    const createdItems: CreateOrderResponse["items"] = [];
 
     // 2. Create order items and their addons
     for (const itemData of itemsData) {
@@ -112,6 +170,24 @@ export async function createOrder(
           orderId: order.id,
         })
         .returning();
+
+      // Get product image for this item
+      const productWithImage = await tx.query.products.findFirst({
+        where: eq(products.id, createdItem.productId),
+        with: {
+          images: {
+            orderBy(fields, { asc }) {
+              return [asc(fields.sortOrder)];
+            },
+            limit: 1,
+          },
+        },
+        columns: {
+          slug: true,
+        },
+      });
+
+      const productImageUrl = productWithImage?.images?.[0]?.url || "";
 
       let createdAddons: OrderItemAddonDB[] = [];
 
@@ -127,7 +203,13 @@ export async function createOrder(
           .values(addonData)
           .returning();
       }
-      createdItems.push({ ...createdItem, addons: createdAddons });
+
+      createdItems.push({
+        ...createdItem,
+        addons: createdAddons,
+        productImageUrl,
+        productSlug: productWithImage?.slug || "",
+      });
     }
 
     return {

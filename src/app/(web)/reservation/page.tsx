@@ -1,9 +1,4 @@
-import Icon from "@/components/common/Icon";
 import Content from "@/components/web/features/reservation/Content";
-import DefaultBookingSection from "@/components/web/features/reservation/DefaultBookingSection";
-import SectionSubTitleFromConfigs from "@/components/web/shared/SectionSubTitleFromConfigs";
-import SectionTitleFromConfigs from "@/components/web/shared/SectionTitleFromConfigs";
-import { Button } from "@/components/web/ui/button";
 import { getUIConfigsByKey } from "@/services/configs";
 import Image from "next/image";
 import React from "react";
@@ -43,7 +38,7 @@ const page = async () => {
           </div>
         </div>
       </section>
-      <Content configs={configs.booking}></Content>
+      <Content configs={configs.booking} />
     </div>
   );
 };
