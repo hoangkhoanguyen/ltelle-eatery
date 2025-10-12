@@ -660,6 +660,7 @@ export async function getProductBySlug(slug: string) {
 }
 
 export async function getProductDetailsBySlug(slug: string) {
+  console.log("get product details by slug called");
   const db = getDb();
 
   const product = await db.query.products.findFirst({
@@ -801,14 +802,14 @@ export const getProductBySlugCached = createDynamicCachedFunction(
   getProductBySlug,
   (slug) => ["products", "item", "slug", slug],
   (slug) => [CACHE_TAGS.PRODUCTS.BY_SLUG(slug)],
-  CACHE_DURATIONS.LONG,
+  CACHE_DURATIONS.REALTIME,
 );
 
 export const getProductDetailsBySlugCached = createDynamicCachedFunction(
   getProductDetailsBySlug,
   (slug) => ["products", "details", "slug", slug],
   (slug) => [CACHE_TAGS.PRODUCTS.BY_SLUG(slug)],
-  CACHE_DURATIONS.LONG,
+  CACHE_DURATIONS.REALTIME,
 );
 
 export const getProductsByCategorySlugCached = createDynamicCachedFunction(
