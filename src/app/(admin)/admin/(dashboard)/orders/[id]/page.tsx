@@ -2,7 +2,7 @@ import OrderInformation from "@/components/admin/features/orders/OrderInformatio
 import DeliveryInformation from "@/components/admin/features/orders/DeliveryInformation";
 import OrderStatuss from "@/components/admin/features/orders/OrderStatuses";
 import Header from "@/components/admin/shared/header/Header";
-import { getAdminOrderById } from "@/services/orders";
+import { getAdminOrderByIdCached } from "@/services/orders";
 import React from "react";
 import OrderSummary from "@/components/admin/features/orders/OrderSummary";
 import OrderItems from "@/components/admin/features/orders/OrderItems";
@@ -16,7 +16,7 @@ const OrderDetailsPage = async ({
 }) => {
   const id = (await params).id;
 
-  const order = await getAdminOrderById(Number(id));
+  const order = await getAdminOrderByIdCached(Number(id));
 
   if (!order) {
     return <div>Order not found</div>;

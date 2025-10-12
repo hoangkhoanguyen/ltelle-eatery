@@ -1,12 +1,12 @@
 import Content from "@/components/web/features/reservation/Content";
-import { getUIConfigsByKey } from "@/services/configs";
+import { getUIConfigsByKeyCached } from "@/services/configs";
 import Image from "next/image";
 import React from "react";
 
 export const dynamic = "force-dynamic";
 
 const page = async () => {
-  const configsDb = await getUIConfigsByKey("reservation_page");
+  const configsDb = await getUIConfigsByKeyCached("reservation_page");
 
   const configs = configsDb?.value || ({} as any);
 

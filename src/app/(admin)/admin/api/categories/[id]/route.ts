@@ -1,5 +1,5 @@
 import { withError } from "@/providers/withError";
-import { getCategoryWithProducts } from "@/services/products";
+import { getCategoryWithProductsCached } from "@/services/products";
 import { NextRequest, NextResponse } from "next/server";
 
 const getCategoryByIdApi = async (
@@ -19,7 +19,7 @@ const getCategoryByIdApi = async (
     );
   }
 
-  const category = await getCategoryWithProducts(id);
+  const category = await getCategoryWithProductsCached(id);
 
   if (!category) {
     return NextResponse.json(

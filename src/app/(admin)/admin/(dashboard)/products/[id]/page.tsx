@@ -2,7 +2,7 @@ import ProductDetailsHeader from "@/components/admin/features/products/ProductDe
 import ProductDetailsProvider from "@/components/admin/features/products/ProductDetailsProvider";
 import ProductEditForm from "@/components/admin/features/products/ProductEditForm";
 import ImageLibraryModalProvider from "@/components/admin/shared/image-library/ImageLibraryProvider";
-import { getAdminProductDetailsById } from "@/services/products";
+import { getAdminProductDetailsByIdCached } from "@/services/products";
 import { pick } from "lodash";
 import React from "react";
 
@@ -11,7 +11,7 @@ import React from "react";
 // export const dynamic = "force-dynamic";
 
 const ProductDetailsPage = async () => {
-  const product = await getAdminProductDetailsById(1);
+  const product = await getAdminProductDetailsByIdCached(1);
 
   if (!product) return <>NoData</>;
 

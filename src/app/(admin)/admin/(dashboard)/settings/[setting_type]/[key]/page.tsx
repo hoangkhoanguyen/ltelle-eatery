@@ -1,7 +1,7 @@
 import InitSetting from "@/components/admin/features/settings/InitSetting";
 import SettingEditor from "@/components/admin/features/settings/SettingEditor";
 import { adminConfigs } from "@/constants/settings";
-import { getConfigsByKey } from "@/services/configs";
+import { getConfigsByKeyCached } from "@/services/configs";
 import React from "react";
 
 const page = async ({
@@ -16,7 +16,7 @@ const page = async ({
     return <div>Invalid setting type {setting_type}</div>;
   }
 
-  const config = await getConfigsByKey(key, setting_type);
+  const config = await getConfigsByKeyCached(key, setting_type);
 
   console.log("config", config);
 

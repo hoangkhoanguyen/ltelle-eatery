@@ -2,6 +2,8 @@ import { getDb } from "@/db/drizzle";
 import { productAddons, productImages } from "@/db/schemas";
 import { ProductAddOnDB, WebProduct } from "@/types/products";
 import { asc } from "drizzle-orm";
+import { createDynamicCachedFunction } from "@/lib/cache-utils";
+import { CACHE_TAGS } from "@/constants/cache";
 
 export async function checkCartLength({
   productIds,
@@ -85,3 +87,11 @@ export async function getCartProductsByIds(ids: number[]): Promise<
     addons: product.addons,
   }));
 }
+
+// ==================== CACHED VERSIONS ====================
+
+export const getCartProductsByIdsCached = createDynamicCachedFunction(
+  getCartProductsByIds,
+  (ids) => ["cart", "products", ids.sort().join(",")],
+  () => [CACHE_TAGS.PRODUCTS.ALL, CACHE_TAGS.CATEGORIES.ALL],
+);

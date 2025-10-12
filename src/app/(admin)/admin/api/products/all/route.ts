@@ -1,9 +1,9 @@
 import { withError } from "@/providers/withError";
-import { getAllProducts } from "@/services/products";
+import { getAllProductsCached } from "@/services/products";
 import { NextResponse } from "next/server";
 
 async function getAllProductsApi() {
-  const allProducts = await getAllProducts();
+  const allProducts = await getAllProductsCached();
 
   return NextResponse.json({ allProducts });
 }

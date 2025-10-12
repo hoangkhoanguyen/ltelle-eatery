@@ -1,11 +1,15 @@
 "use server";
 import { ConfigDB, NewConfigDB } from "@/db/schemas";
 import { initConfig, updateConfigByKey } from "@/services/configs";
+import { revalidateHelpers } from "@/lib/revalidation";
 
 export async function initConfigsAction(data: NewConfigDB) {
   try {
     console.log("init", data);
     await initConfig(data);
+
+    // Revalidate configs cache
+    revalidateHelpers.configUpdated(data.key, data.config_type);
 
     return {
       success: true,
@@ -30,6 +34,9 @@ export async function updateConfigsAction({
 }) {
   try {
     await updateConfigByKey({ key, config_type, value });
+
+    // Revalidate configs cache
+    revalidateHelpers.configUpdated(key, config_type);
 
     return {
       success: true,

@@ -19,13 +19,6 @@ const getCategoriesApi = async (request: NextRequest) => {
   const search = request.nextUrl.searchParams.get("search");
   const isActive = request.nextUrl.searchParams.get("isActive");
 
-  console.log("API Categories - Query params:", {
-    page,
-    limit,
-    search,
-    isActive,
-  });
-
   // If no pagination params, return all categories (for dropdowns, etc.)
   if (!page && !search && !isActive) {
     const categories = await getAllProductCategories();
@@ -39,8 +32,6 @@ const getCategoriesApi = async (request: NextRequest) => {
     search,
     isActive,
   });
-
-  console.log("Validation result:", { success, data, error });
 
   if (!success) {
     return NextResponse.json(

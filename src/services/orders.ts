@@ -26,10 +26,7 @@ import {
   inArray,
   and,
 } from "drizzle-orm";
-import {
-  createDynamicCachedFunction,
-  CACHE_DURATIONS,
-} from "@/lib/cache-utils";
+import { createDynamicCachedFunction } from "@/lib/cache-utils";
 import { CACHE_TAGS } from "@/constants/cache";
 
 export type CreateOrderRequest = {
@@ -404,6 +401,22 @@ export async function updateOrderInternalNote(
 export const getAdminOrderByIdCached = createDynamicCachedFunction(
   getAdminOrderById,
   (id) => ["orders", "admin", "item", id.toString()],
-  (id) => [CACHE_TAGS.ORDERS.BY_ID(id)],
-  CACHE_DURATIONS.SHORT,
+  (id) => [CACHE_TAGS.ORDERS.BY_ID(id)]
+);
+
+// ==================== ADMIN CACHED VERSIONS ====================
+
+export const getAdminOrderTableCached = createDynamicCachedFunction(
+  getAdminOrderTable,
+  (params) => [
+    'admin', 'orders', 'table', 
+    (params.limit || 20).toString(), 
+    (params.page || 1).toString(), 
+    params.search || 'null',
+    params.start_date || 'null',
+    params.end_date || 'null',
+    (params.status || []).join(',') || 'null',
+    (params.order_type || []).join(',') || 'null'
+  ],
+  () => [CACHE_TAGS.ORDERS.ADMIN_LIST]
 );

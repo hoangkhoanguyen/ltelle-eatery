@@ -1,6 +1,6 @@
 "use server";
 
-import { checkCartLength, getCartProductsByIds } from "@/services/cart";
+import { checkCartLength, getCartProductsByIdsCached } from "@/services/cart";
 import { ProductAddOnDB, WebProduct } from "@/types/products";
 
 export async function checkCartLengthAction({
@@ -29,7 +29,7 @@ export async function getCartProductsByIdsAction({
   })[]
 > {
   try {
-    return getCartProductsByIds(ids);
+    return getCartProductsByIdsCached(ids);
   } catch (error) {
     console.error("Error getting cart products by IDs:", error);
     return [];
