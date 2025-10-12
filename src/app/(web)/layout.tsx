@@ -3,7 +3,6 @@ import Header from "@/components/web/shared/header/Header";
 import React, { FC, PropsWithChildren } from "react";
 import { Poppins } from "next/font/google";
 import localFont from "next/font/local";
-
 import { WebsiteQueryProvider } from "@/providers/react-query-provider";
 import AnimationHeaderScroll from "@/components/web/shared/header/AnimationHeaderScroll";
 import { Toaster } from "sonner";
@@ -23,7 +22,7 @@ const allogist = localFont({
   variable: "--font-allogist",
 });
 
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
 
 const Layout: FC<PropsWithChildren> = async ({ children }) => {
   console.log("env", getEnv());
