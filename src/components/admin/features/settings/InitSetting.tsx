@@ -9,7 +9,6 @@ import useInitConfigs from "@/hooks/admin/settings/useInitConfigs";
 const InitSetting: FC<{
   initConfigs: NewConfigDB;
 }> = ({ initConfigs }) => {
-  console.log("initConfigs", initConfigs);
   const { mutate, isPending } = useInitConfigs();
 
   useSetLoading(isPending);

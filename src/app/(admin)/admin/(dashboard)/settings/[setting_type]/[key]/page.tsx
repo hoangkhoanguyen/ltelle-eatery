@@ -18,8 +18,6 @@ const page = async ({
 
   const config = await getConfigsByKeyCached(key, setting_type);
 
-  console.log("config", config);
-
   const meta = settings.meta[key as keyof typeof settings.meta];
 
   const initConfigs =

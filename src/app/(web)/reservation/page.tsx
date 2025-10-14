@@ -1,5 +1,4 @@
 import Content from "@/components/web/features/reservation/Content";
-import { getEnv } from "@/lib/env";
 import { getUIConfigsByKeyCached } from "@/services/configs";
 import Image from "next/image";
 import React from "react";
@@ -7,14 +6,7 @@ import React from "react";
 // export const dynamic = "force-dynamic";
 
 const page = async () => {
-  console.log("env", getEnv());
-  // Delay function for 2 minutes (120000 ms)
-  const delay = (ms: number) =>
-    new Promise((resolve) => setTimeout(resolve, ms));
-  await delay(120000);
   const configsDb = await getUIConfigsByKeyCached("reservation_page");
-  console.log("configsDb", configsDb);
-  await delay(120000);
 
   const configs = configsDb?.value || ({} as any);
 

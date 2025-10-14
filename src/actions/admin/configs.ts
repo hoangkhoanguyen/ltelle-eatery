@@ -5,7 +5,6 @@ import { revalidateHelpers } from "@/lib/revalidation";
 
 export async function initConfigsAction(data: NewConfigDB) {
   try {
-    console.log("init", data);
     await initConfig(data);
 
     // Revalidate configs cache

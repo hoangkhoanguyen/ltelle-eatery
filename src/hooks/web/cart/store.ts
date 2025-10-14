@@ -10,7 +10,6 @@ export interface CartItemsSlice {
 }
 
 export interface CartActionsSlice {
-  syncCart: () => void;
   addToCart: (item: Omit<CartItem, "id">, productName: string) => void;
   removeFromCart: (id: string) => void;
   clearCart: () => void;
@@ -42,10 +41,6 @@ export const useCartStore = create<CartSlice>()(
         totalPrice: 0,
       },
       actions: {
-        syncCart() {
-          const cart = get().context.cart;
-          console.log("cart", cart);
-        },
         addToCart: (item, productName) => {
           set((state) => ({
             context: {
@@ -75,7 +70,7 @@ export const useCartStore = create<CartSlice>()(
         },
         updateQuantity(id, quantity) {
           if (quantity < 1) return;
-          console.log("quantity", quantity);
+
           set((state) => ({
             context: {
               ...state.context,

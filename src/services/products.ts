@@ -614,7 +614,6 @@ export async function getProductsByCategorySlug(
  * Lấy thông tin product theo slug cho việc hiển thị card
  */
 export async function getProductBySlug(slug: string) {
-  console.log("get product by slug called");
   const db = getDb();
 
   const product = await db.query.products.findFirst({
@@ -659,7 +658,6 @@ export async function getProductBySlug(slug: string) {
 }
 
 export async function getProductDetailsBySlug(slug: string) {
-  console.log("get product details by slug called");
   const db = getDb();
 
   const product = await db.query.products.findFirst({
