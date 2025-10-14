@@ -7,7 +7,14 @@ const page = async () => {
   const orderConfigs = await getAppConfigsByKey("order");
 
   return (
-    <CheckoutProvider shippingRules={orderConfigs?.value.shipping.rules}>
+    <CheckoutProvider
+      defaultMethod={
+        ((orderConfigs?.value.shipping.methods as any[]) || []).find(
+          (item: any) => item.isDefault,
+        )?.method
+      }
+      shippingRules={orderConfigs?.value.shipping.rules}
+    >
       <CheckoutRender configs={orderConfigs?.value} />
     </CheckoutProvider>
   );

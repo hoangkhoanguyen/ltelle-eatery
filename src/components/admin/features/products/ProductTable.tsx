@@ -7,6 +7,8 @@ import { useRouter } from "next/navigation";
 import { adminRoutes } from "@/constants/route";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { Switch } from "../../ui/form";
+import useUpdateProductStatus from "@/hooks/admin/features/products/useUpdateProductStatus";
 const columnHelper = createColumnHelper<AdminProductTable>();
 
 export default function ProductTable({
@@ -19,6 +21,7 @@ export default function ProductTable({
   loading?: boolean;
 }) {
   const route = useRouter();
+  const updateProductStatus = useUpdateProductStatus();
 
   const columns = [
     columnHelper.accessor("id", {
@@ -76,15 +79,24 @@ export default function ProductTable({
       header: "Trạng thái",
       cell(props) {
         const isActive = props.getValue();
+        const productId = props.row.original.id;
+        
         return (
-          <span
-            className={cn(
-              "badge badge-outline",
-              isActive ? "badge-success" : "badge-error",
-            )}
-          >
-            {isActive ? "Đang hoạt động" : "Ngưng hoạt động"}
-          </span>
+          <Switch
+            checked={isActive}
+            onChange={(e) => {
+              const newStatus = e.target.checked;
+              updateProductStatus.mutate(
+                { id: productId, isActive: newStatus },
+                {
+                  onSuccess: () => {
+                    onReloadData();
+                  },
+                }
+              );
+            }}
+            disabled={updateProductStatus.isPending}
+          />
         );
       },
       meta: {

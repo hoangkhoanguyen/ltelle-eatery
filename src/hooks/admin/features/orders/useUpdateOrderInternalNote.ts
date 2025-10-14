@@ -6,9 +6,14 @@ const useUpdateOrderInternalNote = () => {
   return useMutation({
     mutationFn: updateOrderInternalNoteAction,
     onSuccess(data) {
-      if (data.success)
-        toast.success("Update order internal note successfully");
-      else toast.error("Failed to update order internal note");
+      if (data.success) {
+        toast.success("Cập nhật ghi chú đơn hàng thành công!");
+      } else {
+        toast.error(data.error || "Có lỗi xảy ra");
+      }
+    },
+    onError: () => {
+      toast.error("Có lỗi xảy ra");
     },
   });
 };

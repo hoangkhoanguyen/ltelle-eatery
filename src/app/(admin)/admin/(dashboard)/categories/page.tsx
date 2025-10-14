@@ -1,7 +1,6 @@
 "use client";
 import React, { useMemo, useRef } from "react";
 import CategoryTable from "@/components/admin/features/categories/CategoryTable";
-import CategoryFilter from "@/components/admin/features/categories/CategoryFilter";
 import CreateCategory from "@/components/admin/features/products/CreateCategory";
 import UpdateCategory from "@/components/admin/features/categories/UpdateCategory";
 import ViewCategoryProducts from "@/components/admin/features/categories/ViewCategoryProducts";
@@ -57,8 +56,8 @@ const CategoriesPage = () => {
   };
 
   const handleCreateSuccess = () => {
-    createModalRef.current?.close();
     refetch();
+    createModalRef.current?.close();
   };
 
   return (
@@ -82,7 +81,7 @@ const CategoriesPage = () => {
             >
               Thêm danh mục
             </Button>
-            <CategoryFilter />
+            {/* <CategoryFilter /> */}
           </div>
         }
       />

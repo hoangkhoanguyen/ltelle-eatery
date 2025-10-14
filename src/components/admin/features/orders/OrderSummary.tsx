@@ -21,7 +21,7 @@ const OrderSummary: FC<{
         </div>
         <div>
           <h3 className="font-medium text-gray-500 text-sm">Payment</h3>
-          <p className="text-gray-700 font-semibold">{data.paymentMethod}</p>
+          <p className="text-gray-700 font-semibold">Only Cash</p>
         </div>
         <hr className="border-gray-200" />
         <div className="flex flex-row justify-between">

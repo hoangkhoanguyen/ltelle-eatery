@@ -6,9 +6,14 @@ const useUpdateReservationInternalNote = () => {
   return useMutation({
     mutationFn: updateReservationInternalNoteAction,
     onSuccess(data) {
-      if (data.success)
-        toast.success("Update reservation internal note successfully");
-      else toast.error("Failed to update reservation internal note");
+      if (data.success) {
+        toast.success("Cập nhật ghi chú đặt bàn thành công!");
+      } else {
+        toast.error(data.error || "Có lỗi xảy ra");
+      }
+    },
+    onError: () => {
+      toast.error("Có lỗi xảy ra");
     },
   });
 };

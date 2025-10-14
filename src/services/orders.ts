@@ -336,23 +336,40 @@ export async function getAdminOrderById(id: number) {
   return order;
 }
 
-export async function updateOrderStatus(
-  orderId: number,
-  newStatus: "processing" | "completed" | "cancelled",
-) {
+// ==================== HELPER FUNCTIONS ====================
+
+/**
+ * Check if order exists by ID
+ * @param orderId - The order ID to check
+ * @returns The order object if found, null if not found
+ */
+export async function checkOrderExists(orderId: number) {
   const db = getDb();
 
   const order = await db.query.orders.findFirst({
     where: eq(orders.id, orderId),
   });
 
-  if (!order) {
-    throw new Error("Order not found");
-  }
+  return order;
+}
 
-  if (order.status === newStatus) {
-    throw new Error("Order is already in the desired status");
-  }
+/**
+ * Check if order can be edited (internal note)
+ * @param order - The order object to check
+ * @returns true if order can be edited, false otherwise
+ */
+export function canEditOrderNote(order: { status: string }) {
+  return order.status !== "cancelled" && order.status !== "completed";
+}
+
+// ==================== UPDATE FUNCTIONS ====================
+
+export async function updateOrderStatus(
+  orderId: number,
+  newStatus: "processing" | "completed" | "cancelled",
+  previousStatus: string,
+) {
+  const db = getDb();
 
   return await db.transaction(async (tx) => {
     // 1. Update the order status
@@ -366,7 +383,7 @@ export async function updateOrderStatus(
     await tx.insert(orderStatusHistory).values({
       orderId,
       newStatus,
-      previousStatus: order.status,
+      previousStatus,
       createdAt: new Date(),
     });
 
@@ -379,14 +396,6 @@ export async function updateOrderInternalNote(
   internalNote: string,
 ) {
   const db = getDb();
-
-  const order = await db.query.orders.findFirst({
-    where: eq(orders.id, orderId),
-  });
-
-  if (!order || order.status === "cancelled" || order.status === "completed") {
-    throw new Error("Cannot update note for this order");
-  }
 
   const [updatedOrder] = await db
     .update(orders)

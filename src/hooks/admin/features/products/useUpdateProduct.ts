@@ -7,8 +7,14 @@ export default function useUpdateProduct() {
   return useMutation({
     mutationFn: updateProductAction,
     onSuccess(data) {
-      if (data.success) toast.success("Update product successfully");
-      else toast.error("Failed to update product");
+      if (data.success) {
+        toast.success(data.data?.message || "Cập nhật sản phẩm thành công!");
+      } else {
+        toast.error(data.error || "Có lỗi xảy ra");
+      }
+    },
+    onError: () => {
+      toast.error("Có lỗi xảy ra");
     },
   });
 }

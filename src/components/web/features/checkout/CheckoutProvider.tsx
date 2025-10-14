@@ -26,10 +26,9 @@ const Context = createContext<{
   successOrder: CreateOrderResponse | null;
 } | null>(null);
 
-const CheckoutProvider: FC<PropsWithChildren<{ shippingRules: any }>> = ({
-  children,
-  shippingRules,
-}) => {
+const CheckoutProvider: FC<
+  PropsWithChildren<{ shippingRules: any; defaultMethod?: EShippingMethod }>
+> = ({ children, shippingRules, defaultMethod }) => {
   const [successOrder, setSuccessOrder] = useState<CreateOrderResponse | null>(
     null,
   );
@@ -40,7 +39,7 @@ const CheckoutProvider: FC<PropsWithChildren<{ shippingRules: any }>> = ({
     mode: "onSubmit",
     defaultValues: {
       paymentMethod: "cash",
-      shippingMethod: EShippingMethod.door2door,
+      shippingMethod: defaultMethod,
       addressNote: "",
       customerFirstName: "",
       customerLastName: "",

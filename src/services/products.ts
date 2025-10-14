@@ -54,6 +54,7 @@ export async function createProduct(productData: NewProductDB) {
 export async function getAdminProductTable({
   limit = 20,
   page = 1,
+  search,
 }: {
   limit?: number;
   page?: number;
@@ -62,10 +63,29 @@ export async function getAdminProductTable({
   const db = getDb();
   const offset = limit * (page - 1);
 
-  const [productsList, totalCount] = await Promise.all([
+  const buildWhereConditions = (fields: any, operators: any) => {
+    const conditions = [];
+    const { ilike, or } = operators;
+
+    if (search) {
+      conditions.push(
+        or(
+          ilike(fields.title, `%${search}%`),
+          ilike(fields.description, `%${search}%`),
+          ilike(fields.slug, `%${search}%`),
+        ),
+      );
+    }
+
+    return conditions.length > 0 ? and(...conditions) : undefined;
+  };
+
+  const [productsList, totalCountResult] = await Promise.all([
     db.query.products.findMany({
+      where: buildWhereConditions,
       limit,
       offset,
+      orderBy: [asc(products.title)],
       with: {
         category: true,
         images: {
@@ -77,8 +97,22 @@ export async function getAdminProductTable({
       },
     }),
 
-    db.$count(products),
+    search
+      ? db
+          .select({ count: count(products.id) })
+          .from(products)
+          .where(
+            buildWhereConditions(products, {
+              ilike,
+              or,
+            }),
+          )
+      : db.$count(products),
   ]);
+
+  const totalCount = search
+    ? (totalCountResult as { count: number }[])[0].count
+    : (totalCountResult as number);
 
   return {
     products: productsList,
@@ -873,3 +907,31 @@ export const getCategoryWithProductsCached = createDynamicCachedFunction(
   ],
 );
 */
+
+// Helper function to check if product exists
+export async function checkProductExists(id: number) {
+  const db = getDb();
+  const product = await db.query.products.findFirst({
+    where: eq(products.id, id),
+    columns: {
+      id: true,
+    },
+  });
+
+  return !!product;
+}
+
+// Pure update function for product status
+export async function updateProductStatus(id: number, isActive: boolean) {
+  const db = getDb();
+  const [updatedProduct] = await db
+    .update(products)
+    .set({
+      isActive,
+      updatedAt: new Date(),
+    })
+    .where(eq(products.id, id))
+    .returning();
+
+  return updatedProduct;
+}

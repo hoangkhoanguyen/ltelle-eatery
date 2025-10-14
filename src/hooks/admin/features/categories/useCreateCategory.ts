@@ -4,17 +4,11 @@ import { NewProductCategoryDB } from "@/types/products";
 import { toast } from "sonner";
 
 const useCreateCategory = () => {
-  const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: (data: NewProductCategoryDB) => addProductCategoryAction(data),
     onSuccess: (result) => {
       if (result.success) {
         toast.success("Tạo danh mục thành công!");
-        // Invalidate categories list
-        queryClient.invalidateQueries({
-          queryKey: ["admin", "categories"],
-        });
       } else {
         toast.error(result.error || "Có lỗi xảy ra");
       }

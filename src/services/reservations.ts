@@ -104,22 +104,44 @@ export async function getAdminReservationById(id: number) {
   return reservation;
 }
 
-export async function updateReservationStatus(
-  reservationId: number,
-  status: ReservationStatus,
-) {
+// ==================== HELPER FUNCTIONS ====================
+
+/**
+ * Check if reservation exists by ID
+ * @param reservationId - The reservation ID to check
+ * @returns The reservation object if found, null if not found
+ */
+export async function checkReservationExists(reservationId: number) {
   const db = getDb();
+
   const reservation = await db.query.reservations.findFirst({
     where: eq(reservations.id, reservationId),
   });
 
-  if (!reservation) {
-    throw new Error("Reservation not found");
-  }
+  return reservation;
+}
 
-  if (reservation.status === status) {
-    throw new Error("Reservation is already in the desired status");
-  }
+/**
+ * Check if reservation can be edited (internal note)
+ * @param reservation - The reservation object to check
+ * @returns true if reservation can be edited, false otherwise
+ */
+export function canEditReservationNote(reservation: {
+  status: ReservationStatus;
+}) {
+  return (
+    reservation.status !== "cancelled" && reservation.status !== "completed"
+  );
+}
+
+// ==================== UPDATE FUNCTIONS ====================
+
+export async function updateReservationStatus(
+  reservationId: number,
+  status: ReservationStatus,
+  previousStatus: ReservationStatus,
+) {
+  const db = getDb();
 
   return await db.transaction(async (tx) => {
     // 1. Update the reservation status
@@ -133,7 +155,7 @@ export async function updateReservationStatus(
     await tx.insert(reservationStatusHistory).values({
       reservationId,
       newStatus: status,
-      previousStatus: reservation.status,
+      previousStatus,
       createdAt: new Date(),
     });
 
@@ -146,22 +168,14 @@ export async function updateReservationInternalNote(
   internalNote: string,
 ) {
   const db = getDb();
-  const reservation = await db.transaction(async (tx) => {
-    const existingReservation = await tx
-      .update(reservations)
-      .set({ internalNote })
-      .where(eq(reservations.id, reservationId))
-      .returning()
-      .then((res) => res[0]);
 
-    if (!existingReservation) {
-      throw new Error("Reservation not found");
-    }
+  const [updatedReservation] = await db
+    .update(reservations)
+    .set({ internalNote, updatedAt: new Date() })
+    .where(eq(reservations.id, reservationId))
+    .returning();
 
-    return existingReservation;
-  });
-
-  return reservation;
+  return updatedReservation;
 }
 
 // ==================== CACHED VERSIONS (DISABLED) ====================

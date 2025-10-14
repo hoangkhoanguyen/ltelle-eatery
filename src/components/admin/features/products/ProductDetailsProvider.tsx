@@ -1,11 +1,10 @@
 "use client";
 import useUpdateProduct from "@/hooks/admin/features/products/useUpdateProduct";
 import useUpdateProductForm from "@/hooks/admin/features/products/useUpdateProductForm";
+import { useSetLoading } from "@/hooks/admin/loading";
 import { AdminEditProductForm } from "@/types/products";
-import { pick } from "lodash";
 import React, { PropsWithChildren, useCallback, useEffect } from "react";
 import { Control } from "react-hook-form";
-import { toast } from "sonner";
 
 const Context = React.createContext<{
   id: number;
@@ -40,6 +39,7 @@ export default function ProductDetailsProvider({
   );
 
   const onSubmit = handleSubmit(({ ...rest }) => {
+    console.log("rest", rest);
     mutate({
       id,
       data: {
@@ -55,6 +55,8 @@ export default function ProductDetailsProvider({
   useEffect(() => {
     onUpdateFormData(initProduct);
   }, [onUpdateFormData, initProduct]);
+
+  useSetLoading(isPending);
 
   return (
     <Context.Provider

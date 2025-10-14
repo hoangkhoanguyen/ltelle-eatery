@@ -10,8 +10,16 @@ import React from "react";
 
 // export const dynamic = "force-dynamic";
 
-const ProductDetailsPage = async () => {
-  const product = await getAdminProductDetailsById(1);
+const ProductDetailsPage = async ({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) => {
+  const { id: idParam } = await params;
+  const id = parseInt(idParam);
+
+  if (isNaN(id)) return <>NoData</>;
+  const product = await getAdminProductDetailsById(id);
 
   if (!product) return <>NoData</>;
 

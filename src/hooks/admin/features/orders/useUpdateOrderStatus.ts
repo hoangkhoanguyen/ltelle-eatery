@@ -6,8 +6,14 @@ const useUpdateOrderStatus = () => {
   return useMutation({
     mutationFn: updateOrderStatusAction,
     onSuccess(data) {
-      if (data.success) toast.success("Update order status successfully");
-      else toast.error("Failed to update order status");
+      if (data.success) {
+        toast.success("Cập nhật trạng thái đơn hàng thành công!");
+      } else {
+        toast.error(data.error || "Có lỗi xảy ra");
+      }
+    },
+    onError: () => {
+      toast.error("Có lỗi xảy ra");
     },
   });
 };

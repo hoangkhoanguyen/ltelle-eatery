@@ -7,7 +7,6 @@ import Pagination from "@/components/admin/ui/table/Pagination";
 import useFetchOrders from "@/hooks/admin/features/orders/useFetchOrders";
 import useOrdersParams from "@/hooks/admin/features/orders/useOrdersParams";
 import React, { useMemo } from "react";
-import CreateOrder from "./CreateOrder";
 import { AdminOrderTable, OrderStatus, OrderType } from "@/types/orders";
 
 const ProductPage = () => {
@@ -52,23 +51,9 @@ const ProductPage = () => {
         actions={
           <div className="flex gap-2">
             <OrderFilter query={query} setQuery={setQuery} />
-            <CreateOrder />
           </div>
         }
       />
-      <div className="flex gap-2 flex-wrap">
-        {/* {query.isActive !== null && (
-          <FilterTag
-            onRemove={() =>
-              setQuery({
-                isActive: null,
-              })
-            }
-            label="Trạng thái"
-            value={query.isActive ? "Đang hoạt động" : "Ngưng hoạt động"}
-          />
-        )} */}
-      </div>
 
       <OrderTable
         data={convertedData}

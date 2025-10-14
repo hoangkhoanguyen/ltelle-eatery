@@ -7,8 +7,14 @@ export default function useDeleteProductImages() {
   return useMutation({
     mutationFn: deleteProductImagesAction,
     onSuccess(data) {
-      if (data.success) toast.success("Delete product images successfully");
-      else toast.error("Failed to delete product images");
+      if (data.success) {
+        toast.success("Xóa hình ảnh sản phẩm thành công!");
+      } else {
+        toast.error(data.error || "Có lỗi xảy ra");
+      }
+    },
+    onError: () => {
+      toast.error("Có lỗi xảy ra");
     },
   });
 }

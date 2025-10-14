@@ -9,10 +9,10 @@ import { generateSlug } from "@/lib/utils";
 import CategorySelector from "./form-elements/CategorySelector";
 import { AdminCreateProductForm } from "@/types/products";
 import useAddProduct from "@/hooks/admin/features/products/useAddProduct";
-import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { adminRoutes } from "@/constants/route";
 import { SlugInput } from "../../ui/form";
+import { useSetLoading } from "@/hooks/admin/loading";
 
 const CreateProduct = () => {
   const modalRef = useRef<LayoutRef>(null);
@@ -44,26 +44,17 @@ const CreateProduct = () => {
         isActive: false,
       },
       {
-        onSuccess({ data, success, code }) {
+        onSuccess({ data, success }) {
           if (success && data) {
-            toast.success("Tạo sản phẩm thành công");
             route.push(adminRoutes.product(data.newProduct.id));
             return;
-          }
-
-          switch (code) {
-            case 1:
-              toast.error("Đường dẫn bị trùng");
-              break;
-
-            default:
-              toast.error("Có lỗi xảy ra!");
-              break;
           }
         },
       },
     );
   };
+
+  useSetLoading(isPending);
 
   return (
     <>
