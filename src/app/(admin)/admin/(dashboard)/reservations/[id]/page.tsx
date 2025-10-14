@@ -4,7 +4,7 @@ import ReservationNote from "@/components/admin/features/reservations/Reservatio
 import ReservationStatuses from "@/components/admin/features/reservations/ReservationStatuses";
 import Header from "@/components/admin/shared/header/Header";
 import Icon from "@/components/common/Icon";
-import { getAdminReservationByIdCached } from "@/services/reservations";
+import { getAdminReservationById } from "@/services/reservations";
 import { EReservationStatus } from "@/types/reservations";
 import moment from "moment";
 import React from "react";
@@ -12,7 +12,7 @@ import React from "react";
 const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
 
-  const reservation = await getAdminReservationByIdCached(Number(id));
+  const reservation = await getAdminReservationById(Number(id));
 
   if (!reservation) {
     return <div>Reservation not found</div>;

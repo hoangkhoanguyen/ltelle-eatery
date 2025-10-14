@@ -3,7 +3,7 @@ import BannerSlider from "@/components/web/features/menu/BannerSlider";
 import FoodCategories from "@/components/web/features/menu/FoodCategories";
 import NewFood from "@/components/web/features/menu/NewFood";
 import { WhyChooseUsSection } from "@/components/web/shared/WhyChooseUsSection";
-import { getUIConfigsByKeyCached } from "@/services/configs";
+import { getUIConfigsByKey } from "@/services/configs";
 import Image from "next/image";
 import React from "react";
 
@@ -12,7 +12,7 @@ import React from "react";
 const page = async ({ params }: { params: Promise<{ category: string }> }) => {
   const { category } = await params;
 
-  const dbConfigs = await getUIConfigsByKeyCached("menu_page");
+  const dbConfigs = await getUIConfigsByKey("menu_page");
 
   const configs = dbConfigs?.value as any;
 

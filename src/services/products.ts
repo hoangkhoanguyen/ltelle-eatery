@@ -17,11 +17,12 @@ import {
   WebProduct,
 } from "@/types/products";
 import { eq, inArray, count, ilike, and, or, desc, ne, asc } from "drizzle-orm";
-import {
-  createCachedFunction,
-  createDynamicCachedFunction,
-} from "@/lib/cache-utils";
-import { CACHE_TAGS } from "@/constants/cache";
+// Disabled cache imports - using direct DB calls now
+// import {
+//   createCachedFunction,
+//   createDynamicCachedFunction,
+// } from "@/lib/cache-utils";
+// import { CACHE_TAGS } from "@/constants/cache";
 
 export async function addProductCategory(categoryData: NewProductCategoryDB) {
   const db = getDb();
@@ -786,8 +787,11 @@ export async function getProductsDetailsByIds(ids: number[]): Promise<
   }));
 }
 
-// ==================== CACHED VERSIONS ====================
+// ==================== CACHED VERSIONS (DISABLED) ====================
+// Note: These cached functions are disabled to simplify the system
+// All functions now use direct database calls for real-time data
 
+/*
 export const getAllProductCategoriesCached = createCachedFunction(
   getAllProductCategories,
   ["products", "categories", "all"],
@@ -833,7 +837,7 @@ export const getProductsDetailsByIdsCached = createDynamicCachedFunction(
   () => [CACHE_TAGS.PRODUCTS.ALL],
 );
 
-// ==================== ADMIN CACHED VERSIONS ====================
+// ==================== ADMIN CACHED VERSIONS (DISABLED) ====================
 
 export const getAdminProductTableCached = createDynamicCachedFunction(
   getAdminProductTable,
@@ -868,3 +872,4 @@ export const getCategoryWithProductsCached = createDynamicCachedFunction(
     CACHE_TAGS.PRODUCTS.BY_CATEGORY(id),
   ],
 );
+*/

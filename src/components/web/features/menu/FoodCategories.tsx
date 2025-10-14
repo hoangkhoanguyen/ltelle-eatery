@@ -5,13 +5,13 @@ import React, { FC } from "react";
 import ProductCard from "../../shared/ProductCard";
 import SectionSubTitleFromConfigs from "../../shared/SectionSubTitleFromConfigs";
 import SectionTitleFromConfigs from "../../shared/SectionTitleFromConfigs";
-import { getProductsByCategorySlugCached } from "@/services/products";
+import { getProductsByCategorySlug } from "@/services/products";
 
 const FoodCategories: FC<{ activeCategoryKey: string; configs: any }> = async ({
   activeCategoryKey,
   configs,
 }) => {
-  const products = await getProductsByCategorySlugCached(activeCategoryKey);
+  const products = await getProductsByCategorySlug(activeCategoryKey);
 
   const categoryLabel = configs.categories_to_show.find(
     (category: any) => category.key === activeCategoryKey,

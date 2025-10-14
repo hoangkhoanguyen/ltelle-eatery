@@ -2,8 +2,9 @@ import { getDb } from "@/db/drizzle";
 import { productAddons, productImages } from "@/db/schemas";
 import { ProductAddOnDB, WebProduct } from "@/types/products";
 import { asc } from "drizzle-orm";
-import { createDynamicCachedFunction } from "@/lib/cache-utils";
-import { CACHE_TAGS } from "@/constants/cache";
+// Disabled cache imports - using direct DB calls now
+// import { createDynamicCachedFunction } from "@/lib/cache-utils";
+// import { CACHE_TAGS } from "@/constants/cache";
 
 export async function checkCartLength({
   productIds,
@@ -88,10 +89,14 @@ export async function getCartProductsByIds(ids: number[]): Promise<
   }));
 }
 
-// ==================== CACHED VERSIONS ====================
+// ==================== CACHED VERSIONS (DISABLED) ====================
+// Note: These cached functions are disabled to simplify the system
+// All functions now use direct database calls for real-time data
 
+/*
 export const getCartProductsByIdsCached = createDynamicCachedFunction(
   getCartProductsByIds,
   (ids) => ["cart", "products", ids.sort().join(",")],
   () => [CACHE_TAGS.PRODUCTS.ALL, CACHE_TAGS.CATEGORIES.ALL],
 );
+*/

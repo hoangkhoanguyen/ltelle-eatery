@@ -1,6 +1,5 @@
 "use server";
 import { adminRoutes } from "@/constants/route";
-import { createOrder, CreateOrderRequest } from "@/services/orders";
 import {
   createProduct,
   deleteProductImages,
@@ -9,22 +8,6 @@ import {
 } from "@/services/products";
 import { AdminEditProductForm, NewProductDB } from "@/types/products";
 import { revalidatePath } from "next/cache";
-
-export async function createOrderAction(data: CreateOrderRequest) {
-  try {
-    const createdOrder = await createOrder(data);
-
-    return {
-      success: true,
-      data: createdOrder,
-    };
-  } catch {
-    return {
-      success: false,
-      error: "Failed to create order",
-    };
-  }
-}
 
 export async function createProductAction(data: NewProductDB) {
   try {
@@ -39,7 +22,6 @@ export async function createProductAction(data: NewProductDB) {
     }
 
     const newProduct = await createProduct(data);
-    // TODO: revalidate website
 
     return {
       success: true,
@@ -56,7 +38,6 @@ export async function createProductAction(data: NewProductDB) {
 export async function deleteProductImagesAction(ids: number[]) {
   try {
     await deleteProductImages(ids);
-    // TODO: revalidate website
 
     return {
       success: true,
@@ -121,7 +102,6 @@ export async function updateProductAction({
     });
 
     revalidatePath(adminRoutes.product(id));
-    // TODO: revalidate for website
 
     return {
       success: true,

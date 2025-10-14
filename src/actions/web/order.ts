@@ -5,7 +5,6 @@ import {
   NewOrderItemAddonDB,
   NewOrderItemDB,
 } from "@/types/orders";
-import { revalidateHelpers } from "@/lib/revalidation";
 
 export async function createOrderAction(data: {
   orderData: Omit<NewOrderDB, "code">;
@@ -24,9 +23,6 @@ export async function createOrderAction(data: {
     }
 
     const createdOrder = await createOrder(data);
-
-    // Revalidate order cache
-    revalidateHelpers.orderCreated();
 
     return {
       success: true,

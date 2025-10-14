@@ -1,10 +1,14 @@
 import { revalidateTag } from "next/cache";
-import { REVALIDATION_MAP } from "@/constants/cache";
+import { REVALIDATION_MAP, CACHE_TAGS } from "@/constants/cache";
+
+// Feature flags
+const REVALIDATION_ENABLED = false; // Set to true when ready to use cache revalidation
 
 /**
  * Revalidate cache tags for specific action
  */
 export function revalidateAction(actionKey: keyof typeof REVALIDATION_MAP) {
+  if (!REVALIDATION_ENABLED) return;
   const tags = REVALIDATION_MAP[actionKey];
 
   if (!tags) {
@@ -26,6 +30,7 @@ export function revalidateAction(actionKey: keyof typeof REVALIDATION_MAP) {
  * Revalidate specific cache tags
  */
 export function revalidateTags(tags: string[]) {
+  if (!REVALIDATION_ENABLED) return;
   tags.forEach((tag) => {
     try {
       revalidateTag(tag);
@@ -42,36 +47,41 @@ export function revalidateTags(tags: string[]) {
 export const revalidateHelpers = {
   // Products
   productCreated: () => revalidateAction("PRODUCT_CREATE"),
-  productUpdated: (productId?: number) => {
+  productUpdated: (productId?: number, categorySlug?: string) => {
     revalidateAction("PRODUCT_UPDATE");
     if (productId) {
-      revalidateTags([`products:item:${productId}`]);
+      revalidateTags([CACHE_TAGS.PRODUCTS.BY_ID(productId)]);
+    }
+    // Revalidate specific category and "all" category
+    if (categorySlug) {
+      revalidateTags([
+        CACHE_TAGS.PRODUCTS.BY_CATEGORY_SLUG(categorySlug),
+        CACHE_TAGS.PRODUCTS.BY_CATEGORY_SLUG("all"), // Always revalidate "all" category
+      ]);
     }
   },
-  productDeleted: () => revalidateAction("PRODUCT_DELETE"),
 
   // Categories
   categoryCreated: () => revalidateAction("CATEGORY_CREATE"),
   categoryUpdated: (categoryId?: number) => {
     revalidateAction("CATEGORY_UPDATE");
     if (categoryId) {
-      revalidateTags([`categories:item:${categoryId}`]);
+      revalidateTags([CACHE_TAGS.CATEGORIES.BY_ID(categoryId)]);
     }
   },
-  categoryDeleted: () => revalidateAction("CATEGORY_DELETE"),
 
   // Orders
   orderCreated: () => revalidateAction("ORDER_CREATE"),
   orderUpdated: (orderId?: number) => {
     revalidateAction("ORDER_UPDATE");
     if (orderId) {
-      revalidateTags([`orders:item:${orderId}`]);
+      revalidateTags([CACHE_TAGS.ORDERS.BY_ID(orderId)]);
     }
   },
   orderStatusChanged: (orderId?: number) => {
     revalidateAction("ORDER_STATUS_UPDATE");
     if (orderId) {
-      revalidateTags([`orders:item:${orderId}`]);
+      revalidateTags([CACHE_TAGS.ORDERS.BY_ID(orderId)]);
     }
   },
 
@@ -79,7 +89,7 @@ export const revalidateHelpers = {
   configUpdated: (key?: string, type?: string) => {
     revalidateAction("CONFIG_UPDATE");
     if (key && type) {
-      revalidateTags([`configs:key:${type}:${key}`]);
+      revalidateTags([CACHE_TAGS.CONFIGS.BY_KEY(key, type)]);
     }
   },
 
@@ -88,10 +98,15 @@ export const revalidateHelpers = {
   reservationUpdated: (reservationId?: number) => {
     revalidateAction("RESERVATION_UPDATE");
     if (reservationId) {
-      revalidateTags([`reservations:item:${reservationId}`]);
+      revalidateTags([CACHE_TAGS.RESERVATIONS.BY_ID(reservationId)]);
     }
   },
-  reservationStatusChanged: () => revalidateAction("RESERVATION_STATUS_UPDATE"),
+  reservationStatusChanged: (reservationId?: number) => {
+    revalidateAction("RESERVATION_STATUS_UPDATE");
+    if (reservationId) {
+      revalidateTags([CACHE_TAGS.RESERVATIONS.BY_ID(reservationId)]);
+    }
+  },
 
   // ==================== SPECIFIC CACHE INVALIDATION ====================
 
@@ -99,14 +114,14 @@ export const revalidateHelpers = {
   imageUploaded: (productId?: number) => {
     revalidateAction("IMAGE_UPLOAD");
     if (productId) {
-      revalidateTags([`products:item:${productId}`]);
+      revalidateTags([CACHE_TAGS.PRODUCTS.BY_ID(productId)]);
     }
   },
 
   imageDeleted: (productId?: number) => {
     revalidateAction("IMAGE_DELETE");
     if (productId) {
-      revalidateTags([`products:item:${productId}`]);
+      revalidateTags([CACHE_TAGS.PRODUCTS.BY_ID(productId)]);
     }
   },
 
@@ -114,21 +129,14 @@ export const revalidateHelpers = {
   addonCreated: (productId?: number) => {
     revalidateAction("ADDON_CREATE");
     if (productId) {
-      revalidateTags([`products:item:${productId}`]);
+      revalidateTags([CACHE_TAGS.PRODUCTS.BY_ID(productId)]);
     }
   },
 
   addonUpdated: (productId?: number) => {
     revalidateAction("ADDON_UPDATE");
     if (productId) {
-      revalidateTags([`products:item:${productId}`]);
-    }
-  },
-
-  addonDeleted: (productId?: number) => {
-    revalidateAction("ADDON_DELETE");
-    if (productId) {
-      revalidateTags([`products:item:${productId}`]);
+      revalidateTags([CACHE_TAGS.PRODUCTS.BY_ID(productId)]);
     }
   },
 
@@ -140,9 +148,9 @@ export const revalidateHelpers = {
     revalidateAction("CATEGORY_PRODUCT_ADD");
     if (categoryId && productId) {
       revalidateTags([
-        `categories:item:${categoryId}`,
-        `products:item:${productId}`,
-        `products:category:${categoryId}`,
+        CACHE_TAGS.CATEGORIES.BY_ID(categoryId),
+        CACHE_TAGS.PRODUCTS.BY_ID(productId),
+        CACHE_TAGS.PRODUCTS.BY_CATEGORY(categoryId),
       ]);
     }
   },
@@ -151,9 +159,9 @@ export const revalidateHelpers = {
     revalidateAction("CATEGORY_PRODUCT_REMOVE");
     if (categoryId && productId) {
       revalidateTags([
-        `categories:item:${categoryId}`,
-        `products:item:${productId}`,
-        `products:category:${categoryId}`,
+        CACHE_TAGS.CATEGORIES.BY_ID(categoryId),
+        CACHE_TAGS.PRODUCTS.BY_ID(productId),
+        CACHE_TAGS.PRODUCTS.BY_CATEGORY(categoryId),
       ]);
     }
   },
@@ -169,36 +177,36 @@ export const revalidateHelpers = {
 
   // Invalidate specific product by ID
   invalidateProduct: (productId: number) => {
-    revalidateTags([`products:item:${productId}`]);
+    revalidateTags([CACHE_TAGS.PRODUCTS.BY_ID(productId)]);
   },
 
   // Invalidate specific product by slug
   invalidateProductSlug: (slug: string) => {
-    revalidateTags([`products:slug:${slug}`]);
+    revalidateTags([CACHE_TAGS.PRODUCTS.BY_SLUG(slug)]);
   },
 
   // Invalidate specific category
   invalidateCategory: (categoryId: number) => {
-    revalidateTags([`categories:item:${categoryId}`]);
+    revalidateTags([CACHE_TAGS.CATEGORIES.BY_ID(categoryId)]);
   },
 
   // Invalidate specific order
   invalidateOrder: (orderId: number) => {
-    revalidateTags([`orders:item:${orderId}`]);
+    revalidateTags([CACHE_TAGS.ORDERS.BY_ID(orderId)]);
   },
 
   // Invalidate specific reservation
   invalidateReservation: (reservationId: number) => {
-    revalidateTags([`reservations:item:${reservationId}`]);
+    revalidateTags([CACHE_TAGS.RESERVATIONS.BY_ID(reservationId)]);
   },
 
   // Invalidate specific config
   invalidateConfig: (key: string, type: string) => {
-    revalidateTags([`configs:key:${type}:${key}`]);
+    revalidateTags([CACHE_TAGS.CONFIGS.BY_KEY(key, type)]);
   },
 
   // Invalidate products by category
   invalidateProductsByCategory: (categorySlug: string) => {
-    revalidateTags([`products:category-slug:${categorySlug}`]);
+    revalidateTags([CACHE_TAGS.PRODUCTS.BY_CATEGORY_SLUG(categorySlug)]);
   },
 };

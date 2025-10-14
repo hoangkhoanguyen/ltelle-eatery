@@ -7,7 +7,7 @@ import { WebsiteQueryProvider } from "@/providers/react-query-provider";
 import AnimationHeaderScroll from "@/components/web/shared/header/AnimationHeaderScroll";
 import { Toaster } from "sonner";
 import Icon from "@/components/common/Icon";
-import { getUIConfigsByKeyCached } from "@/services/configs";
+import { getUIConfigsByKey } from "@/services/configs";
 
 const popinsSans = Poppins({
   variable: "--font-poppins-sans",
@@ -24,7 +24,7 @@ const allogist = localFont({
 export const dynamic = "force-dynamic";
 
 const Layout: FC<PropsWithChildren> = async ({ children }) => {
-  const configs = await getUIConfigsByKeyCached("layout");
+  const configs = await getUIConfigsByKey("layout");
 
   return (
     <div

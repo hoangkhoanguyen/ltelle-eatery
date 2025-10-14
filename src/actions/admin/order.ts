@@ -1,6 +1,5 @@
 "use server";
 import { updateOrderInternalNote, updateOrderStatus } from "@/services/orders";
-import { revalidateHelpers } from "@/lib/revalidation";
 
 export async function updateOrderStatusAction({
   orderId,
@@ -11,9 +10,6 @@ export async function updateOrderStatusAction({
 }) {
   try {
     const updatedOrder = await updateOrderStatus(orderId, status);
-
-    // Revalidate order cache
-    revalidateHelpers.orderStatusChanged(orderId);
 
     return {
       success: true,
@@ -36,9 +32,6 @@ export async function updateOrderInternalNoteAction({
 }) {
   try {
     const updatedOrder = await updateOrderInternalNote(orderId, internalNote);
-
-    // Revalidate order cache
-    revalidateHelpers.orderUpdated(orderId);
 
     return {
       success: true,

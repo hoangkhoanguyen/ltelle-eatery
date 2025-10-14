@@ -6,12 +6,12 @@ import SectionTitleFromConfigs from "../../shared/SectionTitleFromConfigs";
 import SectionSubTitleFromConfigs from "../../shared/SectionSubTitleFromConfigs";
 import { splitTextByNewLine } from "@/lib/utils";
 import { webRoutes } from "@/constants/route";
-import { getProductBySlugCached } from "@/services/products";
+import { getProductBySlug } from "@/services/products";
 
 const NewFood: FC<{ configs: any }> = async ({ configs }) => {
   if (!configs.isShow) return null;
 
-  const product = await getProductBySlugCached(configs?.product_slug);
+  const product = await getProductBySlug(configs?.product_slug);
 
   if (!product) return null;
 

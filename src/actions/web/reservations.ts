@@ -1,7 +1,6 @@
 "use server";
 import { createReservation } from "@/services/reservations";
 import { CreateReservationType } from "@/validations/reservation";
-import { revalidateHelpers } from "@/lib/revalidation";
 
 export async function createReservationAction(data: CreateReservationType) {
   try {
@@ -17,9 +16,6 @@ export async function createReservationAction(data: CreateReservationType) {
       customerPhone: data.customerPhone,
       note: data.note || "",
     });
-
-    // Revalidate reservation cache
-    revalidateHelpers.reservationCreated();
 
     return {
       success: true,

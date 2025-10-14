@@ -2,8 +2,8 @@ import ProductInformation from "@/components/web/features/products/ProductInform
 import RelatedProducts from "@/components/web/features/products/RelatedProducts";
 import { webRoutes } from "@/constants/route";
 import {
-  getMultipleProductsByIdsCached,
-  getProductDetailsBySlugCached,
+  getMultipleProductsByIds,
+  getProductDetailsBySlug,
 } from "@/services/products";
 import { redirect } from "next/navigation";
 import React, { FC } from "react";
@@ -11,13 +11,13 @@ import React, { FC } from "react";
 const page: FC<{ params: Promise<{ slug: string }> }> = async ({ params }) => {
   const { slug } = await params;
 
-  const product = await getProductDetailsBySlugCached(slug);
+  const product = await getProductDetailsBySlug(slug);
 
   if (!product) {
     return redirect(webRoutes.menu(""));
   }
 
-  const relatedProducts = await getMultipleProductsByIdsCached(
+  const relatedProducts = await getMultipleProductsByIds(
     product.relatedProductIds,
   );
 

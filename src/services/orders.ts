@@ -26,8 +26,9 @@ import {
   inArray,
   and,
 } from "drizzle-orm";
-import { createDynamicCachedFunction } from "@/lib/cache-utils";
-import { CACHE_TAGS } from "@/constants/cache";
+// Disabled cache imports - using direct DB calls now
+// import { createDynamicCachedFunction } from "@/lib/cache-utils";
+// import { CACHE_TAGS } from "@/constants/cache";
 
 export type CreateOrderRequest = {
   orderData: Omit<NewOrderDB, "code">;
@@ -396,15 +397,18 @@ export async function updateOrderInternalNote(
   return updatedOrder;
 }
 
-// ==================== CACHED VERSIONS ====================
+// ==================== CACHED VERSIONS (DISABLED) ====================
+// Note: These cached functions are disabled to simplify the system
+// All functions now use direct database calls for real-time data
 
+/*
 export const getAdminOrderByIdCached = createDynamicCachedFunction(
   getAdminOrderById,
   (id) => ["orders", "admin", "item", id.toString()],
   (id) => [CACHE_TAGS.ORDERS.BY_ID(id)],
 );
 
-// ==================== ADMIN CACHED VERSIONS ====================
+// ==================== ADMIN CACHED VERSIONS (DISABLED) ====================
 
 export const getAdminOrderTableCached = createDynamicCachedFunction(
   getAdminOrderTable,
@@ -422,3 +426,4 @@ export const getAdminOrderTableCached = createDynamicCachedFunction(
   ],
   () => [CACHE_TAGS.ORDERS.ADMIN_LIST],
 );
+*/

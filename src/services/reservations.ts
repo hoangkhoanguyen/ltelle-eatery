@@ -6,8 +6,9 @@ import {
   ReservationStatus,
 } from "@/db/schemas";
 import { and, count, desc, eq, ilike, inArray, or } from "drizzle-orm";
-import { createDynamicCachedFunction } from "@/lib/cache-utils";
-import { CACHE_TAGS } from "@/constants/cache";
+// Disabled cache imports - using direct DB calls now
+// import { createDynamicCachedFunction } from "@/lib/cache-utils";
+// import { CACHE_TAGS } from "@/constants/cache";
 
 export function createReservation(data: NewReservationDB) {
   const db = getDb();
@@ -163,8 +164,11 @@ export async function updateReservationInternalNote(
   return reservation;
 }
 
-// ==================== CACHED VERSIONS ====================
+// ==================== CACHED VERSIONS (DISABLED) ====================
+// Note: These cached functions are disabled to simplify the system
+// All functions now use direct database calls for real-time data
 
+/*
 export const getReservationByUuidCached = createDynamicCachedFunction(
   getReservationByUuid,
   (uuid) => ["reservations", "uuid", uuid],
@@ -177,7 +181,7 @@ export const getAdminReservationByIdCached = createDynamicCachedFunction(
   (id) => [CACHE_TAGS.RESERVATIONS.BY_ID(id)],
 );
 
-// ==================== ADMIN CACHED VERSIONS ====================
+// ==================== ADMIN CACHED VERSIONS (DISABLED) ====================
 
 export const getAdminReservationTableCached = createDynamicCachedFunction(
   getAdminReservationTable,
@@ -192,3 +196,4 @@ export const getAdminReservationTableCached = createDynamicCachedFunction(
   ],
   () => [CACHE_TAGS.RESERVATIONS.ADMIN_LIST],
 );
+*/
