@@ -51,8 +51,13 @@ RUN adduser --system --uid 1001 --ingroup nodejs nextjs
 # change group owner of folder app and all files and folders inside /app into nodejs
 RUN chgrp -R nodejs /app
 
+RUN mkdir -p /app/public/uploads/img 
+
+RUN chmod -R 775 /app/public/uploads
+
 # allow group can read
 RUN chmod -R g+r /app
+# allow group can write
 RUN chmod -R g+w /app
 
 USER nextjs
