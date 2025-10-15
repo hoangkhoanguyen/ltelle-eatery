@@ -12,15 +12,14 @@ export const ADMIN_ROUTE = {
   orders: "/admin/orders",
   order: "/admin/orders/[id]",
   settings: "/admin/settings/[setting_type]/[key]",
-  refreshTokenApi: "/admin/api/refresh-token",
+  refreshTokenApi: "/admin/api/auth/refresh-token",
   imagesApi: "/admin/api/images",
   categoriesApi: "/admin/api/categories",
   productsApi: "/admin/api/products",
   allProductApi: "/admin/api/products/all",
   ordersApi: "/admin/api/orders",
   reservationsApi: "/admin/api/reservations",
-  login: "/admin/api/login",
-  logoutApi: "/admin/api/logout",
+  login: "/admin/login",
   register: "/admin/register",
 } as const;
 
@@ -119,7 +118,6 @@ export const adminRoutes = {
     typeof id === "undefined"
       ? ADMIN_ROUTE.order
       : generateRoute("admin", "order", { id }),
-  refreshTokenApi: () => ADMIN_ROUTE.refreshTokenApi,
   imagesApi: () => ADMIN_ROUTE.imagesApi,
   categoriesApi: (query?: any) =>
     query
@@ -157,7 +155,7 @@ export const adminRoutes = {
       : generateRoute("admin", "settings", { key, setting_type }),
   login: () => ADMIN_ROUTE.login,
   register: () => ADMIN_ROUTE.register,
-  logoutApi: () => ADMIN_ROUTE.logoutApi,
+  refreshTokenApi: () => ADMIN_ROUTE.refreshTokenApi,
 };
 
 export const webRoutes = {

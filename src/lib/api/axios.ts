@@ -1,3 +1,4 @@
+import { logoutAction } from "@/actions/admin/auth";
 import { adminRoutes } from "@/constants/route";
 import axios, {
   AxiosError,
@@ -49,7 +50,7 @@ const adminApi = new HttpClient(
       error.response.status === 401
     ) {
       if ((error.response.data as any)?.code !== 2) {
-        await instance.post(adminRoutes.logoutApi());
+        await logoutAction();
         window.location.reload();
         return;
       }
