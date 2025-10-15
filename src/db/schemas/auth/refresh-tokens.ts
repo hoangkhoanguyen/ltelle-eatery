@@ -26,3 +26,6 @@ export const refreshTokenRelations = relations(refreshTokens, ({ one }) => ({
     references: [users.id],
   }),
 }));
+
+export type RefreshTokenDB = typeof refreshTokens.$inferSelect;
+export type NewRefreshTokenDB = typeof refreshTokens.$inferInsert;

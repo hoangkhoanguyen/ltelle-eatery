@@ -2,7 +2,7 @@ import queryString from "query-string";
 
 export const ADMIN_ROUTE = {
   root: "/admin",
-  dashboard: "/admin",
+  dashboard: "/admin/dashboard",
   products: "/admin/products",
   product: "/admin/products/[id]",
   productCreate: "/admin/products/create",
@@ -19,6 +19,8 @@ export const ADMIN_ROUTE = {
   allProductApi: "/admin/api/products/all",
   ordersApi: "/admin/api/orders",
   reservationsApi: "/admin/api/reservations",
+  login: "/admin/login",
+  register: "/admin/register",
 } as const;
 
 export const WEB_ROUTE = {
@@ -152,6 +154,8 @@ export const adminRoutes = {
           -1,
         )
       : generateRoute("admin", "settings", { key, setting_type }),
+  login: () => ADMIN_ROUTE.login,
+  register: () => ADMIN_ROUTE.register,
 };
 
 export const webRoutes = {

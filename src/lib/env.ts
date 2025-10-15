@@ -15,6 +15,7 @@ const envSchema = z.object({
   ACCESS_TOKEN_JWT_EXPIRES_IN: z.string(),
   REFRESH_TOKEN_JWT_SECRET: z.string(),
   REFRESH_TOKEN_JWT_EXPIRES_IN: z.string(),
+  REGISTER_SECRET_CODE: z.string(),
 });
 
 export type Env = z.infer<typeof envSchema>;

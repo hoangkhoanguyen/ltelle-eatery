@@ -1,19 +1,19 @@
-import { LoginForm } from "@/components/admin/features/auth/LoginForm";
+import { RegisterForm } from "@/components/admin/features/auth/RegisterForm";
 
-const LoginPage = () => {
+const RegisterPage = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-base-200 p-4">
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-4xl">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-base-content">
             L&apos;Telle Eatery
           </h1>
           <p className="text-base-content/70 mt-2">
-            Hệ thống quản trị nhà hàng
+            Tạo tài khoản nhân viên mới
           </p>
         </div>
 
-        <LoginForm />
+        <RegisterForm />
 
         <div className="text-center mt-6">
           <p className="text-sm text-base-content/60">
@@ -25,4 +25,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

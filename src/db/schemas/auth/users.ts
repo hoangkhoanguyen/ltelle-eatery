@@ -30,3 +30,6 @@ export const users = dbSchema.table("users", {
 export const usersRelations = relations(users, ({ many }) => ({
   refreshTokens: many(refreshTokens),
 }));
+
+export type UserDB = typeof users.$inferSelect;
+export type NewUserDB = typeof users.$inferInsert;

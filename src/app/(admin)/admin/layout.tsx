@@ -32,6 +32,7 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
             error: "!bg-red-600 !text-white",
             info: "!bg-blue-600 !text-white",
           },
+          descriptionClassName: "!text-white",
         }}
       />
       <FullscreenLoading />
