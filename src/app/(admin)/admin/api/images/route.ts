@@ -10,7 +10,7 @@ import { AccessTokenPayload } from "@/lib/auth";
 
 const MAX_SIZE = 700 * 1024; // 500KB
 const UPLOAD_PATH = "/uploads/img";
-const UPLOAD_DIR = path.join(process.cwd(), "public", "uploads", "img");
+const UPLOAD_DIR = path.join(process.cwd(), "uploads", "img");
 
 const compressFile = async (file: File) => {
   const buffer = Buffer.from(await file.arrayBuffer());
