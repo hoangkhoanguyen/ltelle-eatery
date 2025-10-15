@@ -42,15 +42,9 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 
 # Copy lại thư mục public từ builder
-COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 
-# Tạo group, user, chown, tạo thư mục uploads/img và cấp quyền chỉ trong 1 RUN
-RUN addgroup --system --gid 1001 nodejs \
-	&& adduser --system --uid 1001 --ingroup nodejs nextjs \
-	&& chgrp -R nodejs /app \
-	&& mkdir -p /app/public/uploads/img \
-	&& chmod -R 777 /app/public/uploads \
-	&& chmod -R g+rw /app
+
 
 USER nextjs
 
