@@ -2,6 +2,8 @@ import Icon from "@/components/common/Icon";
 import React, { FC } from "react";
 import { Button } from "../../ui/button";
 import Image from "next/image";
+import Link from "next/link";
+import { webRoutes } from "@/constants/route";
 
 export const HeroSection: FC<{ configs: any }> = ({ configs }) => {
   return (
@@ -31,12 +33,16 @@ export const HeroSection: FC<{ configs: any }> = ({ configs }) => {
 
           <div className="flex flex-col md:flex-row gap-5 md:gap-11 items-stretch w-full md:px-2 mb-5 md:mb-20">
             <Button
+              as={Link}
+              href={webRoutes.menu("all")}
               startIcon={<Icon icon="ph:shopping-bag" className="text-2xl" />}
               className="border border-web-background-1 flex-1 capitalize text-web-button-mobile lg:text-web-button"
             >
               order take away
             </Button>
             <Button
+              as={Link}
+              href={webRoutes.reservation()}
               className="flex-1 text-web-content-1 capitalize text-web-button-mobile lg:text-web-button"
               startIcon={<Icon icon="ph:calendar-blank" className="text-2xl" />}
               variant={"secondary2"}
