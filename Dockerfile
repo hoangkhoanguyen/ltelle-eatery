@@ -47,7 +47,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 # Copy lại thư mục public từ builder
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 
-RUN mkdir -p /app/public/uploads/img && chmod -R 777 /app/public/uploads
+RUN mkdir -p /app/public/uploads/img && chmod -R 777 /app/public/uploads && chmod -R g+rw /app 
 
 USER nextjs
 
