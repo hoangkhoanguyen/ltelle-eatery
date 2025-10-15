@@ -40,25 +40,17 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 
-# create group nodejs with ID = 1001
-RUN addgroup --system --gid 1001 nodejs
-# RUN adduser --system --uid 1001 nextjs
 
-# create user nextjs with ID = 1001 in group nodejs
-RUN adduser --system --uid 1001 --ingroup nodejs nextjs
-
-
-# change group owner of folder app and all files and folders inside /app into nodejs
-RUN chgrp -R nodejs /app
-
+# Copy lại thư mục public từ builder
 COPY --from=builder /app/public ./public
 
-# Tạo lại thư mục uploads/img và cấp quyền ghi cho user và group (sau khi copy public)
-RUN mkdir -p /app/public/uploads/img \
-	&& chmod -R 777 /app/public/uploads
-
-# allow group can read & write toàn bộ app (giữ lại nếu cần)
-RUN chmod -R g+rw /app
+# Tạo group, user, chown, tạo thư mục uploads/img và cấp quyền chỉ trong 1 RUN
+RUN addgroup --system --gid 1001 nodejs \
+	&& adduser --system --uid 1001 --ingroup nodejs nextjs \
+	&& chgrp -R nodejs /app \
+	&& mkdir -p /app/public/uploads/img \
+	&& chmod -R 777 /app/public/uploads \
+	&& chmod -R g+rw /app
 
 USER nextjs
 
