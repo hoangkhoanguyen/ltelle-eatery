@@ -14,6 +14,11 @@ const nextConfig: NextConfig = {
         hostname: "hoanghamobile.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "ltelle-upload.erosnguyen.com",
+        port: "",
+      },
     ],
     qualities: [85],
   },

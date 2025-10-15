@@ -11,7 +11,7 @@ import { AccessTokenPayload } from "@/lib/auth";
 const MAX_SIZE = 700 * 1024; // 500KB
 const UPLOAD_PATH = "/uploads/img";
 const UPLOAD_DIR = path.join(process.cwd(), "uploads", "img");
-
+const IMAGE_URL_PREFIX = "https://ltelle-upload.erosnguyen.com/uploads/img";
 const compressFile = async (file: File) => {
   const buffer = Buffer.from(await file.arrayBuffer());
 
@@ -72,7 +72,7 @@ async function uploadImage(payload: AccessTokenPayload, req: NextRequest) {
 
   return NextResponse.json({
     message: "Upload thành công",
-    url: `${UPLOAD_PATH}/${fileName}`,
+    url: `${IMAGE_URL_PREFIX}/${fileName}`,
     size: compressed.length,
   });
 }
@@ -91,7 +91,7 @@ async function getAllImages(payload: AccessTokenPayload) {
 
       return {
         name: file,
-        url: `${UPLOAD_PATH}/${file}`,
+        url: `${IMAGE_URL_PREFIX}/${file}`,
         mtime: stat.mtime.getTime(), // ms
       };
     });

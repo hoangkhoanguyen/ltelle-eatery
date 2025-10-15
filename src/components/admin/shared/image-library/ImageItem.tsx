@@ -11,7 +11,10 @@ const ImageItem: FC<{ isSelected?: boolean; url: string; onClick(): void }> = ({
   url,
 }) => {
   const { ext, fileName } = useMemo(() => {
-    const pathname = url;
+    const pathname =
+      url.startsWith("http://") || url.startsWith("https://")
+        ? new URL(url).pathname
+        : url;
     const fileNameWithExt = path.basename(pathname);
 
     const ext = path.extname(fileNameWithExt);
