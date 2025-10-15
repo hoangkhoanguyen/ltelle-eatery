@@ -46,6 +46,9 @@ COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 
 
 
+RUN addgroup --system --gid 1001 nodejs \
+    && adduser --system --uid 1001 --ingroup nodejs nextjs
+
 USER nextjs
 
 EXPOSE 3000
