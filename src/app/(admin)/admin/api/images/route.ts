@@ -79,7 +79,7 @@ async function uploadImage(payload: AccessTokenPayload, req: NextRequest) {
 
 async function getAllImages(payload: AccessTokenPayload) {
   try {
-    const uploadDir = path.join(process.cwd(), "public", "uploads", "img");
+    const uploadDir = UPLOAD_DIR;
     const files = fs.readdirSync(uploadDir);
     const images = files.filter((file) =>
       /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(file),
