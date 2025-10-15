@@ -1,4 +1,5 @@
 import { updateReservationInternalNoteAction } from "@/actions/admin/reservation";
+import { handleServerActionError } from "@/lib/handle-server-action-error";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 
@@ -9,7 +10,7 @@ const useUpdateReservationInternalNote = () => {
       if (data.success) {
         toast.success("Cập nhật ghi chú đặt bàn thành công!");
       } else {
-        toast.error(data.error || "Có lỗi xảy ra");
+        handleServerActionError(data.code, data.error);
       }
     },
     onError: () => {

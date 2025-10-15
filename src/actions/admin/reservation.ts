@@ -8,6 +8,7 @@ import {
   checkReservationExists,
   canEditReservationNote,
 } from "@/services/reservations";
+import { verifyAdminAuthSimple } from "@/services/auth";
 
 export async function updateReservationStatusAction({
   reservationId,
@@ -17,6 +18,16 @@ export async function updateReservationStatusAction({
   status: ReservationStatus;
 }) {
   try {
+    // Xác thực token trước khi thực hiện action
+    const authResult = await verifyAdminAuthSimple("/admin/reservations");
+    if (!authResult.isValid) {
+      return {
+        success: false,
+        error: "Không có quyền truy cập",
+        code: "UNAUTHORIZED",
+      };
+    }
+
     // 1. Check if reservation exists
     const reservation = await checkReservationExists(reservationId);
     if (!reservation) {
@@ -64,6 +75,16 @@ export async function updateReservationInternalNoteAction({
   internalNote: string;
 }) {
   try {
+    // Xác thực token trước khi thực hiện action
+    const authResult = await verifyAdminAuthSimple("/admin/reservations");
+    if (!authResult.isValid) {
+      return {
+        success: false,
+        error: "Không có quyền truy cập",
+        code: "UNAUTHORIZED",
+      };
+    }
+
     // 1. Check if reservation exists
     const reservation = await checkReservationExists(reservationId);
     if (!reservation) {

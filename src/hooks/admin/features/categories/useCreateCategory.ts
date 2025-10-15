@@ -1,7 +1,8 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { addProductCategoryAction } from "@/actions/admin/category";
 import { NewProductCategoryDB } from "@/types/products";
 import { toast } from "sonner";
+import { handleServerActionError } from "@/lib/handle-server-action-error";
 
 const useCreateCategory = () => {
   return useMutation({
@@ -10,7 +11,7 @@ const useCreateCategory = () => {
       if (result.success) {
         toast.success("Tạo danh mục thành công!");
       } else {
-        toast.error(result.error || "Có lỗi xảy ra");
+        handleServerActionError(result.code, result.error);
       }
     },
     onError: (error) => {

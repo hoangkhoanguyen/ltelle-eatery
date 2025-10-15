@@ -1,4 +1,5 @@
 import { deleteProductImagesAction } from "@/actions/admin/product";
+import { handleServerActionError } from "@/lib/handle-server-action-error";
 
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -10,7 +11,7 @@ export default function useDeleteProductImages() {
       if (data.success) {
         toast.success("Xóa hình ảnh sản phẩm thành công!");
       } else {
-        toast.error(data.error || "Có lỗi xảy ra");
+        handleServerActionError(data.code, data.error);
       }
     },
     onError: () => {

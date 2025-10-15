@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateProductCategoryAction } from "@/actions/admin/category";
 import { NewProductCategoryDB } from "@/types/products";
 import { toast } from "sonner";
+import { handleServerActionError } from "@/lib/handle-server-action-error";
 
 interface UpdateCategoryParams {
   id: number;
@@ -22,7 +23,7 @@ const useUpdateCategory = () => {
           queryKey: ["admin", "categories"],
         });
       } else {
-        toast.error(result.error || "Có lỗi xảy ra");
+        handleServerActionError(result.code, result.error);
       }
     },
     onError: (error) => {

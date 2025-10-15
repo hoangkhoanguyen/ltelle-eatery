@@ -6,6 +6,7 @@ import {
   checkOrderExists,
   canEditOrderNote,
 } from "@/services/orders";
+import { verifyAdminAuthSimple } from "@/services/auth";
 import { revalidatePath } from "next/cache";
 
 export async function updateOrderStatusAction({
@@ -16,6 +17,16 @@ export async function updateOrderStatusAction({
   status: "processing" | "completed" | "cancelled";
 }) {
   try {
+    // Xác thực token trước khi thực hiện action
+    const authResult = await verifyAdminAuthSimple("/admin/orders");
+    if (!authResult.isValid) {
+      return {
+        success: false,
+        error: "Không có quyền truy cập",
+        code: "UNAUTHORIZED",
+      };
+    }
+
     // 1. Check if order exists
     const order = await checkOrderExists(orderId);
     if (!order) {
@@ -60,6 +71,16 @@ export async function updateOrderInternalNoteAction({
   internalNote: string;
 }) {
   try {
+    // Xác thực token trước khi thực hiện action
+    const authResult = await verifyAdminAuthSimple("/admin/orders");
+    if (!authResult.isValid) {
+      return {
+        success: false,
+        error: "Không có quyền truy cập",
+        code: "UNAUTHORIZED",
+      };
+    }
+
     // 1. Check if order exists
     const order = await checkOrderExists(orderId);
     if (!order) {

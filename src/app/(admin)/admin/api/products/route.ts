@@ -1,6 +1,8 @@
 import { withError } from "@/providers/withError";
+import { withAuth } from "@/providers/withAuth";
 import { getAdminProductTable } from "@/services/products";
 import { NextRequest, NextResponse } from "next/server";
+import { AccessTokenPayload } from "@/lib/auth";
 import z from "zod";
 
 const schema = z.object({
@@ -9,7 +11,7 @@ const schema = z.object({
   search: z.string().optional().nullable(),
 });
 
-async function getProductsApi(req: NextRequest) {
+async function getProductsApi(payload: AccessTokenPayload, req: NextRequest) {
   const page = req.nextUrl.searchParams.get("page");
   const limit = req.nextUrl.searchParams.get("limit");
   const search = req.nextUrl.searchParams.get("search");
@@ -28,4 +30,4 @@ async function getProductsApi(req: NextRequest) {
   return NextResponse.json(result);
 }
 
-export const GET = withError(getProductsApi);
+export const GET = withError(withAuth(getProductsApi));

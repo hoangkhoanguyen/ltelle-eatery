@@ -1,6 +1,8 @@
 import { withError } from "@/providers/withError";
+import { withAuth } from "@/providers/withAuth";
 import { getAdminReservationTable } from "@/services/reservations";
 import { NextRequest, NextResponse } from "next/server";
+import { AccessTokenPayload } from "@/lib/auth";
 import z from "zod";
 
 const schema = z.object({
@@ -21,7 +23,10 @@ const schema = z.object({
     .transform((val) => (val ? val.split(",") : [])),
 });
 
-async function getReservationsApi(req: NextRequest) {
+async function getReservationsApi(
+  payload: AccessTokenPayload,
+  req: NextRequest,
+) {
   const page = req.nextUrl.searchParams.get("page");
   const limit = req.nextUrl.searchParams.get("limit");
   const search = req.nextUrl.searchParams.get("search");
@@ -54,4 +59,4 @@ async function getReservationsApi(req: NextRequest) {
   return NextResponse.json(result);
 }
 
-export const GET = withError(getReservationsApi);
+export const GET = withError(withAuth(getReservationsApi));

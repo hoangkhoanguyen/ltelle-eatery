@@ -1,6 +1,6 @@
 "use client";
 import { useSetLoading } from "@/hooks/admin/loading";
-import useUpdateConfigs from "@/hooks/admin/settings/useUpdateConfigs";
+import useUpdateConfigs from "@/hooks/admin/features/settings/useUpdateConfigs";
 import { ISetting, MetaValue } from "@/types/settings";
 import React, { FC } from "react";
 import Setting from "./Setting";

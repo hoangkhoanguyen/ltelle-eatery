@@ -4,7 +4,9 @@ import path from "path";
 import sharp from "sharp";
 import crypto from "crypto";
 import { withError } from "@/providers/withError";
+import { withAuth } from "@/providers/withAuth";
 import { createInvalidInputs, createResponse } from "@/lib/api/response";
+import { AccessTokenPayload } from "@/lib/auth";
 
 const MAX_SIZE = 700 * 1024; // 500KB
 const UPLOAD_PATH = "/uploads/img";
@@ -52,7 +54,7 @@ if (!fs.existsSync(UPLOAD_DIR)) {
   fs.mkdirSync(UPLOAD_DIR, { recursive: true });
 }
 
-async function uploadImage(req: NextRequest) {
+async function uploadImage(payload: AccessTokenPayload, req: NextRequest) {
   const formData = await req.formData();
   const file = formData.get("file") as File;
 
@@ -75,7 +77,7 @@ async function uploadImage(req: NextRequest) {
   });
 }
 
-async function getAllImages() {
+async function getAllImages(payload: AccessTokenPayload) {
   try {
     const uploadDir = path.join(process.cwd(), "public", "uploads", "img");
     const files = fs.readdirSync(uploadDir);
@@ -105,6 +107,5 @@ async function getAllImages() {
   }
 }
 
-// TODO: thêm withAuth
-export const POST = withError(uploadImage);
-export const GET = withError(getAllImages);
+export const POST = withError(withAuth(uploadImage));
+export const GET = withError(withAuth(getAllImages));

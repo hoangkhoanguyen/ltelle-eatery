@@ -1,8 +1,11 @@
 import { withError } from "@/providers/withError";
+import { withAuth } from "@/providers/withAuth";
 import { getCategoryWithProducts } from "@/services/products";
 import { NextRequest, NextResponse } from "next/server";
+import { AccessTokenPayload } from "@/lib/auth";
 
 const getCategoryByIdApi = async (
+  payload: AccessTokenPayload,
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) => {
@@ -34,4 +37,4 @@ const getCategoryByIdApi = async (
   return NextResponse.json({ category });
 };
 
-export const GET = withError(getCategoryByIdApi);
+export const GET = withError(withAuth(getCategoryByIdApi));

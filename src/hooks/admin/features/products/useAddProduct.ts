@@ -1,4 +1,5 @@
 import { createProductAction } from "@/actions/admin/product";
+import { handleServerActionError } from "@/lib/handle-server-action-error";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 
@@ -9,7 +10,7 @@ export default function useAddProduct() {
       if (data.success) {
         toast.success("Tạo sản phẩm thành công!");
       } else {
-        toast.error(data.error || "Có lỗi xảy ra");
+        handleServerActionError(data.code, data.error);
       }
     },
     onError: () => {

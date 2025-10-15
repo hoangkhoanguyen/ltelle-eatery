@@ -49,7 +49,9 @@ const adminApi = new HttpClient(
       error.response.status === 401
     ) {
       if ((error.response.data as any)?.code !== 2) {
-        return Promise.reject(error);
+        await instance.post(adminRoutes.logoutApi());
+        window.location.reload();
+        return;
       }
 
       if (!refreshTokenPromise) {

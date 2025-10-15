@@ -19,7 +19,8 @@ export const ADMIN_ROUTE = {
   allProductApi: "/admin/api/products/all",
   ordersApi: "/admin/api/orders",
   reservationsApi: "/admin/api/reservations",
-  login: "/admin/login",
+  login: "/admin/api/login",
+  logoutApi: "/admin/api/logout",
   register: "/admin/register",
 } as const;
 
@@ -156,6 +157,7 @@ export const adminRoutes = {
       : generateRoute("admin", "settings", { key, setting_type }),
   login: () => ADMIN_ROUTE.login,
   register: () => ADMIN_ROUTE.register,
+  logoutApi: () => ADMIN_ROUTE.logoutApi,
 };
 
 export const webRoutes = {

@@ -1,4 +1,5 @@
 import { updateOrderStatusAction } from "@/actions/admin/order";
+import { handleServerActionError } from "@/lib/handle-server-action-error";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 
@@ -9,7 +10,7 @@ const useUpdateOrderStatus = () => {
       if (data.success) {
         toast.success("Cập nhật trạng thái đơn hàng thành công!");
       } else {
-        toast.error(data.error || "Có lỗi xảy ra");
+        handleServerActionError(data.code, data.error);
       }
     },
     onError: () => {

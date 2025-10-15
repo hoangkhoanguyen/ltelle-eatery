@@ -1,9 +1,11 @@
 import { withError } from "@/providers/withError";
+import { withAuth } from "@/providers/withAuth";
 import {
   getAllProductCategories,
   getAdminCategoriesTable,
 } from "@/services/products";
 import { NextRequest, NextResponse } from "next/server";
+import { AccessTokenPayload } from "@/lib/auth";
 import z from "zod";
 
 const getCategoriesQuerySchema = z.object({
@@ -13,7 +15,10 @@ const getCategoriesQuerySchema = z.object({
   isActive: z.enum(["true", "false"]).optional().nullable(),
 });
 
-const getCategoriesApi = async (request: NextRequest) => {
+const getCategoriesApi = async (
+  payload: AccessTokenPayload,
+  request: NextRequest,
+) => {
   const page = request.nextUrl.searchParams.get("page");
   const limit = request.nextUrl.searchParams.get("limit");
   const search = request.nextUrl.searchParams.get("search");
@@ -64,4 +69,4 @@ const getCategoriesApi = async (request: NextRequest) => {
   return NextResponse.json(result);
 };
 
-export const GET = withError(getCategoriesApi);
+export const GET = withError(withAuth(getCategoriesApi));

@@ -5,10 +5,21 @@ import {
   isExistingCategorySlug,
   isExistingCategoryName,
 } from "@/services/products";
+import { verifyAdminAuthSimple } from "@/services/auth";
 import { NewProductCategoryDB } from "@/types/products";
 
 export async function addProductCategoryAction(data: NewProductCategoryDB) {
   try {
+    // Xác thực token trước khi thực hiện action
+    const authResult = await verifyAdminAuthSimple("/admin/categories");
+    if (!authResult.isValid) {
+      return {
+        success: false,
+        error: "Không có quyền truy cập",
+        code: "UNAUTHORIZED",
+      };
+    }
+
     // Kiểm tra slug trùng lặp
     const isSlugExists = await isExistingCategorySlug(data.slug);
     if (isSlugExists) {
@@ -49,6 +60,16 @@ export async function updateProductCategoryAction(
   data: Partial<NewProductCategoryDB>,
 ) {
   try {
+    // Xác thực token trước khi thực hiện action
+    const authResult = await verifyAdminAuthSimple("/admin/categories");
+    if (!authResult.isValid) {
+      return {
+        success: false,
+        error: "Không có quyền truy cập",
+        code: "UNAUTHORIZED",
+      };
+    }
+
     // Kiểm tra slug trùng lặp (nếu có update slug)
     if (data.slug) {
       const isSlugExists = await isExistingCategorySlug(data.slug, id);

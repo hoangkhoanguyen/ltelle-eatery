@@ -5,18 +5,19 @@ import {
   getAuthErrorCodeFromServiceCode,
   createAuthErrorResponse,
 } from "@/lib/auth-responses";
-import { withError } from "@/providers/withError";
 import { setAuthCookies } from "@/lib/auth";
+import { AUTH_COOKIE_KEYS } from "@/constants/auth";
 
 export async function POST(request: NextRequest) {
   try {
-    // Parse request body
-    const body = await request.json();
-    const { refreshToken } = body;
+    // Get refresh token from cookies instead of body
+    const refreshToken = request.cookies.get(
+      AUTH_COOKIE_KEYS.REFRESH_TOKEN,
+    )?.value;
 
     // Validate required fields
     if (!refreshToken) {
-      return createUnauthorizedResponse("Refresh token là bắt buộc");
+      return createUnauthorizedResponse("Refresh token không tìm thấy");
     }
 
     // Call service function

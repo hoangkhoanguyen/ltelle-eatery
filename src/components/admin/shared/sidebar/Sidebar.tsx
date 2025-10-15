@@ -34,12 +34,12 @@ const Sidebar = () => {
           L&#39;Telle Admin
         </p>
       </div>
-      
+
       {/* Menu items - takes remaining space */}
       <div className="flex-1">
         <Menu />
       </div>
-      
+
       {/* Logout button at bottom */}
       <div className="p-4">
         <button
@@ -49,11 +49,15 @@ const Sidebar = () => {
             "w-full flex items-center gap-3 px-4 py-3 rounded-lg",
             "text-white hover:bg-slate-800 dark:hover:bg-gray-800",
             "transition-colors duration-200",
-            "disabled:opacity-50 disabled:cursor-not-allowed"
+            "disabled:opacity-50 disabled:cursor-not-allowed",
           )}
         >
-          <Icon 
-            icon={isPending ? "svg-spinners:8-dots-rotate" : "material-symbols:logout"} 
+          <Icon
+            icon={
+              isPending
+                ? "svg-spinners:8-dots-rotate"
+                : "material-symbols:logout"
+            }
             className="text-xl"
           />
           <span className="text-sm font-medium">

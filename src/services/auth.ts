@@ -589,3 +589,208 @@ export async function updateRefreshToken(
     throw new Error(`Lỗi khi cập nhật refresh token: ${error}`);
   }
 }
+
+// ===== TOKEN VERIFICATION SERVICE =====
+
+import {
+  verifyAccessToken,
+  getAccessTokenFromCookie,
+  getRefreshTokenFromCookie,
+  setAuthCookies,
+  deleteAuthCookies,
+} from "@/lib/auth";
+import { adminRoutes } from "@/constants/route";
+import { redirect } from "next/navigation";
+
+// Interface cho kết quả verify token
+export interface TokenVerificationResult {
+  isValid: boolean;
+  user?: Omit<UserDB, "password">;
+  error?: string;
+}
+
+// Interface cho options của verification
+export interface VerifyTokenOptions {
+  clearTokensOnFail?: boolean; // Xóa tokens khi fail
+  redirectOnFail?: boolean; // Redirect về login khi fail
+  redirectPath?: string; // Custom redirect path
+  currentPath?: string; // Current path để làm callback URL
+}
+
+/**
+ * Service xác thực token tự động:
+ * 1. Kiểm tra access token từ cookie
+ * 2. Nếu không có token → trả false (+ clear/redirect nếu có option)
+ * 3. Nếu token hợp lệ → trả true với thông tin user
+ * 4. Nếu token hết hạn → tự động refresh và lưu cookie mới
+ * 5. Nếu refresh fail → trả false (+ clear/redirect nếu có option)
+ */
+export async function verifyTokenWithAutoRefresh(
+  options: VerifyTokenOptions = {},
+): Promise<TokenVerificationResult> {
+  const {
+    clearTokensOnFail = false,
+    redirectOnFail = false,
+    redirectPath = adminRoutes.login(),
+    currentPath,
+  } = options;
+
+  const handleFailure = async (
+    error: string,
+  ): Promise<TokenVerificationResult> => {
+    if (clearTokensOnFail) {
+      try {
+        await deleteAuthCookies();
+      } catch (err) {
+        console.error("Error clearing cookies:", err);
+      }
+    }
+
+    if (redirectOnFail) {
+      let loginUrl = redirectPath;
+
+      // Thêm callback URL nếu có currentPath
+      if (currentPath && currentPath !== adminRoutes.login()) {
+        const callbackUrl = encodeURIComponent(currentPath);
+        const separator = redirectPath.includes("?") ? "&" : "?";
+        loginUrl = `${redirectPath}${separator}callback_url=${callbackUrl}`;
+      }
+
+      redirect(loginUrl);
+    }
+
+    return {
+      isValid: false,
+      error,
+    };
+  };
+  try {
+    // 1. Lấy access token từ cookie
+    const accessToken = await getAccessTokenFromCookie();
+
+    if (!accessToken) {
+      return await handleFailure("Không tìm thấy access token");
+    }
+
+    // 2. Verify access token
+    const verifyResult = await verifyAccessToken(accessToken);
+
+    // 3. Nếu token hợp lệ → trả về thông tin user
+    if (verifyResult.isValid && verifyResult.payload) {
+      // Lấy thông tin user từ database để đảm bảo data mới nhất
+      const user = await getUserById(verifyResult.payload.userId);
+
+      if (!user) {
+        return await handleFailure("Không tìm thấy user");
+      }
+
+      // Loại bỏ password khỏi response
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { password: _, ...userWithoutPassword } = user;
+
+      return {
+        isValid: true,
+        user: userWithoutPassword,
+      };
+    }
+
+    // 4. Nếu token hết hạn → thử refresh
+    if (verifyResult.isExpired) {
+      const refreshToken = await getRefreshTokenFromCookie();
+
+      if (!refreshToken) {
+        return await handleFailure("Không tìm thấy refresh token");
+      }
+
+      // Thử refresh access token
+      const refreshResult = await refreshAccessToken({ refreshToken });
+
+      if (refreshResult.success) {
+        // Lưu tokens mới vào cookie
+        await setAuthCookies(
+          refreshResult.accessToken!,
+          refreshResult.refreshToken!,
+        );
+
+        // Verify token mới và lấy thông tin user
+        const newVerifyResult = await verifyAccessToken(
+          refreshResult.accessToken!,
+        );
+
+        if (newVerifyResult.isValid && newVerifyResult.payload) {
+          const user = await getUserById(newVerifyResult.payload.userId);
+
+          if (!user) {
+            return await handleFailure("Không tìm thấy user sau khi refresh");
+          }
+
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const { password: _, ...userWithoutPassword } = user;
+
+          return {
+            isValid: true,
+            user: userWithoutPassword,
+          };
+        }
+      }
+
+      // Refresh thất bại
+      return await handleFailure("Không thể làm mới token");
+    }
+
+    // 5. Token không hợp lệ (không phải hết hạn)
+    return await handleFailure("Access token không hợp lệ");
+  } catch (error) {
+    console.error("Error in token verification service:", error);
+    return await handleFailure("Lỗi xác thực token");
+  }
+}
+
+/**
+ * Helper function cho admin actions - tự động clear tokens và redirect khi fail
+ */
+export async function verifyAdminAuth(
+  currentPath?: string,
+): Promise<TokenVerificationResult> {
+  return await verifyTokenWithAutoRefresh({
+    clearTokensOnFail: true,
+    redirectOnFail: true,
+    currentPath,
+  });
+}
+
+/**
+ * Helper function đơn giản cho admin actions
+ * Tự động clear tokens và redirect về login khi fail
+ * @param currentPath - Optional current path để làm callback URL sau khi login
+ */
+export async function verifyAdminAuthSimple(
+  currentPath?: string,
+): Promise<TokenVerificationResult> {
+  return await verifyTokenWithAutoRefresh({
+    clearTokensOnFail: true,
+    redirectOnFail: true,
+    currentPath,
+  });
+}
+
+/**
+ * Helper function cho middleware/components - với support đầy đủ cho callback URL
+ */
+export async function verifyAdminAuthWithCallback(request?: {
+  url: string;
+  nextUrl: { pathname: string; search: string };
+}): Promise<TokenVerificationResult> {
+  let currentPath: string | undefined;
+
+  if (request) {
+    // Lấy full path từ request (pathname + search params)
+    currentPath = request.nextUrl.pathname + request.nextUrl.search;
+  }
+
+  return await verifyTokenWithAutoRefresh({
+    clearTokensOnFail: true,
+    redirectOnFail: true,
+    currentPath,
+  });
+}

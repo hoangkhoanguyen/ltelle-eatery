@@ -4,7 +4,7 @@ import Header from "../../shared/header/Header";
 import { Button } from "../../ui/button";
 import { useSetLoading } from "@/hooks/admin/loading";
 import { NewConfigDB } from "@/db/schemas";
-import useInitConfigs from "@/hooks/admin/settings/useInitConfigs";
+import useInitConfigs from "@/hooks/admin/features/settings/useInitConfigs";
 
 const InitSetting: FC<{
   initConfigs: NewConfigDB;

@@ -8,11 +8,22 @@ import {
   updateProductById,
   updateProductStatus,
 } from "@/services/products";
+import { verifyAdminAuthSimple } from "@/services/auth";
 import { AdminEditProductForm, NewProductDB } from "@/types/products";
 import { revalidatePath } from "next/cache";
 
 export async function createProductAction(data: NewProductDB) {
   try {
+    // Xác thực token trước khi thực hiện action
+    const authResult = await verifyAdminAuthSimple("/admin/products");
+    if (!authResult.isValid) {
+      return {
+        success: false,
+        error: "Không có quyền truy cập",
+        code: "UNAUTHORIZED",
+      };
+    }
+
     const isExisSlug = await isExistingSlug(data.slug);
 
     if (isExisSlug) {
@@ -40,6 +51,16 @@ export async function createProductAction(data: NewProductDB) {
 
 export async function deleteProductImagesAction(ids: number[]) {
   try {
+    // Xác thực token trước khi thực hiện action
+    const authResult = await verifyAdminAuthSimple("/admin/products");
+    if (!authResult.isValid) {
+      return {
+        success: false,
+        error: "Không có quyền truy cập",
+        code: "UNAUTHORIZED",
+      };
+    }
+
     await deleteProductImages(ids);
 
     return {
@@ -63,6 +84,16 @@ export async function updateProductAction({
   id: number;
 }) {
   try {
+    // Xác thực token trước khi thực hiện action
+    const authResult = await verifyAdminAuthSimple("/admin/products");
+    if (!authResult.isValid) {
+      return {
+        success: false,
+        error: "Không có quyền truy cập",
+        code: "UNAUTHORIZED",
+      };
+    }
+
     const imagesWithOrder = images.map((item, index) => ({
       ...item,
       sortOrder: index + 1,
@@ -125,6 +156,16 @@ export async function updateProductAction({
 
 export async function updateProductStatusAction(id: number, isActive: boolean) {
   try {
+    // Xác thực token trước khi thực hiện action
+    const authResult = await verifyAdminAuthSimple("/admin/products");
+    if (!authResult.isValid) {
+      return {
+        success: false,
+        error: "Không có quyền truy cập",
+        code: "UNAUTHORIZED",
+      };
+    }
+
     // Validate product exists
     const productExists = await checkProductExists(id);
     if (!productExists) {

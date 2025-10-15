@@ -1,4 +1,5 @@
 import { updateProductStatusAction } from "@/actions/admin/product";
+import { handleServerActionError } from "@/lib/handle-server-action-error";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 
@@ -12,7 +13,7 @@ export default function useUpdateProductStatus() {
           data.data?.message || "Cập nhật trạng thái sản phẩm thành công!",
         );
       } else {
-        toast.error(data.error || "Có lỗi xảy ra");
+        handleServerActionError(data.code, data.error);
       }
     },
     onError: () => {
