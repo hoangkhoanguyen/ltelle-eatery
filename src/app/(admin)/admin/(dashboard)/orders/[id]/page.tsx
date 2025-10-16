@@ -94,6 +94,7 @@ const OrderDetailsPage = async ({
                 data={{
                   internalNote: order.internalNote,
                   id: order.id,
+                  status: order.status as OrderStatus,
                 }}
               />
             </div>
