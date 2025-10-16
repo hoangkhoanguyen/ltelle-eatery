@@ -39,7 +39,6 @@ export default function ProductDetailsProvider({
   );
 
   const onSubmit = handleSubmit(({ ...rest }) => {
-    console.log("rest", rest);
     mutate({
       id,
       data: {

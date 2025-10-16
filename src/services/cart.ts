@@ -15,7 +15,10 @@ export async function checkCartLength({
   const db = getDb();
   const products = await db.query.products.findMany({
     where(fields, operators) {
-      return operators.inArray(fields.id, productIds);
+      return operators.and(
+        operators.inArray(fields.id, productIds),
+        operators.eq(fields.isActive, true),
+      );
     },
     columns: { id: true },
   });

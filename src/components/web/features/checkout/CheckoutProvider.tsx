@@ -73,7 +73,6 @@ const CheckoutProvider: FC<
   const totalPrice = subTotalPrice + shippingFee;
 
   const onCheckout = handleSubmit((data: CheckoutFormData) => {
-    console.log(data);
     mutate(
       {
         orderData: {
