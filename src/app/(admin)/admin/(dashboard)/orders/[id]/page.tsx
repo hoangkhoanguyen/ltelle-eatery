@@ -6,8 +6,9 @@ import { getAdminOrderById } from "@/services/orders";
 import React from "react";
 import OrderSummary from "@/components/admin/features/orders/OrderSummary";
 import OrderItems from "@/components/admin/features/orders/OrderItems";
-import { AdminOrderAddon, OrderStatus, OrderType } from "@/types/orders";
+import { AdminOrderAddon, OrderStatus } from "@/types/orders";
 import OrderInternalNote from "@/components/admin/features/orders/OrderInternalNote";
+import { EShippingMethod } from "@/types/app-configs";
 
 const OrderDetailsPage = async ({
   params,
@@ -47,7 +48,7 @@ const OrderDetailsPage = async ({
                   note: order.note,
                 }}
               />
-              {order.orderType === OrderType.delivery && (
+              {order.orderType === EShippingMethod.door2door && (
                 <DeliveryInformation
                   data={{
                     deliveryAddress: order.deliveryAddress,

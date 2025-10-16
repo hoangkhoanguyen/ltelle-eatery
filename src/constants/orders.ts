@@ -1,4 +1,5 @@
-import { OrderStatus, OrderType, PaymentMethod } from "@/types/orders";
+import { EShippingMethod } from "@/types/app-configs";
+import { OrderStatus, PaymentMethod } from "@/types/orders";
 
 export const ORDER_STATUS: Record<
   OrderStatus,
@@ -26,17 +27,17 @@ export const ORDER_STATUS: Record<
 };
 
 export const ORDER_TYPE: Record<
-  OrderType,
+  EShippingMethod,
   {
     color: string;
     label: string;
   }
 > = {
-  [OrderType.pickup]: {
+  [EShippingMethod.pickup]: {
     color: "badge-secondary",
     label: "Pickup at Restaurant",
   },
-  [OrderType.delivery]: {
+  [EShippingMethod.door2door]: {
     color: "badge-success",
     label: "Door-to-Door Delivery",
   },

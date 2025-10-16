@@ -7,12 +7,14 @@ import Pagination from "@/components/admin/ui/table/Pagination";
 import useFetchOrders from "@/hooks/admin/features/orders/useFetchOrders";
 import useOrdersParams from "@/hooks/admin/features/orders/useOrdersParams";
 import React, { useMemo } from "react";
-import { AdminOrderTable, OrderStatus, OrderType } from "@/types/orders";
+import { AdminOrderTable, OrderStatus } from "@/types/orders";
+import { EShippingMethod } from "@/types/app-configs";
 
 const ProductPage = () => {
   const { query, setQuery } = useOrdersParams();
   const { data, refetch, isPending, isRefetching } = useFetchOrders(query);
 
+  console.log("init", data);
   const convertedData: AdminOrderTable[] = useMemo(
     (): AdminOrderTable[] =>
       data?.orders.map((item) => ({
@@ -20,7 +22,7 @@ const ProductPage = () => {
         customerName: `${item.firstName} ${item.lastName}`,
         customerPhone: item.customerPhone,
         totalPrice: item.totalPrice,
-        orderType: item.orderType as OrderType,
+        orderType: item.orderType as EShippingMethod,
         orderTypeLabel: item.orderTypeLabel || "",
         paymentMethod: item.paymentMethod,
         status: item.status as OrderStatus,
@@ -32,6 +34,8 @@ const ProductPage = () => {
       })) || [],
     [data],
   );
+
+  console.log("display", convertedData);
 
   return (
     <div className="container px-5 pb-5 mx-auto flex flex-col gap-4 min-h-screen">

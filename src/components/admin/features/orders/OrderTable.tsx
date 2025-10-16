@@ -63,7 +63,7 @@ export default function OrderTable({
       header: "Shipping Method",
       cell(props) {
         const value = props.getValue();
-        const label = props.row.getValue("orderTypeLabel") as string;
+        const label = props.row.original.orderTypeLabel;
         return (
           <span className={`badge badge-soft ${ORDER_TYPE[value].color}`}>
             {label}

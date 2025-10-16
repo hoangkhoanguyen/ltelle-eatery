@@ -1,15 +1,8 @@
 import React, { useState } from "react";
 import Filter from "../../shared/Filter";
-import {
-  parseAsArrayOf,
-  parseAsBoolean,
-  parseAsString,
-  SetValues,
-  useQueryStates,
-} from "nuqs";
-import { Select } from "../../ui/form";
 import { ORDER_STATUS, ORDER_TYPE } from "@/constants/orders";
-import { OrderStatus, OrderType } from "@/types/orders";
+import { OrderStatus } from "@/types/orders";
+import { EShippingMethod } from "@/types/app-configs";
 
 interface FilterQuery {
   status: string[];
@@ -90,7 +83,7 @@ const OrderFilter = ({
 
       <fieldset className="fieldset bg-base-100 border-base-300 rounded-box w-full border p-4">
         <legend className="fieldset-legend">Order Type</legend>
-        {Object.values(OrderType).map((type) => (
+        {Object.values(EShippingMethod).map((type) => (
           <label className="label" key={type}>
             <input
               type="checkbox"

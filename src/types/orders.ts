@@ -1,9 +1,5 @@
 import { orderItemAddons, orderItems, orders } from "@/db/schemas/orders";
-
-export enum OrderType {
-  delivery = "delivery",
-  pickup = "pickup",
-}
+import { EShippingMethod } from "./app-configs";
 
 export enum PaymentMethod {
   cash_on_delivery = "cash_on_delivery",
@@ -24,7 +20,7 @@ export interface AdminOrderTable {
   totalPrice: number;
   note: string | null;
   createdAt: Date;
-  orderType: OrderType;
+  orderType: EShippingMethod;
   orderTypeLabel: string;
   deliveryAddress: string | null;
   status: OrderStatus;
