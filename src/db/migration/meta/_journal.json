@@ -15,6 +15,13 @@
       "when": 1760091446475,
       "tag": "0001_shocking_red_shift",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1760591144437,
+      "tag": "0002_blue_the_executioner",
+      "breakpoints": true
     }
   ]
 }

@@ -25,6 +25,7 @@ export interface AdminOrderTable {
   note: string | null;
   createdAt: Date;
   orderType: OrderType;
+  orderTypeLabel: string;
   deliveryAddress: string | null;
   status: OrderStatus;
 }

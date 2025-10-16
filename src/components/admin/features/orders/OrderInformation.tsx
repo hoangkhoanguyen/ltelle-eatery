@@ -4,7 +4,7 @@ import React, { FC } from "react";
 const OrderInformation: FC<{
   data: Pick<
     AdminOrderDetails,
-    "customerName" | "customerPhone" | "code" | "orderType" | "note"
+    "customerName" | "customerPhone" | "code" | "orderTypeLabel" | "note"
   >;
 }> = ({ data }) => {
   return (
@@ -25,7 +25,7 @@ const OrderInformation: FC<{
         </div>
         <div>
           <h3 className="font-medium text-gray-500 text-sm">Order Type</h3>
-          <p className="text-gray-700 font-semibold">{data.orderType}</p>
+          <p className="text-gray-700 font-semibold">{data.orderTypeLabel}</p>
         </div>
         <div className="col-span-1 md:col-span-2">
           <h3 className="font-medium text-gray-500 text-sm">Order Note</h3>

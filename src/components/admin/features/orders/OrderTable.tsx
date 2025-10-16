@@ -60,12 +60,13 @@ export default function OrderTable({
       header: "Customer Phone",
     }),
     columnHelper.accessor("orderType", {
-      header: "Order Type",
+      header: "Shipping Method",
       cell(props) {
         const value = props.getValue();
+        const label = props.row.getValue("orderTypeLabel") as string;
         return (
           <span className={`badge badge-soft ${ORDER_TYPE[value].color}`}>
-            {ORDER_TYPE[value].label}
+            {label}
           </span>
         );
       },

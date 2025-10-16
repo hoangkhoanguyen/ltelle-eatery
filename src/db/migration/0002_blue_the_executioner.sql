@@ -1,0 +1,1 @@
+ALTER TABLE "dev"."orders" ADD COLUMN "order_type_label" varchar(100);

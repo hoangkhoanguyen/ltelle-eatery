@@ -43,7 +43,7 @@ const OrderDetailsPage = async ({
                   customerName: order.firstName + " " + order.lastName,
                   customerPhone: order.customerPhone,
                   code: order.code,
-                  orderType: order.orderType as OrderType,
+                  orderTypeLabel: order.orderTypeLabel || "",
                   note: order.note,
                 }}
               />

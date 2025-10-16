@@ -21,6 +21,7 @@ const ProductPage = () => {
         customerPhone: item.customerPhone,
         totalPrice: item.totalPrice,
         orderType: item.orderType as OrderType,
+        orderTypeLabel: item.orderTypeLabel || "",
         paymentMethod: item.paymentMethod,
         status: item.status as OrderStatus,
         createdAt: item.createdAt,
