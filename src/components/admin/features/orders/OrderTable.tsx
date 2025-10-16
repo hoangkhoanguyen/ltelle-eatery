@@ -40,7 +40,7 @@ export default function OrderTable({
       cell(props) {
         const value = props.getValue();
         return (
-          <span className={`badge badge-soft ${ORDER_STATUS[value].color}`}>
+          <span className={`badge badge-soft ${ORDER_STATUS[value]?.color}`}>
             {ORDER_STATUS[value].label}
           </span>
         );
