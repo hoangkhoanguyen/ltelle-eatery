@@ -12,7 +12,7 @@ export interface AdminReservationTable {
   code: string;
   customerName: string;
   customerPhone: string;
-  arrivalTime: Date;
+  arrivalTime: string;
   status: EReservationStatus;
   createdAt: string;
   note: string;

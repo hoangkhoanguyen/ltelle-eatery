@@ -64,15 +64,9 @@ export default function ReservationTable({
 
     columnHelper.accessor("arrivalTime", {
       header: "Arrival Time",
-      cell(props) {
-        return moment(props.getValue()).format("DD/MM/YYYY hh:mm A");
-      },
     }),
     columnHelper.accessor("createdAt", {
       header: "Created At",
-      cell(props) {
-        return moment(props.getValue()).format("DD/MM/YYYY hh:mm A");
-      },
     }),
   ];
   return (

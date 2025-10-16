@@ -15,9 +15,7 @@ const OrderSummary: FC<{
       <div className="mt-4 flex flex-col gap-3">
         <div>
           <h3 className="font-medium text-gray-500 text-sm">Created at</h3>
-          <p className="text-gray-700 font-semibold">
-            {moment(data.createdAt).format("MMMM Do YYYY, h:mm:ss a")}
-          </p>
+          <p className="text-gray-700 font-semibold">{data.createdAt}</p>
         </div>
         <div>
           <h3 className="font-medium text-gray-500 text-sm">Payment</h3>

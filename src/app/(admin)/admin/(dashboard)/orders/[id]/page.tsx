@@ -9,6 +9,7 @@ import OrderItems from "@/components/admin/features/orders/OrderItems";
 import { AdminOrderAddon, OrderStatus } from "@/types/orders";
 import OrderInternalNote from "@/components/admin/features/orders/OrderInternalNote";
 import { EShippingMethod } from "@/types/app-configs";
+import moment from "moment";
 
 const OrderDetailsPage = async ({
   params,
@@ -87,7 +88,9 @@ const OrderDetailsPage = async ({
                   totalPrice: order.totalPrice,
                   shippingFee: order.shippingFee,
                   paymentMethod: order.paymentMethod,
-                  createdAt: order.createdAt,
+                  createdAt: moment(order.createdAt)
+                    .add(7, "hours")
+                    .format("YYYY-MM-DD HH:mm A"),
                 }}
               />
               <OrderInternalNote

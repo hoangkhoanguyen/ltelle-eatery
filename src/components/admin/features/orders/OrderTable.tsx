@@ -83,9 +83,6 @@ export default function OrderTable({
     }),
     columnHelper.accessor("createdAt", {
       header: "Created At",
-      cell(props) {
-        return moment(props.getValue()).format("DD/MM/YYYY hh:mm A");
-      },
     }),
   ];
   return (

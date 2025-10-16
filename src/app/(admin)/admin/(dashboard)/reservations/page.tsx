@@ -11,6 +11,7 @@ import {
 } from "@/types/reservations";
 import ReservationTable from "@/components/admin/features/reservations/ReservationTable";
 import ReservationFilter from "@/components/admin/features/reservations/ReservationFilter";
+import moment from "moment";
 
 const ProductPage = () => {
   const { query, setQuery } = useOrdersParams();
@@ -23,9 +24,13 @@ const ProductPage = () => {
         code: item.code,
         customerName: item.customerFullName,
         customerPhone: item.customerPhone,
-        arrivalTime: item.arrivalTime,
+        arrivalTime: moment(item.arrivalTime)
+          .add(7, "hours")
+          .format("YYYY-MM-DD HH:mm A"),
         status: item.status as EReservationStatus,
-        createdAt: new Date(item.createdAt).toISOString(),
+        createdAt: moment(item.createdAt)
+          .add(7, "hours")
+          .format("YYYY-MM-DD HH:mm A"),
         note: item.note,
       })) || [],
     [data],

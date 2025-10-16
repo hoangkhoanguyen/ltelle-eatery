@@ -40,14 +40,18 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
               />
               <p className="text-sm leading-none text-blue-500">Date</p>
               <p className="text-lg text-blue-600 font-semibold">
-                {moment(reservation.arrivalTime).format("YYYY-MM-DD")}
+                {moment(reservation.arrivalTime)
+                  .add(7, "hours")
+                  .format("YYYY-MM-DD")}
               </p>
             </div>
             <div className="card p-5 bg-green-100 flex flex-col items-center gap-0 justify-center">
               <Icon icon="noto:alarm-clock" className="text-5xl mb-3" />
               <p className="text-sm leading-none text-green-500">Time</p>
               <p className="text-lg text-green-600 font-semibold">
-                {moment(reservation.arrivalTime).format("hh:mm A")}
+                {moment(reservation.arrivalTime)
+                  .add(7, "hours")
+                  .format("hh:mm A")}
               </p>
             </div>
             <div className="card p-5 bg-orange-100 flex flex-col items-center gap-0 justify-center">
@@ -68,6 +72,9 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
                   code: reservation.code,
                   customerName: reservation.customerFullName,
                   customerPhone: reservation.customerPhone,
+                  createdAt: moment(reservation.createdAt)
+                    .add(7, "hours")
+                    .format("YYYY-MM-DD HH:mm:ss"),
                 }}
               />
             </div>

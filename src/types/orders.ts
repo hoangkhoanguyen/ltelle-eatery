@@ -19,7 +19,7 @@ export interface AdminOrderTable {
   customerPhone: string;
   totalPrice: number;
   note: string | null;
-  createdAt: Date;
+  createdAt: string;
   orderType: EShippingMethod;
   orderTypeLabel: string;
   deliveryAddress: string | null;
