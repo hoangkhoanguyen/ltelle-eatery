@@ -15,33 +15,7 @@ import { useSetLoading } from "@/hooks/web/ui/loading";
 const ReservationForm: FC<{
   configs: any;
 }> = ({ configs }) => {
-  const { setNewReservation } = useReservationContext();
-  const { handleSubmit, control } = useForm({
-    defaultValues: {
-      customerFullName: "",
-      customerPhone: "",
-      numberOfPeople: 1,
-      arrivalTime: "",
-      note: "",
-    },
-    resolver: zodResolver(createReservationSchema),
-  });
-
-  const { mutate, isPending } = useMutation({
-    mutationFn: createReservationAction,
-    onSuccess(data) {
-      if (data.success) {
-        toast.success(
-          `Reservation successful! Your code is ${data.reservation!.code}`,
-        );
-        setNewReservation(data.reservation!);
-      } else {
-        toast.error(data.error);
-      }
-    },
-  });
-
-  useSetLoading(isPending);
+  const { control, onSubmit } = useReservationContext();
 
   return (
     <div className="reservation-card-shadow bg-white rounded-xl p-5 @container">
@@ -247,9 +221,7 @@ const ReservationForm: FC<{
             className="w-full rounded-lg py-4 text-web-button-mobile lg:text-web-button"
             variant={"primary"}
             type="button"
-            onClick={handleSubmit((data) => {
-              mutate(data);
-            })}
+            onClick={onSubmit}
           >
             Submit Reservation Request
           </Button>
