@@ -31,6 +31,9 @@ export const orders = dbSchema.table("orders", {
   orderType: varchar("order_type", {
     length: 20,
   }).notNull(),
+  orderTypeLabel: varchar("order_type_label", {
+    length: 100,
+  }),
   deliveryAddress: text("delivery_address").notNull().default(""),
   addressNote: text("address_note").notNull().default(""),
   status: varchar("status", {

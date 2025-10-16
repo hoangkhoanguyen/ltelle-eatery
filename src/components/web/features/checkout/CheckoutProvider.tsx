@@ -27,8 +27,12 @@ const Context = createContext<{
 } | null>(null);
 
 const CheckoutProvider: FC<
-  PropsWithChildren<{ shippingRules: any; defaultMethod?: EShippingMethod }>
-> = ({ children, shippingRules, defaultMethod }) => {
+  PropsWithChildren<{
+    shippingRules: any;
+    defaultMethod?: EShippingMethod;
+    shippingMethods: any;
+  }>
+> = ({ children, shippingRules, defaultMethod, shippingMethods }) => {
   const [successOrder, setSuccessOrder] = useState<CreateOrderResponse | null>(
     null,
   );
@@ -87,6 +91,9 @@ const CheckoutProvider: FC<
           note: data.note,
           addressNote: data.addressNote,
           internalNote: "",
+          orderTypeLabel: shippingMethods.find(
+            (item: any) => item.method === data.shippingMethod,
+          )?.label,
         },
         orderItems: cartItems.map((item) => ({
           productId: item.productId,

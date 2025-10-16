@@ -46,16 +46,18 @@ const CheckoutRender: FC<{ configs: any }> = ({ configs }) => {
           <Card>
             <CardTitle label="Your Contact" icon="ph:phone" />
             <ul className="flex flex-col gap-5">
-              <InfoItem label="Order Code" value={`#123456`} />
-              <InfoItem label="Phone Number in Vietnam" value={`0123456789`} />
+              <InfoItem
+                label="Order Code"
+                value={`#${successOrder.order.code}`}
+              />
+              <InfoItem
+                label="Phone Number in Vietnam"
+                value={successOrder.order.customerPhone}
+              />
               <InfoItem label="Payment method" value={"Only Cash"} />
               <InfoItem
                 label="Shipping method"
-                value={
-                  configs.shipping.methods.find(
-                    (item: any) => item.method === EShippingMethod.door2door,
-                  ).label
-                }
+                value={successOrder.order.orderTypeLabel || ""}
               />
             </ul>
           </Card>

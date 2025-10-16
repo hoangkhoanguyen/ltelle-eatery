@@ -8,6 +8,7 @@ const page = async () => {
 
   return (
     <CheckoutProvider
+      shippingMethods={orderConfigs?.value.shipping.methods}
       defaultMethod={
         ((orderConfigs?.value.shipping.methods as any[]) || []).find(
           (item: any) => item.isDefault,
