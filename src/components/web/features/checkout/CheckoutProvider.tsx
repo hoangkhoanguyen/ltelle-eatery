@@ -1,4 +1,5 @@
 "use client";
+import { useCartStore } from "@/hooks/web/cart/store";
 import useGetCartProducts from "@/hooks/web/cart/useGetCartProducts";
 import useCheckout from "@/hooks/web/checkout/useCheckout";
 import { useSetLoading } from "@/hooks/web/ui/loading";
@@ -37,6 +38,7 @@ const CheckoutProvider: FC<
     null,
   );
   const { mutate, isPending } = useCheckout();
+  const clearCart = useCartStore((state) => state.actions.clearCart);
   const cartItems: CartItemDisplay[] = useGetCartProducts();
   const { control, handleSubmit } = useForm<CheckoutFormData>({
     resolver: zodResolver(checkoutSchema),
@@ -115,6 +117,7 @@ const CheckoutProvider: FC<
         onSuccess: (data) => {
           if (data.success && data.data) {
             setSuccessOrder(data.data);
+            clearCart();
           }
         },
       },
