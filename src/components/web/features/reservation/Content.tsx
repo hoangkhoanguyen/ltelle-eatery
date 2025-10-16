@@ -1,17 +1,13 @@
 "use client";
-import React, { FC, useState } from "react";
-import ReservationForm from "./ReservationForm";
+import React, { FC } from "react";
 import ReservationSubmitSuccess from "./ReservationSubmitSuccess";
-import { ReservationDB } from "@/db/schemas";
 import DefaultBookingSection from "./DefaultBookingSection";
+import { useReservationContext } from "./ReservationProvider";
 
 const Content: FC<{
   configs?: any;
-  // children?: React.ReactNode;
 }> = ({ configs }) => {
-  const [newReservation, setNewReservation] = useState<ReservationDB | null>(
-    null,
-  );
+  const { newReservation } = useReservationContext();
 
   if (newReservation) {
     return (
@@ -22,9 +18,7 @@ const Content: FC<{
     );
   }
 
-  return (
-    <DefaultBookingSection configs={configs} onSuccess={setNewReservation} />
-  );
+  return <DefaultBookingSection configs={configs} />;
 };
 
 export default Content;

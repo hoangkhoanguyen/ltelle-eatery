@@ -1,4 +1,5 @@
 import Content from "@/components/web/features/reservation/Content";
+import ReservationProvider from "@/components/web/features/reservation/ReservationProvider";
 import { getUIConfigsByKey } from "@/services/configs";
 import Image from "next/image";
 import React from "react";
@@ -38,7 +39,9 @@ const page = async () => {
           </div>
         </div>
       </section>
-      <Content configs={configs.booking} />
+      <ReservationProvider>
+        <Content configs={configs.booking} />
+      </ReservationProvider>
     </div>
   );
 };

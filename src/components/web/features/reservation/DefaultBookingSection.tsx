@@ -3,12 +3,10 @@ import SectionSubTitleFromConfigs from "../../shared/SectionSubTitleFromConfigs"
 import SectionTitleFromConfigs from "../../shared/SectionTitleFromConfigs";
 import ReservationForm from "./ReservationForm";
 import ReservationInformation from "./ReservationInformation";
-import { ReservationDB } from "@/db/schemas";
 
 const DefaultBookingSection: FC<{
   configs: any;
-  onSuccess(data: ReservationDB): void;
-}> = ({ configs, onSuccess }) => {
+}> = ({ configs }) => {
   return (
     <section>
       <div className="container">
@@ -25,7 +23,7 @@ const DefaultBookingSection: FC<{
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-5 gap-10 pb-10">
           <div className="col-span-1 xl:col-span-3">
-            <ReservationForm configs={configs} onSuccess={onSuccess} />
+            <ReservationForm configs={configs} />
           </div>
           <div className="col-span-1 xl:col-span-2">
             <ReservationInformation configs={configs} />

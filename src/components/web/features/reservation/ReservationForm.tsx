@@ -9,12 +9,13 @@ import { createReservationSchema } from "@/validations/reservation";
 import { useMutation } from "@tanstack/react-query";
 import { createReservationAction } from "@/actions/web/reservations";
 import { toast } from "sonner";
-import { ReservationDB } from "@/db/schemas";
+import { useReservationContext } from "./ReservationProvider";
+import { useSetLoading } from "@/hooks/web/ui/loading";
 
 const ReservationForm: FC<{
   configs: any;
-  onSuccess(newData: ReservationDB): void;
-}> = ({ configs, onSuccess }) => {
+}> = ({ configs }) => {
+  const { setNewReservation } = useReservationContext();
   const { handleSubmit, control } = useForm({
     defaultValues: {
       customerFullName: "",
@@ -26,19 +27,21 @@ const ReservationForm: FC<{
     resolver: zodResolver(createReservationSchema),
   });
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: createReservationAction,
     onSuccess(data) {
       if (data.success) {
         toast.success(
           `Reservation successful! Your code is ${data.reservation!.code}`,
         );
-        onSuccess(data.reservation!);
+        setNewReservation(data.reservation!);
       } else {
         toast.error(data.error);
       }
     },
   });
+
+  useSetLoading(isPending);
 
   return (
     <div className="reservation-card-shadow bg-white rounded-xl p-5 @container">

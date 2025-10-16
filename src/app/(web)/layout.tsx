@@ -8,6 +8,7 @@ import AnimationHeaderScroll from "@/components/web/shared/header/AnimationHeade
 import { Toaster } from "sonner";
 import Icon from "@/components/common/Icon";
 import { getUIConfigsByKey } from "@/services/configs";
+import { FullscreenLoading } from "@/components/web/ui/loading";
 
 const popinsSans = Poppins({
   variable: "--font-poppins-sans",
@@ -56,6 +57,7 @@ const Layout: FC<PropsWithChildren> = async ({ children }) => {
             ),
           }}
         />
+        <FullscreenLoading />
       </WebsiteQueryProvider>
     </div>
   );
