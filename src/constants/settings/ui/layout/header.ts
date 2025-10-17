@@ -21,11 +21,6 @@ export const headerInitValue: ConfigValue = {
       title: "Reservations",
       href: webRoutes.reservation(),
     },
-    {
-      label: "Contact",
-      title: "Contact",
-      href: webRoutes.contact(),
-    },
   ],
 };
 

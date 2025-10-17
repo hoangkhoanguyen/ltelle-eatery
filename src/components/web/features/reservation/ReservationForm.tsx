@@ -59,7 +59,10 @@ const ReservationForm: FC<{
                   <input
                     type="date"
                     min={new Date().toISOString().slice(0, 16)}
-                    className={cn("web-input", !!error && " web-input-error")}
+                    className={cn(
+                      "web-input w-full",
+                      !!error && " web-input-error",
+                    )}
                     {...field}
                   />
                   {error?.message && (
@@ -86,7 +89,10 @@ const ReservationForm: FC<{
                   <input
                     type="time"
                     min={new Date().toISOString().slice(0, 16)}
-                    className={cn("web-input", !!error && " web-input-error")}
+                    className={cn(
+                      "web-input w-full",
+                      !!error && " web-input-error",
+                    )}
                     {...field}
                   />
                   {error?.message && (
@@ -112,7 +118,10 @@ const ReservationForm: FC<{
               }) => (
                 <>
                   <select
-                    className={cn("web-input", !!error && " web-input-error")}
+                    className={cn(
+                      "web-input w-full",
+                      !!error && " web-input-error",
+                    )}
                     value={value}
                     onChange={(e) => onChange(e.target.value)}
                   >
@@ -159,7 +168,10 @@ const ReservationForm: FC<{
                 <>
                   <input
                     type="text"
-                    className={cn("web-input", !!error && " web-input-error")}
+                    className={cn(
+                      "web-input w-full",
+                      !!error && " web-input-error",
+                    )}
                     placeholder="Enter your full name"
                     {...field}
                   />
@@ -186,7 +198,10 @@ const ReservationForm: FC<{
                 <>
                   <input
                     type="tel"
-                    className={cn("web-input", !!error && " web-input-error")}
+                    className={cn(
+                      "web-input w-full",
+                      !!error && " web-input-error",
+                    )}
                     placeholder="Enter your phone number"
                     {...field}
                   />
@@ -228,7 +243,7 @@ const ReservationForm: FC<{
                   <textarea
                     rows={4}
                     className={cn(
-                      "web-input bg-web-background-2",
+                      "web-input bg-web-background-2 w-full",
                       !!error && " web-input-error",
                     )}
                     placeholder="Tell us about dietary restrictions, celebrations, seating preferences, or any other special requirements..."
