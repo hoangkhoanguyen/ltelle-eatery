@@ -45,16 +45,6 @@ export const ReviewsSliders: FC<{ children: ReactNode[] }> = ({ children }) => {
           {child}
         </SwiperSlide>
       ))}
-      {children.map((child, index) => (
-        <SwiperSlide key={index} className="pb-8">
-          {child}
-        </SwiperSlide>
-      ))}
-      {children.map((child, index) => (
-        <SwiperSlide key={index} className="pb-8">
-          {child}
-        </SwiperSlide>
-      ))}
     </Swiper>
   );
 };
