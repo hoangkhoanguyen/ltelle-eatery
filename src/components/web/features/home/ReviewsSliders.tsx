@@ -11,13 +11,11 @@ export const ReviewsSliders: FC<{ children: ReactNode[] }> = ({ children }) => {
   return (
     <Swiper
       modules={[Pagination, Autoplay]}
-      spaceBetween={32}
-      // slidesPerView={1}
       pagination={{
         clickable: true,
-        bulletActiveClass: "bg-web-primary opacity-100",
-        // TODO: pagination style
-        bulletClass: "swiper-pagination-bullet !bg-web-primary opacity-30",
+        bulletActiveClass:
+          "!bg-web-secondary-1 opacity-100 swiper-pagination-bullet-active",
+        bulletClass: "swiper-pagination-bullet !h-2.5 !w-2.5",
       }}
       autoplay={{
         delay: 3000,
@@ -43,7 +41,17 @@ export const ReviewsSliders: FC<{ children: ReactNode[] }> = ({ children }) => {
       }}
     >
       {children.map((child, index) => (
-        <SwiperSlide key={index} className="pb-12">
+        <SwiperSlide key={index} className="pb-8">
+          {child}
+        </SwiperSlide>
+      ))}
+      {children.map((child, index) => (
+        <SwiperSlide key={index} className="pb-8">
+          {child}
+        </SwiperSlide>
+      ))}
+      {children.map((child, index) => (
+        <SwiperSlide key={index} className="pb-8">
           {child}
         </SwiperSlide>
       ))}

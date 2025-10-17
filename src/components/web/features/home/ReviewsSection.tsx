@@ -122,7 +122,7 @@ function Review({
           </span>
         </div>
 
-        <p className="text-web-caption-mobile lg:text-web-caption text-web-content-1 line-clamp-4 md:line-clamp-3 lg:line-clamp-4">
+        <p className="text-web-caption-mobile lg:text-web-caption text-web-content-1 line-clamp-4 md:line-clamp-3 lg:line-clamp-4 min-h-24 md:min-h-20 lg:min-h-24">
           {comment}
         </p>
 
