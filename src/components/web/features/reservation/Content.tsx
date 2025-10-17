@@ -1,12 +1,13 @@
 "use client";
-import React, { FC } from "react";
+import React, { FC, PropsWithChildren } from "react";
 import ReservationSubmitSuccess from "./ReservationSubmitSuccess";
-import DefaultBookingSection from "./DefaultBookingSection";
 import { useReservationContext } from "./ReservationProvider";
 
-const Content: FC<{
-  configs?: any;
-}> = ({ configs }) => {
+const Content: FC<
+  PropsWithChildren<{
+    configs?: any;
+  }>
+> = ({ configs, children }) => {
   const { newReservation } = useReservationContext();
 
   if (newReservation) {
@@ -18,7 +19,9 @@ const Content: FC<{
     );
   }
 
-  return <DefaultBookingSection configs={configs} />;
+  return children;
+
+  // return <DefaultBookingSection configs={configs} />;
 };
 
 export default Content;
