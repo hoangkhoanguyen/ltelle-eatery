@@ -19,6 +19,7 @@ export async function createOrderAction(data: {
       return {
         success: false,
         error: "Invalid order data",
+        code: "INVALID_ORDER_DATA",
       };
     }
 

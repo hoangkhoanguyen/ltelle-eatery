@@ -10,6 +10,7 @@ const useCheckout = () => {
         toast.success("Order placed successfully!");
       } else {
         toast.error(data.error || "Failed to place order");
+        if (data.code === "INVALID_ORDER_DATA") window.location.reload();
       }
     },
     onError() {

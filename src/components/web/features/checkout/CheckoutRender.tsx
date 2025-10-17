@@ -3,7 +3,6 @@ import React, { FC, ReactNode } from "react";
 import CheckoutForm from "./CheckoutForm";
 import CheckoutSummary from "./CheckoutSummary";
 import Icon from "@/components/common/Icon";
-import { EShippingMethod } from "@/types/app-configs";
 import { Button } from "../../ui/button";
 import Link from "next/link";
 import { webRoutes } from "@/constants/route";
