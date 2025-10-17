@@ -102,7 +102,7 @@ function Review({
   };
 }) {
   return (
-    <div className="bg-web-secondary-2 rounded-lg px-6 pb-6 pt-1">
+    <div className="bg-web-secondary-2 rounded-lg px-6 pb-6 pt-1 h-full">
       <div className="flex justify-between items-center mb-1">
         <Icon
           icon={"gravity-ui:quote-close"}
