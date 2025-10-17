@@ -24,15 +24,15 @@ const OrderInformation: FC<{
           <p className="text-gray-700 font-semibold">{data.code}</p>
         </div>
         <div>
-          <h3 className="font-medium text-gray-500 text-sm">Order Type</h3>
+          <h3 className="font-medium text-gray-500 text-sm">Shipping Method</h3>
           <p className="text-gray-700 font-semibold">{data.orderTypeLabel}</p>
         </div>
-        <div className="col-span-1 md:col-span-2">
+        {/* <div className="col-span-1 md:col-span-2">
           <h3 className="font-medium text-gray-500 text-sm">Order Note</h3>
           <p className="text-sm text-gray-700 font-semibold bg-gray-200 p-2 rounded">
             {data.note || "--/--"}
           </p>
-        </div>
+        </div> */}
       </div>
     </div>
   );
