@@ -1,6 +1,6 @@
 import Content from "@/components/web/features/reservation/Content";
 import ReservationProvider from "@/components/web/features/reservation/ReservationProvider";
-import { getUIConfigsByKey } from "@/services/configs";
+import { getAppConfigsByKey, getUIConfigsByKey } from "@/services/configs";
 import Image from "next/image";
 import React from "react";
 
@@ -8,6 +8,8 @@ import React from "react";
 
 const page = async () => {
   const configsDb = await getUIConfigsByKey("reservation_page");
+
+  const reservationConfigs = await getAppConfigsByKey("reservation");
 
   const configs = configsDb?.value || ({} as any);
 
@@ -39,7 +41,7 @@ const page = async () => {
           </div>
         </div>
       </section>
-      <ReservationProvider>
+      <ReservationProvider reservationConfigs={reservationConfigs?.value}>
         <Content configs={configs.booking} />
       </ReservationProvider>
     </div>

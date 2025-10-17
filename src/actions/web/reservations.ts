@@ -10,7 +10,8 @@ export async function createReservationAction(data: CreateReservationType) {
 
     const [reservation] = await createReservation({
       code,
-      arrivalTime: new Date(data.arrivalTime),
+      arrivalTime: data.arrivalTime,
+      arrivalDate: data.arrivalDate,
       numberOfPeople: data.numberOfPeople,
       customerFullName: data.customerFullName,
       customerPhone: data.customerPhone,

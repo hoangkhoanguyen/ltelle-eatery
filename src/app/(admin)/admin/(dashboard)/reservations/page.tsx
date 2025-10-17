@@ -24,13 +24,12 @@ const ProductPage = () => {
         code: item.code,
         customerName: item.customerFullName,
         customerPhone: item.customerPhone,
-        arrivalTime: moment(item.arrivalTime)
-          .add(7, "hours")
-          .format("YYYY-MM-DD HH:mm A"),
+        arrivalTime: moment(item.arrivalTime, "HH:mm:ss").format("HH:mm A"),
+        arrivalDate: moment(item.arrivalDate, "YYYY-MM-DD").format(
+          "DD/MM/YYYY",
+        ),
         status: item.status as EReservationStatus,
-        createdAt: moment(item.createdAt)
-          .add(7, "hours")
-          .format("YYYY-MM-DD HH:mm A"),
+        createdAt: moment(item.createdAt).format("YYYY-MM-DD HH:mm A"),
         note: item.note,
       })) || [],
     [data],

@@ -1,5 +1,4 @@
 import { AdminReservationTable } from "@/types/reservations";
-import moment from "moment";
 import React, { FC } from "react";
 
 const ReservationInformation: FC<{
@@ -33,9 +32,7 @@ const ReservationInformation: FC<{
           <div>
             <p className="text-sm text-gray-500">Created At</p>
             <p className="text-base text-gray-700 font-semibold">
-              {moment(data.createdAt)
-                .add(7, "hours")
-                .format("YYYY-MM-DD HH:mm:ss")}
+              {data.createdAt}
             </p>
           </div>
         </div>

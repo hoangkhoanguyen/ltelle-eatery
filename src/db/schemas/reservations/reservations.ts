@@ -8,6 +8,8 @@ import {
   varchar,
   timestamp,
   pgEnum,
+  time,
+  date,
 } from "drizzle-orm/pg-core";
 import { reservationStatusHistory } from "./reservation-status-history";
 
@@ -28,10 +30,11 @@ export const reservations = dbSchema.table("reservations", {
   customerPhone: varchar("customer_phone", { length: 20 }).notNull(),
   note: text("note").notNull().default(""),
   internalNote: text("internal_note").notNull().default(""),
-  numberOfPeople: integer("number_of_people").notNull().default(1),
-  arrivalTime: timestamp("arrival_time", {
-    withTimezone: true,
+  numberOfPeople: varchar("number_of_people", {
+    length: 20,
   }).notNull(),
+  arrivalTime: time("arrival_time").notNull(),
+  arrivalDate: date("arrival_date").notNull(),
   status: reservationStatusEnum().default("scheduled").notNull(),
   createdAt: timestamp("created_at", {
     withTimezone: true,

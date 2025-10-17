@@ -15,7 +15,6 @@ const ProductPage = () => {
   const { query, setQuery } = useOrdersParams();
   const { data, refetch, isPending, isRefetching } = useFetchOrders(query);
 
-  console.log("init", data);
   const convertedData: AdminOrderTable[] = useMemo(
     (): AdminOrderTable[] =>
       data?.orders.map((item) => ({

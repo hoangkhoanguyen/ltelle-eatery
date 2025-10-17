@@ -88,9 +88,9 @@ const OrderDetailsPage = async ({
                   totalPrice: order.totalPrice,
                   shippingFee: order.shippingFee,
                   paymentMethod: order.paymentMethod,
-                  createdAt: moment(order.createdAt)
-                    .add(7, "hours")
-                    .format("YYYY-MM-DD HH:mm A"),
+                  createdAt: moment(order.createdAt).format(
+                    "YYYY-MM-DD HH:mm A",
+                  ),
                 }}
               />
               <OrderInternalNote

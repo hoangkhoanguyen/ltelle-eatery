@@ -3,19 +3,13 @@ import Icon from "@/components/common/Icon";
 import React, { FC } from "react";
 import { Button } from "../../ui/button";
 import { cn, splitTextByNewLine } from "@/lib/utils";
-import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { createReservationSchema } from "@/validations/reservation";
-import { useMutation } from "@tanstack/react-query";
-import { createReservationAction } from "@/actions/web/reservations";
-import { toast } from "sonner";
+import { Controller } from "react-hook-form";
 import { useReservationContext } from "./ReservationProvider";
-import { useSetLoading } from "@/hooks/web/ui/loading";
 
 const ReservationForm: FC<{
   configs: any;
 }> = ({ configs }) => {
-  const { control, onSubmit } = useReservationContext();
+  const { control, onSubmit, reservationConfigs } = useReservationContext();
 
   return (
     <div className="reservation-card-shadow bg-white rounded-xl p-5 @container">
@@ -55,15 +49,15 @@ const ReservationForm: FC<{
         <div className="col-span-1">
           <div>
             <label className="web-reservation-label">
-              Preferred Date Time *
+              Preferred Date (GMT +7) *
             </label>
             <Controller
               control={control}
-              name="arrivalTime"
+              name="arrivalDate"
               render={({ field, fieldState: { error } }) => (
                 <>
                   <input
-                    type="datetime-local"
+                    type="date"
                     min={new Date().toISOString().slice(0, 16)}
                     className={cn("web-input", !!error && " web-input-error")}
                     {...field}
@@ -81,6 +75,33 @@ const ReservationForm: FC<{
 
         <div className="col-span-1">
           <div>
+            <label className="web-reservation-label">
+              Preferred Time (GMT +7) *
+            </label>
+            <Controller
+              control={control}
+              name="arrivalTime"
+              render={({ field, fieldState: { error } }) => (
+                <>
+                  <input
+                    type="time"
+                    min={new Date().toISOString().slice(0, 16)}
+                    className={cn("web-input", !!error && " web-input-error")}
+                    {...field}
+                  />
+                  {error?.message && (
+                    <p className="text-web-error text-xs mt-1">
+                      {error.message}
+                    </p>
+                  )}
+                </>
+              )}
+            />
+          </div>
+        </div>
+
+        <div className="col-span-1 @md:col-span-2">
+          <div>
             <label className="web-reservation-label">Number of Guests *</label>
             <Controller
               control={control}
@@ -90,13 +111,22 @@ const ReservationForm: FC<{
                 fieldState: { error },
               }) => (
                 <>
-                  <input
-                    type="number"
+                  <select
                     className={cn("web-input", !!error && " web-input-error")}
-                    placeholder="Enter number of guests"
                     value={value}
-                    onChange={(e) => onChange(parseInt(e.target.value))}
-                  />
+                    onChange={(e) => onChange(e.target.value)}
+                  >
+                    {reservationConfigs?.reservation.size_options.map(
+                      (option: any) => (
+                        <option key={option.value} value={option.value}>
+                          {option.value}
+                        </option>
+                      ),
+                    )}
+                    <option hidden value={""}>
+                      Please choose an option
+                    </option>
+                  </select>
                   {error?.message && (
                     <p className="text-web-error text-xs mt-1">
                       {error.message}

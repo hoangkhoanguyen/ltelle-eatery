@@ -16,17 +16,23 @@ const Context = createContext<{
   newReservation: ReservationDB | null;
   control: Control<CreateReservationType>;
   onSubmit(): void;
+  reservationConfigs?: any;
 } | null>(null);
 
-const ReservationProvider: FC<PropsWithChildren> = ({ children }) => {
+const ReservationProvider: FC<
+  PropsWithChildren<{
+    reservationConfigs?: any;
+  }>
+> = ({ children, reservationConfigs }) => {
   const [newReservation, setNewReservation] =
     React.useState<ReservationDB | null>(null);
   const { handleSubmit, control } = useForm<CreateReservationType>({
     defaultValues: {
       customerFullName: "",
       customerPhone: "",
-      numberOfPeople: 1,
+      numberOfPeople: "",
       arrivalTime: "",
+      arrivalDate: "",
       note: "",
     },
     resolver: zodResolver(createReservationSchema),
@@ -53,7 +59,9 @@ const ReservationProvider: FC<PropsWithChildren> = ({ children }) => {
   useSetLoading(isPending);
 
   return (
-    <Context.Provider value={{ newReservation, onSubmit, control }}>
+    <Context.Provider
+      value={{ newReservation, onSubmit, control, reservationConfigs }}
+    >
       {children}
     </Context.Provider>
   );

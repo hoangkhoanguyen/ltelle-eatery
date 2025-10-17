@@ -35,11 +35,15 @@ const ReservationSubmitSuccess: FC<{
               />
               <InfoItem
                 label="Preferred Date"
-                value={moment(reservation.arrivalTime).format("MMMM D, YYYY")}
+                value={moment(reservation.arrivalDate, "YYYY-MM-DD").format(
+                  "DD/MM/YYYY",
+                )}
               />
               <InfoItem
                 label="Preferred Time"
-                value={moment(reservation.arrivalTime).format("h:mm A")}
+                value={moment(reservation.arrivalTime, "HH:mm:ss").format(
+                  "HH:mm A",
+                )}
               />
               <InfoItem
                 label="Number of Guests"

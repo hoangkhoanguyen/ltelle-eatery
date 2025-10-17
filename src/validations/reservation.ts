@@ -1,25 +1,17 @@
 import z from "zod";
 
 export const createReservationSchema = z.object({
-  arrivalTime: z
-    .string({
-      error: "Please provide a valid date and time",
-    })
-    .refine(
-      (val) => {
-        const date = new Date(val);
-        return !isNaN(date.getTime()) && date >= new Date();
-      },
-      {
-        message: "Arrival time must be now or in the future",
-      },
-    ),
+  arrivalTime: z.string({ error: "Preferred time is required" }).min(1, {
+    error: "Preferred time is required",
+  }), // time only, required
+  arrivalDate: z.string({ error: "Preferred date is required" }).min(1, {
+    error: "Preferred date is required",
+  }), // date only, required
   numberOfPeople: z
-    .number({
+    .string({
       error: "Number of guests is required",
     })
-    .min(1, { message: "Number of guests must be at least 1" })
-    .max(20, { message: "Number of guests must be at most 20" }),
+    .min(1, { message: "Number of guests is required" }),
   customerFullName: z
     .string({
       error: "Full name is required",
