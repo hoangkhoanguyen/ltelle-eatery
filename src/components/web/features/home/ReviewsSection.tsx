@@ -6,6 +6,13 @@ import SectionSubTitleFromConfigs from "../../shared/SectionSubTitleFromConfigs"
 import SectionTitleFromConfigs from "../../shared/SectionTitleFromConfigs";
 
 export const ReviewsSection: FC<{ configs: any }> = ({ configs }) => {
+  const averageRating = configs.reviews_list
+    ? configs.reviews_list.reduce(
+        (sum: number, review: any) => sum + review.rating,
+        0,
+      ) / configs.reviews_list.length
+    : 0;
+  const totalReviews = configs.reviews_list ? configs.reviews_list.length : 0;
   return (
     <section className="bg-web-background-1">
       <div className="container py-10">
@@ -19,12 +26,12 @@ export const ReviewsSection: FC<{ configs: any }> = ({ configs }) => {
         </div>
 
         <div className="flex gap-2 justify-center items-center mb-5 ">
-          <Stars />
+          <Stars rating={Math.round(averageRating)} />
           <span className="text-web-h4-mobile lg:text-web-h4 text-web-content-2">
-            4.8
+            {averageRating.toFixed(1)}
           </span>
           <span className="text-web-caption-mobile lg:text-web-caption text-web-content-2">
-            (88 Reviews)
+            ({totalReviews} Reviews)
           </span>
         </div>
 
@@ -33,15 +40,8 @@ export const ReviewsSection: FC<{ configs: any }> = ({ configs }) => {
         </p>
         <div className="mb-10 md:px-20 lg:px-0">
           <ReviewsSliders>
-            {[1, 2, 3].map((_, index) => (
-              <div
-                key={index}
-                className="grid grid-cols-1 lg:grid-cols-3 gap-5"
-              >
-                <Review />
-                <Review />
-                <Review />
-              </div>
+            {configs.reviews_list?.map((review: any, index: number) => (
+              <Review key={index} data={review} />
             ))}
           </ReviewsSliders>
         </div>
@@ -76,19 +76,31 @@ export const ReviewsSection: FC<{ configs: any }> = ({ configs }) => {
   );
 };
 
-function Stars() {
+function Stars({ rating }: { rating: number }) {
   return (
     <div className="flex gap-1 items-center text-web-secondary-1 text-lg">
-      <Icon icon="ph:star-fill" />
-      <Icon icon="ph:star-fill" />
-      <Icon icon="ph:star-fill" />
-      <Icon icon="ph:star-fill" />
-      <Icon icon="ph:star" />
+      {Array(5)
+        .fill(0)
+        .map((_, index) => (
+          <Icon
+            key={index}
+            icon={index <= rating - 1 ? "ph:star-fill" : "ph:star"}
+          />
+        ))}
     </div>
   );
 }
 
-function Review() {
+function Review({
+  data: { customer_name, comment, date, rating },
+}: {
+  data: {
+    customer_name: string;
+    rating: number;
+    comment: string;
+    date: string;
+  };
+}) {
   return (
     <div className="bg-web-secondary-2 rounded-lg px-6 pb-6 pt-1">
       <div className="flex justify-between items-center mb-1">
@@ -104,33 +116,31 @@ function Review() {
 
       <div className="flex flex-col gap-3 items-start">
         <div className="flex items-center gap-2">
-          <Stars />
+          <Stars rating={rating} />
           <span className="text-web-content-2 text-web-caption-mobile lg:text-web-caption">
-            (4/5)
+            ({rating}/5)
           </span>
         </div>
 
         <p className="text-web-caption-mobile lg:text-web-caption text-web-content-1 line-clamp-4 md:line-clamp-3 lg:line-clamp-4">
-          Outstanding food and excellent service. The French onion soup was the
-          best I have had outside of France. The location is convenient and the
-          atmosphere is cozy. Highly recommend for a special night out.
+          {comment}
         </p>
 
-        <a
+        {/* <a
           href={"https://google.com"}
           target="_blank"
           rel="noreferrer"
           className="text-web-secondary-1 text-web-button-mobile lg:text-web-button"
         >
           Read more
-        </a>
+        </a> */}
 
         <div>
           <p className="line-clamp-1 mb-0.5 text-web-content-1 text-web-body-mobile lg:text-web-body">
-            James Wilson
+            {customer_name}
           </p>
           <p className="text-web-content-2 text-web-label-mobile lg:text-web-label">
-            Dec 8, 2024
+            {date}
           </p>
         </div>
       </div>

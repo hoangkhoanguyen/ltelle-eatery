@@ -58,6 +58,57 @@ const fields: FieldType[] = [
     isRequired: false,
     placeholder: "Nhập mô tả",
   },
+  {
+    key: "reviews_list",
+    type: "array",
+    label: "Danh sách Reviews",
+    description: "Danh sách các đánh giá của khách hàng",
+    isEditableList: true,
+    isRequired: false,
+    itemType: {
+      type: "object",
+      fields: [
+        {
+          key: "customer_name",
+          type: "text",
+          label: "Tên khách hàng",
+          description: "Tên của khách hàng đánh giá",
+          isRequired: true,
+          placeholder: "Nhập tên khách hàng",
+        },
+        {
+          key: "rating",
+          type: "number",
+          label: "Đánh giá",
+          description: "Số sao đánh giá (1-5)",
+          isRequired: true,
+          placeholder: "Nhập số sao",
+        },
+        {
+          key: "comment",
+          type: "textarea",
+          label: "Bình luận",
+          description: "Nội dung đánh giá của khách hàng",
+          isRequired: true,
+          placeholder: "Nhập nội dung đánh giá",
+        },
+        {
+          key: "date",
+          type: "text",
+          label: "Ngày đánh giá",
+          description: "Ngày khách hàng để lại đánh giá",
+          isRequired: true,
+          placeholder: "Nhập ngày đánh giá",
+        },
+      ],
+    },
+    newItem: {
+      customer_name: "",
+      rating: 5,
+      comment: "",
+      date: "",
+    },
+  },
 ];
 
 export const reviewsMeta: MetaValue = {

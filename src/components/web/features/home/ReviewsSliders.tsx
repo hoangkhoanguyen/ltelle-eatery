@@ -12,7 +12,7 @@ export const ReviewsSliders: FC<{ children: ReactNode[] }> = ({ children }) => {
     <Swiper
       modules={[Pagination, Autoplay]}
       spaceBetween={32}
-      slidesPerView={1}
+      // slidesPerView={1}
       pagination={{
         clickable: true,
         bulletActiveClass: "bg-web-primary opacity-100",
@@ -22,6 +22,24 @@ export const ReviewsSliders: FC<{ children: ReactNode[] }> = ({ children }) => {
       autoplay={{
         delay: 3000,
         disableOnInteraction: false,
+      }}
+      breakpoints={{
+        0: {
+          slidesPerView: 1,
+          spaceBetween: 12,
+        },
+        640: {
+          slidesPerView: 1.5,
+          spaceBetween: 12,
+        },
+        768: {
+          slidesPerView: 2,
+          spaceBetween: 12,
+        },
+        992: {
+          slidesPerView: 3,
+          spaceBetween: 12,
+        },
       }}
     >
       {children.map((child, index) => (
