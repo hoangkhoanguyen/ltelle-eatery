@@ -65,8 +65,10 @@ const fields: FieldType[] = [
     description: "Danh sách các đánh giá của khách hàng",
     isEditableList: true,
     isRequired: false,
+    needBox: true,
     itemType: {
       type: "object",
+      needBox: true,
       fields: [
         {
           key: "customer_name",
