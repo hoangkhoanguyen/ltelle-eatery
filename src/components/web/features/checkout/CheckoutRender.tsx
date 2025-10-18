@@ -27,6 +27,71 @@ const CheckoutRender: FC<{ configs: any }> = ({ configs }) => {
       </div>
     );
 
+  const renderTitle = () => (
+    <h2 className="text-web-h2-mobile lg:text-web-h2 text-web-content-1">
+      Order Summary
+    </h2>
+  );
+
+  const renderOrderContent = () => (
+    <>
+      <ul className="w-full flex-col gap-5 mt-9 mb-5">
+        {successOrder.items.map((item) => (
+          <OrderItem
+            key={item.id}
+            item={{
+              productId: item.productId,
+              title: item.productName,
+              imageUrl: item.productImageUrl,
+              price: item.price,
+              quantity: item.quantity,
+              notes: item.note,
+              category: "",
+              slug: item.productSlug,
+              totalPrice: item.totalPrice,
+              addons: item.addons.map((addon) => ({
+                id: addon.id,
+                name: addon.addonName,
+                price: addon.price,
+                quantity: addon.quantity,
+              })),
+            }}
+          />
+        ))}
+      </ul>
+      <ul className="flex flex-col gap-2.5 items-stretch">
+        <li className="flex justify-between items-center">
+          <span className="text-web-h4-mobile lg:text-web-h4 text-web-content-1">
+            Subtotal
+          </span>
+          <span className="text-web-h4-mobile lg:text-web-h4 text-web-secondary-1">
+            {formatCurrencyWebsite(
+              successOrder.order.totalPrice - successOrder.order.shippingFee,
+            )}
+          </span>
+        </li>
+        <li className="flex justify-between items-center">
+          <span className="text-web-h4-mobile lg:text-web-h4 text-web-content-1">
+            Shipping Fee
+          </span>
+          <span className="text-web-h4-mobile lg:text-web-h4 text-web-secondary-1">
+            {successOrder.order.shippingFee
+              ? formatCurrencyWebsite(successOrder.order.shippingFee)
+              : "Free"}
+          </span>
+        </li>
+        <li className="flex justify-between items-center">
+          <span className="text-web-h2-mobile lg:text-web-h2 text-web-content-1">
+            Total
+          </span>
+          <span className="text-web-h2-mobile lg:text-web-h2 text-web-secondary-1">
+            {formatCurrencyWebsite(successOrder.order.totalPrice)}
+          </span>
+        </li>
+      </ul>
+    </>
+  );
+
   return (
     <div className="container py-10">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
@@ -71,65 +136,21 @@ const CheckoutRender: FC<{ configs: any }> = ({ configs }) => {
             </Button>
           </div>
         </div>
-        <div className="lg:pt-14 lg:pb-10 lg:bg-web-secondary-2 lg:px-5">
-          <h2 className="text-web-h2-mobile lg:text-web-h2 text-web-content-1 mb-9">
-            Order Summary
-          </h2>
-          <ul className="w-full flex-col gap-5">
-            {successOrder.items.map((item) => (
-              <OrderItem
-                key={item.id}
-                item={{
-                  productId: item.productId,
-                  title: item.productName,
-                  imageUrl: item.productImageUrl,
-                  price: item.price,
-                  quantity: item.quantity,
-                  notes: item.note,
-                  category: "",
-                  slug: item.productSlug,
-                  totalPrice: item.totalPrice,
-                  addons: item.addons.map((addon) => ({
-                    id: addon.id,
-                    name: addon.addonName,
-                    price: addon.price,
-                    quantity: addon.quantity,
-                  })),
-                }}
+        <div className="lg:pt-14 lg:pb-10 lg:px-5">
+          <div className="hidden lg:block">
+            {renderTitle()}
+            {renderOrderContent()}
+          </div>
+          <details className="lg:hidden">
+            <summary className="flex justify-between items-center">
+              {renderTitle()}
+              <Icon
+                icon="ph:caret-down"
+                className="text-web-content-2 text-2xl"
               />
-            ))}
-          </ul>
-          <ul className="flex flex-col gap-2.5 items-stretch">
-            <li className="flex justify-between items-center">
-              <span className="text-web-h4-mobile lg:text-web-h4 text-web-content-1">
-                Subtotal
-              </span>
-              <span className="text-web-h4-mobile lg:text-web-h4 text-web-secondary-1">
-                {formatCurrencyWebsite(
-                  successOrder.order.totalPrice -
-                    successOrder.order.shippingFee,
-                )}
-              </span>
-            </li>
-            <li className="flex justify-between items-center">
-              <span className="text-web-h4-mobile lg:text-web-h4 text-web-content-1">
-                Shipping Fee
-              </span>
-              <span className="text-web-h4-mobile lg:text-web-h4 text-web-secondary-1">
-                {successOrder.order.shippingFee
-                  ? formatCurrencyWebsite(successOrder.order.shippingFee)
-                  : "Free"}
-              </span>
-            </li>
-            <li className="flex justify-between items-center">
-              <span className="text-web-h2-mobile lg:text-web-h2 text-web-content-1">
-                Total
-              </span>
-              <span className="text-web-h2-mobile lg:text-web-h2 text-web-secondary-1">
-                {formatCurrencyWebsite(successOrder.order.totalPrice)}
-              </span>
-            </li>
-          </ul>
+            </summary>
+            {renderOrderContent()}
+          </details>
         </div>
       </div>
     </div>

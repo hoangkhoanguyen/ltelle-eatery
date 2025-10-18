@@ -35,9 +35,7 @@ const Layout: FC<PropsWithChildren> = async ({ children }) => {
         <AnimationHeaderScroll>
           <Header configs={configs?.value.header || {}} />
         </AnimationHeaderScroll>
-        <main className="pt-[149px] lg:pt-[146px] min-h-[calc(100vh-149px)] lg:min-h-[calc(100vh-146px)]">
-          {children}
-        </main>
+        <main className="pt-[149px] lg:pt-[146px]">{children}</main>
         <Footer configs={configs?.value.footer || {}} />
         <Toaster
           visibleToasts={3}
