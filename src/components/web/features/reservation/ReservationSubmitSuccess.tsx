@@ -53,7 +53,7 @@ const ReservationSubmitSuccess: FC<{
                 <InfoItem
                   label="Preferred Time"
                   value={moment(reservation.arrivalTime, "HH:mm:ss").format(
-                    "HH:mm A",
+                    "hh:mm A",
                   )}
                 />
                 <InfoItem

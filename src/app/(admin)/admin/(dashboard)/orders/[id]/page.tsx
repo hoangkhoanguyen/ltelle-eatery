@@ -89,7 +89,7 @@ const OrderDetailsPage = async ({
                   shippingFee: order.shippingFee,
                   paymentMethod: order.paymentMethod,
                   createdAt: moment(order.createdAt).format(
-                    "YYYY-MM-DD HH:mm A",
+                    "YYYY-MM-DD hh:mm A",
                   ),
                 }}
               />

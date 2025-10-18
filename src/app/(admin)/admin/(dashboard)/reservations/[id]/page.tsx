@@ -71,7 +71,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
                   customerName: reservation.customerFullName,
                   customerPhone: reservation.customerPhone,
                   createdAt: moment(reservation.createdAt).format(
-                    "YYYY-MM-DD HH:mm A",
+                    "YYYY-MM-DD hh:mm A",
                   ),
                 }}
               />

@@ -20,8 +20,6 @@ const Content: FC<
   }
 
   return children;
-
-  // return <DefaultBookingSection configs={configs} />;
 };
 
 export default Content;

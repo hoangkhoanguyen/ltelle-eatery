@@ -28,7 +28,7 @@ const ProductPage = () => {
         status: item.status as OrderStatus,
         createdAt: moment(item.createdAt)
           .add(7, "hours")
-          .format("YYYY-MM-DD HH:mm A"),
+          .format("YYYY-MM-DD hh:mm A"),
         code: item.code,
         note: item.note,
         deliveryAddress: item.deliveryAddress,
