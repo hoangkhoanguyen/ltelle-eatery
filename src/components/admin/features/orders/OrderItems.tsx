@@ -71,6 +71,17 @@ function OrderItem({ data }: { data: AdminOrderItem }) {
             </div>
           </details>
         )}
+
+        {data.note && (
+          <details open>
+            <summary className="cursor-pointer">
+              <span className="font-semibold text-xs">Note</span>
+            </summary>
+            <p className="text-xs text-gray-700 border-s border-gray-200 ps-4">
+              {data.note}
+            </p>
+          </details>
+        )}
       </div>
     </div>
   );
