@@ -37,8 +37,6 @@ const ProductPage = () => {
     [data],
   );
 
-  console.log("display", convertedData);
-
   return (
     <div className="container px-5 pb-5 mx-auto flex flex-col gap-4 min-h-screen">
       <Header

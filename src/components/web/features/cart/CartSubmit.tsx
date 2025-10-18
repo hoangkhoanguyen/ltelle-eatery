@@ -3,9 +3,13 @@ import React from "react";
 import { Button } from "../../ui/button";
 import { useRouter } from "next/navigation";
 import { webRoutes } from "@/constants/route";
+import { useCartContext } from "./CartProvider";
+import { formatCurrencyWebsite } from "@/lib/utils";
 
 const CartSubmit = () => {
   const router = useRouter();
+
+  const { totalPrice } = useCartContext();
 
   const onGoCheckout = () => {
     router.push(webRoutes.checkout());
@@ -17,7 +21,7 @@ const CartSubmit = () => {
       variant={"secondary1"}
       onClick={onGoCheckout}
     >
-      Checkout &bull; 250.000 VND
+      Checkout &bull; {formatCurrencyWebsite(totalPrice)}
     </Button>
   );
 };
