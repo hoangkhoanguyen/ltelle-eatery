@@ -4,6 +4,8 @@ import { ReviewsSliders } from "./ReviewsSliders";
 import { Button } from "../../ui/button";
 import SectionSubTitleFromConfigs from "../../shared/SectionSubTitleFromConfigs";
 import SectionTitleFromConfigs from "../../shared/SectionTitleFromConfigs";
+import Link from "next/link";
+import { webRoutes } from "@/constants/route";
 
 export const ReviewsSection: FC<{ configs: any }> = ({ configs }) => {
   const averageRating = configs.reviews_list
@@ -58,12 +60,16 @@ export const ReviewsSection: FC<{ configs: any }> = ({ configs }) => {
           </div>
           <div className="flex flex-col md:flex-row items-stretch md:items-center justify-center gap-5">
             <Button
+              as={Link}
+              href={webRoutes.menu("all")}
               variant={"white"}
               className="text-web-label text-web-content-1 lg:text-web-label border-web-content-3"
             >
               Explore Our Menu
             </Button>
             <Button
+              as={Link}
+              href={webRoutes.reservation()}
               variant={"secondary2"}
               className="text-web-label text-web-content-1 lg:text-web-label"
             >
