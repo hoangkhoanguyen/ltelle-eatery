@@ -34,6 +34,7 @@ const ProductImagesSlider: FC<{
         freeMode
         watchSlidesProgress
         modules={[FreeMode, Thumbs]}
+        className="image-thumbs-swiper"
         // wrapperClass="justify-center"
       >
         {thumbs.map((item, index) => (

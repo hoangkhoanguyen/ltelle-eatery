@@ -254,3 +254,11 @@ details[open]::details-content {
 .badge {
   @apply w-max;
 }
+
+.image-thumbs-swiper .swiper-slide {
+  @apply border-2 border-transparent rounded-xs;
+}
+
+.image-thumbs-swiper .swiper-slide.swiper-slide-thumb-active {
+  @apply border-2 border-web-secondary-1;
+}
