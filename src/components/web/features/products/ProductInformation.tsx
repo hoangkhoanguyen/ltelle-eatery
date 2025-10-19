@@ -55,11 +55,11 @@ const ProductInformation: FC<{ product: WebProductDetails }> = ({
                 </p>
                 <aside className="rounded-lg bg-web-secondary-2 p-3 mb-5">
                   <h2 className="text-web-h4-mobile lg:text-web-h4 text-web-content-2 mb-2">
-                    Allergen Information
+                    Food Ingredients
                   </h2>
                   <p className="text-web-content-2 text-web-caption-mobile lg:text-web-caption">
                     {product.allergenInfo ||
-                      "No allergen information provided."}
+                      "No food ingredients information provided."}
                   </p>
                 </aside>
                 <hr className="border-web-content-3 mb-5" />

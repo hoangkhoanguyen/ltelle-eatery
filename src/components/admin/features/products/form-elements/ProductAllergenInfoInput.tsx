@@ -6,7 +6,7 @@ import { Editor } from "@/types/common";
 
 const ProductAllergenInfoInput: FC<Editor> = ({ value, onChange, error }) => {
   return (
-    <InputWithLabel label="Mô tả thành phần dị ứng">
+    <InputWithLabel label="Mô tả thành phần món ăn">
       <WithError error={error}>
         <Textarea
           value={value}
