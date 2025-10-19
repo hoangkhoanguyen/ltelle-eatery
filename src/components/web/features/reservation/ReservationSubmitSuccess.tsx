@@ -25,18 +25,17 @@ const ReservationSubmitSuccess: FC<{
     <section>
       <div className="container py-10">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-10">
+          <div className="lg:col-span-5">
+            <h3 className="text-web-h2-mobile lg:text-web-h2 text-web-primary mb-5">
+              {configs.success_title || "Reservation Submitted Successfully!"}
+            </h3>
+
+            <p className="text-web-subtitle-mobile lg:text-web-subtitle text-web-content-2">
+              {configs.success_description ||
+                "Thank you for choosing our restaurant. We have received your reservation request and will get back to you shortly to confirm the details."}
+            </p>
+          </div>
           <div className="lg:col-span-3 grid grid-cols-1 gap-5">
-            <div>
-              <h3 className="text-web-h2-mobile lg:text-web-h2 text-web-primary">
-                {configs.success_title || "Reservation Submitted Successfully!"}
-              </h3>
-            </div>
-            <div>
-              <p className="text-web-subtitle-mobile lg:text-web-subtitle text-web-content-2">
-                {configs.success_description ||
-                  "Thank you for choosing our restaurant. We have received your reservation request and will get back to you shortly to confirm the details."}
-              </p>
-            </div>
             <Card>
               <CardTitle label="Make a Reservation" icon="ph:calendar-blank" />
               <ul className="flex flex-col gap-5">
