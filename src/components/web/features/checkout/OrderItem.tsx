@@ -35,21 +35,23 @@ const OrderItem: FC<{ item: Omit<CartItemDisplay, "id"> }> = ({ item }) => {
           {formatCurrencyWebsite(item.price * item.quantity)}
         </p>
       </div>
-      <ul className="flex flex-col gap-2.5">
-        {addons.map((addon) => (
-          <li
-            className="flex justify-between items-center gap-2.5"
-            key={addon.id}
-          >
-            <span className="flex-1 text-web-body-mobile lg:text-web-body text-web-content-1">
-              +{addon.quantity} {addon.name}
-            </span>
-            <span className="text-web-h4-mobile lg:text-web-h4 text-web-secondary-1 shrink-0">
-              {formatCurrencyWebsite(addon.price * addon.quantity)}
-            </span>
-          </li>
-        ))}
-      </ul>
+      {addons.length > 0 && (
+        <ul className="flex flex-col gap-2.5">
+          {addons.map((addon) => (
+            <li
+              className="flex justify-between items-center gap-2.5"
+              key={addon.id}
+            >
+              <span className="flex-1 text-web-body-mobile lg:text-web-body text-web-content-1">
+                +{addon.quantity} {addon.name}
+              </span>
+              <span className="text-web-h4-mobile lg:text-web-h4 text-web-secondary-1 shrink-0">
+                {formatCurrencyWebsite(addon.price * addon.quantity)}
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
 
       {item.notes && (
         <div className="px-5 py-4 bg-web-background-1 rounded-lg">
