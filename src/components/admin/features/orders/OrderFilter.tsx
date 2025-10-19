@@ -82,7 +82,7 @@ const OrderFilter = ({
       </fieldset>
 
       <fieldset className="fieldset bg-base-100 border-base-300 rounded-box w-full border p-4">
-        <legend className="fieldset-legend">Order Type</legend>
+        <legend className="fieldset-legend">Shipping Method</legend>
         {Object.values(EShippingMethod).map((type) => (
           <label className="label" key={type}>
             <input
