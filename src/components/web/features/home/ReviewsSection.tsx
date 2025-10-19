@@ -132,14 +132,14 @@ function Review({
           {comment}
         </p>
 
-        {/* <a
-          href={"https://google.com"}
+        <a
+          href={"https://maps.app.goo.gl/PU9DSqCevAPkMkjGA"}
           target="_blank"
           rel="noreferrer"
-          className="text-web-secondary-1 text-web-button-mobile lg:text-web-button"
+          className="text-web-secondary-1 text-web-button-mobile lg:text-web-button hover:underline"
         >
           Read more
-        </a> */}
+        </a>
 
         <div>
           <p className="line-clamp-1 mb-0.5 text-web-content-1 text-web-body-mobile lg:text-web-body">
