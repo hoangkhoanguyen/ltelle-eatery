@@ -119,52 +119,55 @@ const CheckoutForm: FC<{ shippingMethods: any }> = ({ shippingMethods }) => {
         />
       </div>
 
-      {shippingMethod === EShippingMethod.door2door && (
-        <div className="grid grid-cols-1 gap-5">
-          <h2 className="text-web-h2-mobile lg:text-web-h2 text-web-content-1">
-            Delivery
-          </h2>
-          <p className="text-web-subtitle-mobile lg:text-web-subtitle text-web-content-2">
-            We will deliver within a 10km radius. If your address is too far
-            from the restaurant, we will call to confirm with you.
-          </p>
-          <Controller
-            control={control}
-            name="deliveryAddress"
-            render={({ field, fieldState: { error } }) => (
-              <div>
-                <input
-                  {...field}
-                  type="text"
-                  className={cn("web-input", !!error && " web-input-error")}
-                  placeholder="Delivery address"
-                />
-                {error?.message && (
-                  <p className="text-web-error text-xs mt-1">{error.message}</p>
-                )}
-              </div>
-            )}
-          />
+      <div
+        className={cn(
+          "grid grid-cols-1 gap-5 overflow-hidden duration-200",
+          shippingMethod === EShippingMethod.door2door ? "h-auto" : "h-0",
+        )}
+      >
+        <h2 className="text-web-h2-mobile lg:text-web-h2 text-web-content-1">
+          Delivery
+        </h2>
+        <p className="text-web-subtitle-mobile lg:text-web-subtitle text-web-content-2">
+          We will deliver within a 10km radius. If your address is too far from
+          the restaurant, we will call to confirm with you.
+        </p>
+        <Controller
+          control={control}
+          name="deliveryAddress"
+          render={({ field, fieldState: { error } }) => (
+            <div>
+              <input
+                {...field}
+                type="text"
+                className={cn("web-input", !!error && " web-input-error")}
+                placeholder="Delivery address"
+              />
+              {error?.message && (
+                <p className="text-web-error text-xs mt-1">{error.message}</p>
+              )}
+            </div>
+          )}
+        />
 
-          <Controller
-            control={control}
-            name="addressNote"
-            render={({ field, fieldState: { error } }) => (
-              <div>
-                <input
-                  {...field}
-                  type="text"
-                  className={cn("web-input", !!error && " web-input-error")}
-                  placeholder="Apartment, Homestay, etc (optional)"
-                />
-                {error?.message && (
-                  <p className="text-web-error text-xs mt-1">{error.message}</p>
-                )}
-              </div>
-            )}
-          />
-        </div>
-      )}
+        <Controller
+          control={control}
+          name="addressNote"
+          render={({ field, fieldState: { error } }) => (
+            <div>
+              <input
+                {...field}
+                type="text"
+                className={cn("web-input", !!error && " web-input-error")}
+                placeholder="Apartment, Homestay, etc (optional)"
+              />
+              {error?.message && (
+                <p className="text-web-error text-xs mt-1">{error.message}</p>
+              )}
+            </div>
+          )}
+        />
+      </div>
 
       <div className="py-2 border-t border-web-content-3 items-stretch gap-4 flex fixed bottom-0 left-0 right-0 bg-web-background-1 px-3 lg:px-0 lg:relative lg:inset-0">
         <Button
