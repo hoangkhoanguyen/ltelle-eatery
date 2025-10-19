@@ -45,7 +45,7 @@ const page = async ({ params }: { params: Promise<{ category: string }> }) => {
         activeCategoryKey={category}
       />
       <NewFood configs={configs?.new_product} />
-      <section className="bg-web-background-1">
+      <section className="bg-web-secondary-2">
         <WhyChooseUsSection configs={configs?.why_choose_us} />
       </section>
     </div>
