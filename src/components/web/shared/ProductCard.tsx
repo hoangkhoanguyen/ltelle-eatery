@@ -11,7 +11,10 @@ const ProductCard: FC<{ product: WebProduct; categoryLabel?: string }> = ({
   categoryLabel,
 }) => {
   return (
-    <div className="flex flex-col rounded-xl overflow-hidden border border-web-content-3 @container">
+    <Link
+      href={webRoutes.dish(product.slug)}
+      className="flex flex-col rounded-xl overflow-hidden border border-web-content-3 @container hover:shadow-lg duration-200 cursor-pointer"
+    >
       <div className="w-full aspect-square bg-gray-300 relative">
         <Image src={product.imageUrl} alt={product.title} fill />
       </div>
@@ -20,12 +23,9 @@ const ProductCard: FC<{ product: WebProduct; categoryLabel?: string }> = ({
           <p className="text-web-label-mobile lg:text-web-label text-web-secondary-3 mb-0.5 capitalize">
             {categoryLabel || product.category}
           </p>
-          <Link
-            href={webRoutes.dish(product.slug)}
-            className="text-web-h3-mobile lg:text-web-h3 text-web-content-1 mb-2.5 line-clamp-1"
-          >
+          <p className="text-web-h3-mobile lg:text-web-h3 text-web-content-1 mb-2.5 line-clamp-1">
             {product.title}
-          </Link>
+          </p>
           <p className="text-web-body-mobile lg:text-web-body text-web-content-1 line-clamp-3">
             {product.subDescription}
           </p>
@@ -37,7 +37,7 @@ const ProductCard: FC<{ product: WebProduct; categoryLabel?: string }> = ({
           <QuickCartButton data={{ id: product.id, title: product.title }} />
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
