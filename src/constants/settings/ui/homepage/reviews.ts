@@ -111,6 +111,31 @@ const fields: FieldType[] = [
       date: "",
     },
   },
+  {
+    key: "below_box",
+    type: "object",
+    label: "Phần bên dưới danh sách Reviews",
+    description: "Cấu hình phần box bên dưới danh sách Reviews",
+    isRequired: false,
+    fields: [
+      {
+        key: "title",
+        type: "text",
+        label: "Tiêu đề",
+        description: "Tiêu đề hiển thị trong box bên dưới",
+        isRequired: true,
+        placeholder: "Nhập tiêu đề",
+      },
+      {
+        key: "description",
+        type: "textarea",
+        label: "Mô tả",
+        description: "Mô tả hiển thị trong box bên dưới",
+        isRequired: true,
+        placeholder: "Nhập mô tả",
+      },
+    ],
+  },
 ];
 
 export const reviewsMeta: MetaValue = {
@@ -132,4 +157,10 @@ export const reviewsInitValue: ConfigValue = {
     },
   ],
   description: "Chúng tôi yêu thích nhận được phản hồi từ khách hàng!",
+  reviews_list: [],
+  below_box: {
+    title: "Ready to Create Your Own Memorable Experience?",
+    description:
+      "Join hundreds of satisfied international guests who have discovered the magic of French cuisine in the heart of Ninh Binh.",
+  },
 };
