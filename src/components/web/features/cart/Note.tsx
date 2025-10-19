@@ -2,31 +2,67 @@
 import React, { FC, memo, useState } from "react";
 import { Button } from "../../ui/button";
 import Icon from "@/components/common/Icon";
-import NoteEditor from "./NoteEditor";
 
 const Note: FC<{ note: string; onSubmit(note: string): void }> = memo(
   ({ note, onSubmit }) => {
-    const [isEditing, setIsEditing] = useState(true);
+    const [isEditing, setIsEditing] = useState(false);
 
-    if (isEditing) return <NoteEditor onSubmit={onSubmit} initNote={note} />;
+    const [noteText, setNoteText] = useState("");
+
+    const onStartEditing = () => {
+      setNoteText(note);
+      setIsEditing(true);
+    };
+
+    const onCloseEditing = () => {
+      setIsEditing(false);
+    };
 
     return (
       <div className="bg-web-secondary-2 rounded-lg p-5">
         <p className="text-web-h4-mobile lg:text-web-h4 text-web-content-2">
-          Note (230/300)
+          Note ({note.length}/300)
         </p>
-        <p className="text-web-body-mobile lg:text-web-body text-web-content-2 mb-2.5">
-          Crisp romaine lettuce, parmesan cheese, croutons, and Caesar dressing,
-          Fresh mozzarella, Crisp romaine lettuce, parmesan cheese, croutons,
-          Crisp romaine lettuce, parmesan cheese, croutons MMM.
-        </p>
-        <Button
-          startIcon={<Icon icon="ph:pen" />}
-          variant={"secondary1"}
-          className="text-web-background-1 text-web-button-mobile lg:text-web-button ms-auto rounded-full"
-        >
-          Fill in note
-        </Button>
+        {isEditing ? (
+          <textarea
+            className="web-input w-full bg-white"
+            value={noteText}
+            maxLength={300}
+            onChange={(e) => {
+              setNoteText(e.target.value);
+            }}
+          ></textarea>
+        ) : (
+          <p className="text-web-body-mobile lg:text-web-body text-web-content-2 mb-2.5">
+            {note}
+          </p>
+        )}
+        <div className="flex items-center justify-end gap-3">
+          <Button
+            onClick={
+              isEditing
+                ? () => {
+                    onSubmit(noteText);
+                    onCloseEditing();
+                  }
+                : onStartEditing
+            }
+            startIcon={<Icon icon={isEditing ? "ph:check" : "ph:pen"} />}
+            variant={"secondary1"}
+            className="text-web-background-1 text-web-button-mobile lg:text-web-button rounded-full"
+          >
+            {isEditing ? "Save" : "Fill in note"}
+          </Button>
+          {isEditing && (
+            <Button
+              onClick={onCloseEditing}
+              variant={"white"}
+              className="text-web-content-2 rounded-full text-web-button-mobile lg:text-web-button"
+            >
+              Cancel
+            </Button>
+          )}
+        </div>
       </div>
     );
   },
