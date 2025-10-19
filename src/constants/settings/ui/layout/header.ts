@@ -22,6 +22,7 @@ export const headerInitValue: ConfigValue = {
       href: webRoutes.reservation(),
     },
   ],
+  welcom_text: "Welcome to Ha Giang",
 };
 
 export const headerMeta: MetaValue = {
@@ -45,6 +46,14 @@ export const headerMeta: MetaValue = {
         "Giờ mở cửa hàng ngày hiển thị trên header (ví dụ: 8:00 AM - 10:00 PM)",
       isRequired: false,
       placeholder: "Nhập giờ mở cửa hàng ngày",
+    },
+    {
+      key: "welcom_text",
+      type: "text",
+      label: "Văn bản chào mừng",
+      description: "Văn bản chào mừng hiển thị trên header bên phải",
+      isRequired: false,
+      placeholder: "Nhập văn bản chào mừng",
     },
     {
       key: "nav_bar",
