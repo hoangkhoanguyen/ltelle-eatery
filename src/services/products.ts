@@ -85,7 +85,7 @@ export async function getAdminProductTable({
       where: buildWhereConditions,
       limit,
       offset,
-      orderBy: [asc(products.title)],
+      orderBy: [desc(products.priority), desc(products.createdAt)],
       with: {
         category: true,
         images: {
@@ -143,6 +143,7 @@ export async function getAdminRelatedProductsByIds(ids: number[]) {
       title: true,
       isActive: true,
     },
+    orderBy: [desc(products.priority), desc(products.createdAt)],
   });
 }
 
@@ -237,6 +238,7 @@ export async function getAllProducts() {
       title: true,
       isActive: true,
     },
+    orderBy: [desc(products.priority), desc(products.createdAt)],
   });
 }
 
@@ -574,7 +576,7 @@ export async function getProductsByCategorySlug(
           },
         },
       },
-      orderBy: [desc(products.createdAt)],
+      orderBy: [desc(products.priority), desc(products.createdAt)],
     });
 
     // Format data for product cards
@@ -628,7 +630,7 @@ export async function getProductsByCategorySlug(
         limit: 1,
       },
     },
-    orderBy: [desc(products.createdAt)],
+    orderBy: [desc(products.priority), desc(products.createdAt)],
   });
 
   // Format data for product cards
@@ -756,6 +758,7 @@ export async function getMultipleProductsByIds(ids: number[]) {
         },
       },
     },
+    orderBy: [desc(products.priority), desc(products.createdAt)],
   });
 }
 

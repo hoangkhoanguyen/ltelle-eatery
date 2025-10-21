@@ -71,4 +71,5 @@ export const updateProductSchema = z.object({
   relatedProducts: z.array(relatedProductSchema),
   addons: z.array(productAddonSchema),
   images: z.array(productImageSchema),
+  priority: z.number(),
 });

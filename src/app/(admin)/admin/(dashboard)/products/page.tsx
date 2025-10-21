@@ -26,6 +26,7 @@ const ProductPage = () => {
         imageUrl: item.images[0]?.url,
         isActive: item.isActive,
         slug: item.slug,
+        priority: item.priority,
       })) || [],
     [data],
   );

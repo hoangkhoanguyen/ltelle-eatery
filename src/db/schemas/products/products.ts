@@ -24,6 +24,7 @@ export const products = dbSchema.table("products", {
   title: varchar("title", {
     length: 255,
   }).notNull(),
+  priority: integer("priority").notNull().default(0),
   categoryId: integer("category_id").notNull(),
   allergenInfo: text("allergen_info"),
   subDescription: text("sub_description"),

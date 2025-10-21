@@ -52,6 +52,7 @@ export interface AdminProductTable {
   imageUrl?: string;
   isActive: boolean;
   slug: string;
+  priority: number | null;
 }
 
 export interface AdminProductAddons {

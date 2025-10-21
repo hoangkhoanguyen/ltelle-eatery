@@ -63,6 +63,12 @@ export default function ProductTable({
         );
       },
     }),
+    columnHelper.accessor("priority", {
+      header: "Độ ưu tiên hiển thị",
+      meta: {
+        align: "right",
+      },
+    }),
     columnHelper.accessor("category", {
       header: "Nhóm",
     }),
@@ -80,7 +86,7 @@ export default function ProductTable({
       cell(props) {
         const isActive = props.getValue();
         const productId = props.row.original.id;
-        
+
         return (
           <Switch
             checked={isActive}
@@ -92,7 +98,7 @@ export default function ProductTable({
                   onSuccess: () => {
                     onReloadData();
                   },
-                }
+                },
               );
             }}
             disabled={updateProductStatus.isPending}

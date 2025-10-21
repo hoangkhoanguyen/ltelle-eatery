@@ -1,0 +1,1 @@
+ALTER TABLE "dev"."products" ALTER COLUMN "priority" SET NOT NULL;

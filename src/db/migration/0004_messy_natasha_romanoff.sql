@@ -1,0 +1,1 @@
+ALTER TABLE "dev"."products" ADD COLUMN "priority" integer DEFAULT 0;

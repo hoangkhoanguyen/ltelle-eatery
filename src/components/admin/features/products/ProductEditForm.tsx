@@ -13,7 +13,8 @@ import AddonsEditor from "./form-elements/AddonsEditor";
 import { useProductDetailsContext } from "./ProductDetailsProvider";
 import { Controller, useWatch } from "react-hook-form";
 import { generateSlug } from "@/lib/utils";
-import { SlugInput } from "../../ui/form";
+import { Input, InputWithLabel, SlugInput } from "../../ui/form";
+import WithError from "../../ui/form/WithError";
 
 const ProductEditForm = () => {
   const { control } = useProductDetailsContext();
@@ -124,6 +125,27 @@ const ProductEditForm = () => {
                       <ProductStatusSwitch value={value} onChange={onChange} />
                     )}
                   />
+                  <Controller
+                    control={control}
+                    name="priority"
+                    render={({
+                      field: { value, onChange },
+                      fieldState: { error },
+                    }) => (
+                      <InputWithLabel label="Độ ưu tiên hiển thị">
+                        <WithError error={error}>
+                          <Input
+                            type="number"
+                            value={value}
+                            onChange={(e) => onChange(Number(e.target.value))}
+                            className={error ? "input-error" : ""}
+                          />
+                        </WithError>
+                      </InputWithLabel>
+                    )}
+                  />
+                </div>
+                <div>
                   <Controller
                     control={control}
                     name="categoryId"

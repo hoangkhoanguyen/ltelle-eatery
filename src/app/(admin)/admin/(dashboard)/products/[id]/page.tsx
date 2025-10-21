@@ -39,6 +39,7 @@ const ProductDetailsPage = async ({
     relatedProducts: product.relatedProducts.map((item) =>
       pick(item, "id", "title"),
     ),
+    priority: product.priority,
   };
 
   return (
