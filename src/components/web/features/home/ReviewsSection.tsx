@@ -51,11 +51,10 @@ export const ReviewsSection: FC<{ configs: any }> = ({ configs }) => {
         <div className="bg-web-background-2 py-5 px-3 md:px-10 lg:px-28 rounded-lg max-w-[860px] mx-auto ">
           <div className="mb-5 text-center">
             <p className="mb-5 text-web-content-1 text-web-h4-mobile lg:text-web-h4">
-              Ready to Create Your Own Memorable Experience?
+              {configs.below_box.title}
             </p>
             <p className="text-web-body-mobile lg:text-web-body text-web-content-2">
-              Join hundreds of satisfied international guests who have
-              discovered the magic of French cuisine in the heart of Ninh Binh.
+              {configs.below_box.description}
             </p>
           </div>
           <div className="flex flex-col md:flex-row items-stretch md:items-center justify-center gap-5">

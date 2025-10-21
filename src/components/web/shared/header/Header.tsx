@@ -19,7 +19,7 @@ export default function Header({ configs }: { configs: any }) {
                 />
               </div>
               <span className="text-web-body text-web-content-1 hidden md:block">
-                Welcom to Ha Giang
+                {configs.welcom_text}
               </span>
             </div>
             {/* below header */}
