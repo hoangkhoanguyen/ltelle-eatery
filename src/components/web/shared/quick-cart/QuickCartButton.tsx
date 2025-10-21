@@ -1,31 +1,14 @@
 "use client";
 import Icon from "@/components/common/Icon";
-import React, { FC, useEffect, useRef } from "react";
-import { Button } from "../ui/button";
-import { useCartStore } from "@/hooks/web/cart/store";
+import React, { FC } from "react";
+import { Button } from "../../ui/button";
 import { WebProduct } from "@/types/products";
-import { throttle } from "lodash";
+import { useQuickCartModalStore } from "@/hooks/web/quick-cart";
 
 const QuickCartButton: FC<{
   data: Pick<WebProduct, "id" | "title">;
 }> = ({ data }) => {
-  const onAddToCart = useCartStore((state) => state.actions.addToCart);
-
-  const throttledAddRef = useRef(
-    throttle(
-      (payload: Parameters<typeof onAddToCart>[0], title: string) => {
-        onAddToCart(payload, title);
-      },
-      500,
-      { leading: true, trailing: false },
-    ),
-  );
-
-  useEffect(() => {
-    return () => {
-      throttledAddRef.current.cancel?.();
-    };
-  }, []);
+  const openQuickCartModal = useQuickCartModalStore((state) => state.openModal);
 
   return (
     <Button
@@ -36,10 +19,7 @@ const QuickCartButton: FC<{
       onKeyDown={(e) => e.stopPropagation()}
       onClick={(e) => {
         e.stopPropagation();
-        throttledAddRef.current(
-          { productId: data.id, quantity: 1, notes: "", addons: [] },
-          data.title,
-        );
+        openQuickCartModal(data.id);
         e.preventDefault();
       }}
       startIcon={<Icon icon={"ph:plus-circle"} className="text-2xl" />}

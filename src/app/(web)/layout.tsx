@@ -9,6 +9,7 @@ import { Toaster } from "sonner";
 import Icon from "@/components/common/Icon";
 import { getUIConfigsByKey } from "@/services/configs";
 import { FullscreenLoading } from "@/components/web/ui/loading";
+import QuickCartModal from "@/components/web/shared/quick-cart/QuickCartModal";
 
 const popinsSans = Poppins({
   variable: "--font-poppins-sans",
@@ -28,8 +29,8 @@ const Layout: FC<PropsWithChildren> = async ({ children }) => {
   const configs = await getUIConfigsByKey("layout");
 
   return (
-    <div
-      className={`website ${popinsSans.variable} ${allogist.variable} antialiased font-poppins-sans bg-web-background-1`}
+    <body
+      className={`website antialiased ${popinsSans.variable} ${allogist.variable} antialiased font-poppins-sans bg-web-background-1`}
     >
       <WebsiteQueryProvider>
         <AnimationHeaderScroll>
@@ -55,9 +56,10 @@ const Layout: FC<PropsWithChildren> = async ({ children }) => {
             ),
           }}
         />
+        <QuickCartModal />
         <FullscreenLoading />
       </WebsiteQueryProvider>
-    </div>
+    </body>
   );
 };
 

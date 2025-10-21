@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React, { FC } from "react";
-import QuickCartButton from "./QuickCartButton";
+import QuickCartButton from "./quick-cart/QuickCartButton";
 import Link from "next/link";
 import { webRoutes } from "@/constants/route";
 import { WebProduct } from "@/types/products";

@@ -67,10 +67,11 @@ const ProductInformation: FC<{ product: WebProductDetails }> = ({
                   <ProductQuantityEditor />
                 </div>
 
-                <div className="mb-11">
-                  <ProductAddOns />
-                </div>
-
+                {product.addons.length > 0 && (
+                  <div className="mb-11">
+                    <ProductAddOns />
+                  </div>
+                )}
                 <div>
                   <AddToCartButton />
                 </div>

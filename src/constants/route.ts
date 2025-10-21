@@ -34,6 +34,7 @@ export const WEB_ROUTE = {
   cart: "/cart",
   checkout: "/checkout",
   productsByIdsApi: "/api/products/ids",
+  productQuickApi: "/api/products/quick/[id]",
 } as const;
 
 export const ROUTES = {
@@ -173,4 +174,6 @@ export const webRoutes = {
       skipNull: true,
     })}`,
   checkout: () => WEB_ROUTE.checkout,
+  productQuickApi: (id: string | number) =>
+    generateRoute("web", "productQuickApi", { id }),
 };

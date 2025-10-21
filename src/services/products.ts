@@ -935,3 +935,35 @@ export async function updateProductStatus(id: number, isActive: boolean) {
 
   return updatedProduct;
 }
+
+export async function getProductDetailsForQuickCartById(id: number) {
+  const db = getDb();
+
+  const product = await db.query.products.findFirst({
+    where: and(eq(products.id, id), eq(products.isActive, true)),
+    columns: {
+      id: true,
+      title: true,
+      price: true,
+      allergenInfo: true,
+    },
+    with: {
+      addons: {
+        where: eq(productAddons.isActive, true),
+        orderBy: [asc(productAddons.sortOrder)],
+        columns: {
+          id: true,
+          name: true,
+          price: true,
+        },
+      },
+      category: {
+        columns: {
+          name: true,
+        },
+      },
+    },
+  });
+
+  return product;
+}

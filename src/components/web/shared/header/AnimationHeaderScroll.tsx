@@ -30,7 +30,7 @@ const AnimationHeaderScroll: FC<PropsWithChildren> = ({ children }) => {
   return (
     <>
       <div
-        className={`fixed top-0 start-0 end-0 z-50 duration-200 ${
+        className={`fixed top-0 start-0 end-0 z-30 duration-200 ${
           isShow ? "translate-y-0" : "-translate-y-full"
         }`}
       >

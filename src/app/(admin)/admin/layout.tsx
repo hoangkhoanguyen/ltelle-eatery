@@ -14,8 +14,8 @@ const interSans = Inter({
 
 const Layout: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <div
-      className={`admin ${interSans.variable} font-inter-sans`}
+    <body
+      className={`admin antialiased ${interSans.variable} font-inter-sans`}
       data-theme="light"
     >
       <AdminQueryProvider>
@@ -36,7 +36,7 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
         }}
       />
       <FullscreenLoading />
-    </div>
+    </body>
   );
 };
 
