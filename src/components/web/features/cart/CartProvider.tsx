@@ -1,6 +1,7 @@
 import useGetCartProducts from "@/hooks/web/cart/useGetCartProducts";
 import { CartItemDisplay } from "@/types/cart";
 import React, { FC, PropsWithChildren, useMemo } from "react";
+import EmptyCart from "./EmptyCart";
 
 const Context = React.createContext<{
   cartItems: CartItemDisplay[];
@@ -21,7 +22,7 @@ const CartProvider: FC<PropsWithChildren> = ({ children }) => {
         totalPrice,
       }}
     >
-      {children}
+      {cartItems.length > 0 ? children : <EmptyCart />}
     </Context.Provider>
   );
 };

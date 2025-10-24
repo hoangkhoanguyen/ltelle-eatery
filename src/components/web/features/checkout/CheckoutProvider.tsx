@@ -16,6 +16,7 @@ import React, {
   useState,
 } from "react";
 import { Control, useForm, useWatch } from "react-hook-form";
+import EmptyCart from "../cart/EmptyCart";
 
 const mockOrder: CreateOrderResponse = {
   order: {
@@ -216,7 +217,7 @@ const CheckoutProvider: FC<
         successOrder,
       }}
     >
-      {children}
+      {cartItems.length > 0 ? children : <EmptyCart />}
     </Context.Provider>
   );
 };
