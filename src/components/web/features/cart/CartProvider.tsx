@@ -2,6 +2,7 @@ import useGetCartProducts from "@/hooks/web/cart/useGetCartProducts";
 import { CartItemDisplay } from "@/types/cart";
 import React, { FC, PropsWithChildren, useMemo } from "react";
 import EmptyCart from "./EmptyCart";
+import Checking from "../../shared/Checking";
 
 const Context = React.createContext<{
   cartItems: CartItemDisplay[];
@@ -9,20 +10,31 @@ const Context = React.createContext<{
 } | null>(null);
 
 const CartProvider: FC<PropsWithChildren> = ({ children }) => {
-  const cartItems = useGetCartProducts();
+  const { cartItems, isLoading } = useGetCartProducts();
 
   const totalPrice = useMemo(() => {
-    return cartItems.reduce((sum, item) => sum + item.totalPrice, 0);
+    return cartItems?.reduce((sum, item) => sum + item.totalPrice, 0) ?? 0;
   }, [cartItems]);
+
+  const renderContent = () => {
+    if (!cartItems || isLoading) {
+      return <Checking />;
+    }
+    if (cartItems.length === 0) {
+      return <EmptyCart />;
+    }
+
+    return children;
+  };
 
   return (
     <Context.Provider
       value={{
-        cartItems,
+        cartItems: cartItems || [],
         totalPrice,
       }}
     >
-      {cartItems.length > 0 ? children : <EmptyCart />}
+      {renderContent()}
     </Context.Provider>
   );
 };
