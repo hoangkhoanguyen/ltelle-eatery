@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import React, { FC } from "react";
 import CartItemQuantity from "./CartItemQuantity";
@@ -6,10 +7,19 @@ import CartItemTotalPrice from "./CartItemTotalPrice";
 import CartItemNote from "./CartItemNote";
 import { CartItemDisplay } from "@/types/cart";
 import { formatCurrencyWebsite } from "@/lib/utils";
+import Icon from "@/components/common/Icon";
+import { useCartStore } from "@/hooks/web/cart/store";
 
 const CartItem: FC<{ item: CartItemDisplay }> = ({ item }) => {
+  const removeFromCart = useCartStore((state) => state.actions.removeFromCart);
   return (
-    <div className="border-t border-web-content-3 pt-5">
+    <div className="border-t border-web-content-3 pt-5 relative">
+      <button
+        className="absolute top-5 right-0 text-web-content-1"
+        onClick={() => removeFromCart(item.id)}
+      >
+        <Icon icon="ph:trash" className="text-2xl" />
+      </button>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-5">
         <div className="flex items-start gap-5">
           <div className="w-40 aspect-square relative overflow-hidden">
