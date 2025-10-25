@@ -1,6 +1,7 @@
 import { getDb } from "@/db/drizzle";
 import { ConfigDB, configs, NewConfigDB } from "@/db/schemas";
 import { and, eq } from "drizzle-orm";
+import { unstable_cache } from "next/cache";
 // Disabled cache imports - using direct DB calls now
 // import { createDynamicCachedFunction } from "@/lib/cache-utils";
 // import { CACHE_TAGS } from "@/constants/cache";
@@ -54,6 +55,10 @@ export async function updateConfigByKey({
 
 export async function getUIConfigsByKey(key: string) {
   return getConfigsByKey(key, "ui");
+}
+
+export async function getUIConfigsByKeyCached(key: string) {
+  return unstable_cache(getConfigsByKey, [key, "ui"])(key, "ui");
 }
 
 export async function getAppConfigsByKey(key: string) {
