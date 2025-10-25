@@ -17,7 +17,6 @@ export function getDb() {
   if (!db) {
     const env = getEnv();
 
-    console.log("envvvvv", env);
     const pool = new Pool({
       host: env.DB_HOST,
       port: env.DB_PORT,

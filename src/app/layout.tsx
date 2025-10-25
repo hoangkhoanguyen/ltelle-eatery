@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { getDb } from "@/db/drizzle";
-import { products } from "@/db/schemas";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -13,10 +11,5 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const db = getDb();
-
-  const product = await db.select().from(products).limit(1);
-  console.log("product", product);
-
   return <html lang="en">{children}</html>;
 }

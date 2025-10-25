@@ -7,7 +7,7 @@ import { WebsiteQueryProvider } from "@/providers/react-query-provider";
 import AnimationHeaderScroll from "@/components/web/shared/header/AnimationHeaderScroll";
 import { Toaster } from "sonner";
 import Icon from "@/components/common/Icon";
-import { getUIConfigsByKey, getUIConfigsByKeyCached } from "@/services/configs";
+import { getUIConfigsByKey } from "@/services/configs";
 import { FullscreenLoading } from "@/components/web/ui/loading";
 import QuickCartModal from "@/components/web/shared/quick-cart/QuickCartModal";
 
@@ -23,12 +23,10 @@ const allogist = localFont({
   variable: "--font-allogist",
 });
 
-// export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic";
 
 const Layout: FC<PropsWithChildren> = async ({ children }) => {
-  const configs = await getUIConfigsByKeyCached("layout");
-
-  console.log("configsssssssssss", configs);
+  const configs = await getUIConfigsByKey("layout");
 
   return (
     <body

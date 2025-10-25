@@ -1,10 +1,6 @@
 import { getDb } from "@/db/drizzle";
 import { ConfigDB, configs, NewConfigDB } from "@/db/schemas";
 import { and, eq } from "drizzle-orm";
-import { unstable_cache } from "next/cache";
-// Disabled cache imports - using direct DB calls now
-// import { createDynamicCachedFunction } from "@/lib/cache-utils";
-// import { CACHE_TAGS } from "@/constants/cache";
 
 export async function getConfigsByKey(key: string, configType: string) {
   const db = getDb();
@@ -57,34 +53,6 @@ export async function getUIConfigsByKey(key: string) {
   return getConfigsByKey(key, "ui");
 }
 
-export async function getUIConfigsByKeyCached(key: string) {
-  return unstable_cache(getConfigsByKey, [key, "ui"])(key, "ui");
-}
-
 export async function getAppConfigsByKey(key: string) {
   return getConfigsByKey(key, "app");
 }
-
-// ==================== CACHED VERSIONS (DISABLED) ====================
-// Note: These cached functions are disabled to simplify the system
-// All functions now use direct database calls for real-time data
-
-/*
-export const getConfigsByKeyCached = createDynamicCachedFunction(
-  getConfigsByKey,
-  (key, configType) => ["config", configType, key],
-  (key, configType) => [CACHE_TAGS.CONFIGS.BY_KEY(key, configType)],
-);
-
-export const getUIConfigsByKeyCached = createDynamicCachedFunction(
-  getUIConfigsByKey,
-  (key) => ["config", "ui", key],
-  (key) => [CACHE_TAGS.CONFIGS.BY_KEY(key, "ui")],
-);
-
-export const getAppConfigsByKeyCached = createDynamicCachedFunction(
-  getAppConfigsByKey,
-  (key) => ["config", "app", key],
-  (key) => [CACHE_TAGS.CONFIGS.BY_KEY(key, "app")],
-);
-*/
