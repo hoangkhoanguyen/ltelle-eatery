@@ -40,7 +40,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/ltelle-eatery:dev-cache
+          tags: ${{ secrets.DOCKER_USERNAME }}/ltelle-eatery:dev
           file: ./Dockerfile
           cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/ltelle-eatery:buildcache
           cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/ltelle-eatery:buildcache,mode=max
@@ -54,5 +54,5 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
             cd ../home/apps
-            docker compose pull app_dev_cache
-            docker compose up app_dev_cache -d --force-recreate
+            docker compose pull app_dev
+            docker compose up app_dev -d --force-recreate
