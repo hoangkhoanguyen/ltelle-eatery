@@ -8,7 +8,9 @@ const useGetCartProducts = () => {
 
   const productIds = useMemo(() => cart.map((item) => item.productId), [cart]);
 
-  const { data: products } = useGetProductsDetailsByIds({ ids: productIds });
+  const { data: products, isLoading } = useGetProductsDetailsByIds({
+    ids: productIds,
+  });
 
   const cartItems: CartItemDisplay[] = useMemo((): CartItemDisplay[] => {
     if (!products) return [];
@@ -41,7 +43,7 @@ const useGetCartProducts = () => {
       .filter((item) => item !== null);
   }, [cart, products]);
 
-  return cartItems;
+  return { cartItems, isLoading };
 };
 
 export default useGetCartProducts;

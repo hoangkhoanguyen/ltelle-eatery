@@ -17,6 +17,7 @@ import React, {
 } from "react";
 import { Control, useForm, useWatch } from "react-hook-form";
 import EmptyCart from "../cart/EmptyCart";
+import Checking from "../../shared/Checking";
 
 const mockOrder: CreateOrderResponse = {
   order: {
@@ -109,7 +110,7 @@ const CheckoutProvider: FC<
   );
   const { mutate, isPending } = useCheckout();
   const clearCart = useCartStore((state) => state.actions.clearCart);
-  const cartItems: CartItemDisplay[] = useGetCartProducts();
+  const { cartItems, isLoading } = useGetCartProducts();
   const { control, handleSubmit } = useForm<CheckoutFormData>({
     resolver: zodResolver(checkoutSchema),
     mode: "onSubmit",
@@ -205,6 +206,16 @@ const CheckoutProvider: FC<
 
   useSetLoading(isPending);
 
+  const renderContent = () => {
+    if (isLoading) {
+      return <Checking />;
+    }
+    if (cartItems.length === 0) {
+      return <EmptyCart />;
+    }
+    return children;
+  };
+
   return (
     <Context.Provider
       value={{
@@ -217,7 +228,7 @@ const CheckoutProvider: FC<
         successOrder,
       }}
     >
-      {cartItems.length > 0 ? children : <EmptyCart />}
+      {renderContent()}
     </Context.Provider>
   );
 };
