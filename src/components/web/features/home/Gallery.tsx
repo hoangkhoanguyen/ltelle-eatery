@@ -10,6 +10,7 @@ export const Gallery: FC<{
   autoplay?: boolean;
 }> = ({ children, thumbs, autoplay }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null);
+  console.log("env in client component", process.env.NEXT_PUBLIC_TEST_ENV);
 
   return (
     <div>

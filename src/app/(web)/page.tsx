@@ -11,7 +11,7 @@ import React from "react";
 
 const HomePage = async () => {
   const homeConfig = await getUIConfigsByKey("homepage");
-  console.log("env", process.env.TEST_ENV);
+  console.log("env in server component", process.env.NEXT_PUBLIC_TEST_ENV);
   return (
     <div>
       <HeroSection configs={homeConfig?.value.hero} />
