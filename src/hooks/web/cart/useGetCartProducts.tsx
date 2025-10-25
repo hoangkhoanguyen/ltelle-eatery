@@ -8,12 +8,10 @@ const useGetCartProducts = () => {
 
   const productIds = useMemo(() => cart.map((item) => item.productId), [cart]);
 
-  const { data: products, isLoading } = useGetProductsDetailsByIds({
-    ids: productIds,
-  });
+  const { data: products } = useGetProductsDetailsByIds({ ids: productIds });
 
-  const cartItems = useMemo((): CartItemDisplay[] | undefined => {
-    if (!products) return undefined;
+  const cartItems: CartItemDisplay[] = useMemo((): CartItemDisplay[] => {
+    if (!products) return [];
     return cart
       .map((item) => {
         const product = products.find((p) => p.id === item.productId);
@@ -43,7 +41,7 @@ const useGetCartProducts = () => {
       .filter((item) => item !== null);
   }, [cart, products]);
 
-  return { cartItems, isLoading };
+  return cartItems;
 };
 
 export default useGetCartProducts;

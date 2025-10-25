@@ -17,7 +17,6 @@ import React, {
 } from "react";
 import { Control, useForm, useWatch } from "react-hook-form";
 import EmptyCart from "../cart/EmptyCart";
-import Checking from "../../shared/Checking";
 
 const mockOrder: CreateOrderResponse = {
   order: {
@@ -110,7 +109,7 @@ const CheckoutProvider: FC<
   );
   const { mutate, isPending } = useCheckout();
   const clearCart = useCartStore((state) => state.actions.clearCart);
-  const { cartItems, isLoading } = useGetCartProducts();
+  const cartItems: CartItemDisplay[] = useGetCartProducts();
   const { control, handleSubmit } = useForm<CheckoutFormData>({
     resolver: zodResolver(checkoutSchema),
     mode: "onSubmit",
@@ -132,17 +131,15 @@ const CheckoutProvider: FC<
   });
 
   const subTotalPrice = useMemo(() => {
-    return (
-      cartItems?.reduce(
-        (acc, item) =>
-          acc +
-          item.price * item.quantity +
-          item.addons.reduce(
-            (result, addon) => result + addon.price * addon.quantity,
-            0,
-          ),
-        0,
-      ) ?? 0
+    return cartItems.reduce(
+      (acc, item) =>
+        acc +
+        item.price * item.quantity +
+        item.addons.reduce(
+          (result, addon) => result + addon.price * addon.quantity,
+          0,
+        ),
+      0,
     );
   }, [cartItems]);
 
@@ -179,22 +176,21 @@ const CheckoutProvider: FC<
             (item: any) => item.method === data.shippingMethod,
           )?.label,
         },
-        orderItems:
-          cartItems?.map((item) => ({
-            productId: item.productId,
-            price: item.price,
-            quantity: item.quantity,
-            productName: item.title,
-            totalPrice: item.totalPrice,
-            note: item.notes || "",
-            addons: item.addons.map((addon) => ({
-              quantity: addon.quantity,
-              price: addon.price,
-              totalPrice: addon.price * addon.quantity,
-              addonId: addon.id,
-              addonName: addon.name,
-            })),
-          })) || [],
+        orderItems: cartItems.map((item) => ({
+          productId: item.productId,
+          price: item.price,
+          quantity: item.quantity,
+          productName: item.title,
+          totalPrice: item.totalPrice,
+          note: item.notes || "",
+          addons: item.addons.map((addon) => ({
+            quantity: addon.quantity,
+            price: addon.price,
+            totalPrice: addon.price * addon.quantity,
+            addonId: addon.id,
+            addonName: addon.name,
+          })),
+        })),
       },
       {
         onSuccess: (data) => {
@@ -209,20 +205,10 @@ const CheckoutProvider: FC<
 
   useSetLoading(isPending);
 
-  const renderContent = () => {
-    if (!cartItems || isLoading) {
-      return <Checking />;
-    }
-    if (cartItems.length === 0) {
-      return <EmptyCart />;
-    }
-    return children;
-  };
-
   return (
     <Context.Provider
       value={{
-        cartItems: cartItems || [],
+        cartItems,
         control,
         onCheckout,
         totalPrice,
@@ -231,7 +217,7 @@ const CheckoutProvider: FC<
         successOrder,
       }}
     >
-      {renderContent()}
+      {cartItems.length > 0 ? children : <EmptyCart />}
     </Context.Provider>
   );
 };
