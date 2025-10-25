@@ -7,6 +7,18 @@ on:
 jobs:
   build-dev:
     runs-on: ubuntu-latest
+    env:
+      TEST_ENV: uhihihi
+      DB_HOST: ${{ secrets.DEV_DB_HOST }}
+      DB_PORT: ${{ secrets.DEV_DB_PORT }}
+      DB_USERNAME: ${{ secrets.DEV_DB_USERNAME }}
+      DB_PASSWORD: ${{ secrets.DEV_DB_PASSWORD }}
+      DB_NAME: ${{ secrets.DEV_DB_NAME }}
+      ACCESS_TOKEN_JWT_SECRET: ${{ secrets.DEV_ACCESS_TOKEN_JWT_SECRET }}
+      ACCESS_TOKEN_JWT_EXPIRES_IN: 5m
+      REFRESH_TOKEN_JWT_SECRET: ${{ secrets.DEV_REFRESH_TOKEN_JWT_SECRET }}
+      REFRESH_TOKEN_JWT_EXPIRES_IN: 1w
+      REGISTER_SECRET_CODE: ${{ secrets.DEV_REGISTER_SECRET_CODE }}
     steps:
       - uses: actions/checkout@v4
 

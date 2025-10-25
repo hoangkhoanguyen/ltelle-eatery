@@ -23,7 +23,7 @@ const allogist = localFont({
   variable: "--font-allogist",
 });
 
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
 
 const Layout: FC<PropsWithChildren> = async ({ children }) => {
   const configs = await getUIConfigsByKey("layout");
