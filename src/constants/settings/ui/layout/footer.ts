@@ -104,7 +104,7 @@ export const footerMeta: MetaValue = {
       label: "Quick Links",
       type: "array",
       description: "Danh sách các liên kết nhanh hiển thị trong phần footer",
-      isEditableList: true,
+      isEditableList: false,
       isRequired: false,
       needBox: true,
       itemType: {
