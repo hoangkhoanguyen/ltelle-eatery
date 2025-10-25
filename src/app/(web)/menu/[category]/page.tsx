@@ -26,7 +26,7 @@ const page = async ({ params }: { params: Promise<{ category: string }> }) => {
             </div>
           ))}
         </BannerSlider>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 hidden lg:block">
           <h1 className="flex flex-col items-center text-web-h1-mobile lg:text-web-h1 text-web-background-1 text-center mb-2.5 md:mb-10">
             {configs.hero.title.map((item: any, index: number) => (
               <span
