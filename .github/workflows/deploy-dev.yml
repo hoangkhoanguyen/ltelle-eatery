@@ -15,7 +15,8 @@ jobs:
           touch .env
           echo "NEXT_PUBLIC_TEST_ENV=This is a development environment" >> .env
           echo "DB_HOST=${{ secrets.DEV_DB_HOST }}" >> .env
-          echo "DB_USER=${{ secrets.DEV_DB_USER }}" >> .env
+          echo "DB_PORT=${{ secrets.DEV_DB_PORT }}" >> .env
+          echo "DB_USERNAME=${{ secrets.DEV_DB_USERNAME }}" >> .env
           echo "DB_PASSWORD=${{ secrets.DEV_DB_PASSWORD }}" >> .env
           echo "DB_NAME=${{ secrets.DEV_DB_NAME }}" >> .env
           echo "ACCESS_TOKEN_JWT_SECRET=${{ secrets.DEV_ACCESS_TOKEN_JWT_SECRET }}" >> .env
@@ -37,20 +38,20 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          push: true
+          push: false
           tags: ${{ secrets.DOCKER_USERNAME }}/ltelle-eatery:dev-cache
           file: ./Dockerfile
           cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/ltelle-eatery:buildcache
           cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/ltelle-eatery:buildcache,mode=max
 
-      - name: Deploy to VPS via SSH
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          port: ${{ secrets.SERVER_PORT }}
-          username: ${{ secrets.SERVER_USERNAME }}
-          password: ${{ secrets.SERVER_PASSWORD }}
-          script: |
-            cd ../home/apps
-            docker compose pull app_dev_cache
-            docker compose up app_dev_cache -d --force-recreate
+      # - name: Deploy to VPS via SSH
+      #   uses: appleboy/ssh-action@v1
+      #   with:
+      #     host: ${{ secrets.SERVER_HOST }}
+      #     port: ${{ secrets.SERVER_PORT }}
+      #     username: ${{ secrets.SERVER_USERNAME }}
+      #     password: ${{ secrets.SERVER_PASSWORD }}
+      #     script: |
+      #       cd ../home/apps
+      #       docker compose pull app_dev_cache
+      #       docker compose up app_dev_cache -d --force-recreate
