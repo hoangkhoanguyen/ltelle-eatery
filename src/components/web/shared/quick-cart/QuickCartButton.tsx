@@ -13,7 +13,7 @@ const QuickCartButton: FC<{
   return (
     <Button
       variant={"secondary1"}
-      className="gap-3 px-4 py-3 rounded-lg duration-200 active:scale-95 text-web-button-mobile lg:text-web-button "
+      className="gap-3 px-4 py-3 rounded-lg duration-200 active:scale-95 text-web-button-mobile lg:text-web-button hover:bg-web-primary hover:text-web-background-1"
       onMouseDown={(e) => e.stopPropagation()}
       onMouseUp={(e) => e.stopPropagation()}
       onKeyDown={(e) => e.stopPropagation()}
