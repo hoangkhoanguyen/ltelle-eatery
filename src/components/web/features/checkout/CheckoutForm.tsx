@@ -9,6 +9,7 @@ import { EShippingMethod } from "@/types/app-configs";
 import Icon from "@/components/common/Icon";
 import Link from "next/link";
 import { webRoutes } from "@/constants/route";
+import GoToMenuButton from "../../shared/GoToMenuButton";
 
 const CheckoutForm: FC<{ shippingMethods: any }> = ({ shippingMethods }) => {
   const { control, onCheckout, totalPrice, cartItems } = useCheckoutContext();
@@ -170,15 +171,7 @@ const CheckoutForm: FC<{ shippingMethods: any }> = ({ shippingMethods }) => {
       </div>
 
       <div className="py-2 border-t border-web-content-3 items-stretch gap-4 flex fixed z-30 bottom-0 left-0 right-0 bg-web-background-1 px-3 lg:px-0 lg:relative lg:inset-0">
-        <Button
-          as={Link}
-          href={webRoutes.menu("")}
-          variant={"secondary1"}
-          startIcon={<Icon icon="ph:fork-knife-fill" className="text-2xl" />}
-          className="gap-1 flex-col text-web-background-1 text-web-button-mobile lg:text-web-button"
-        >
-          Menu
-        </Button>
+        <GoToMenuButton />
         <Button
           disabled={cartItems.length === 0}
           onClick={onCheckout}

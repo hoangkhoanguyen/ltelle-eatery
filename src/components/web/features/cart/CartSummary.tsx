@@ -3,6 +3,7 @@ import React from "react";
 import CartSubmit from "./CartSubmit";
 import { useCartContext } from "./CartProvider";
 import { formatCurrencyWebsite } from "@/lib/utils";
+import GoToMenuButton from "../../shared/GoToMenuButton";
 
 const CartSummary = () => {
   const { totalPrice } = useCartContext();
@@ -29,7 +30,8 @@ const CartSummary = () => {
           </div>
         </div>
       </div>
-      <div className="fixed bottom-0 left-0 right-0 lg:hidden p-3 border-t border-web-content-3 bg-web-background-1">
+      <div className="fixed bottom-0 left-0 right-0 lg:hidden p-3 border-t border-web-content-3 bg-web-background-1 flex items-stretch gap-4">
+        <GoToMenuButton />
         <CartSubmit />
       </div>
     </div>
