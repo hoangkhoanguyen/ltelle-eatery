@@ -62,7 +62,7 @@ export const ReviewsSection: FC<{ configs: any }> = ({ configs }) => {
               as={Link}
               href={webRoutes.menu("all")}
               variant={"white"}
-              className="text-web-label text-web-content-1 lg:text-web-label border-web-content-3"
+              className="text-web-label text-web-content-1 lg:text-web-label border-web-content-3 hover:bg-web-primary hover:text-web-background-1"
             >
               Explore Our Menu
             </Button>
@@ -70,7 +70,7 @@ export const ReviewsSection: FC<{ configs: any }> = ({ configs }) => {
               as={Link}
               href={webRoutes.reservation()}
               variant={"secondary2"}
-              className="text-web-label text-web-content-1 lg:text-web-label"
+              className="text-web-label text-web-content-1 lg:text-web-label hover:bg-web-secondary-1"
             >
               Reserve Your Table
             </Button>

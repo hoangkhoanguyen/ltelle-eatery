@@ -51,7 +51,7 @@ button:not(:disabled) {
 /* website */
 @theme {
   /* color */
-  --color-web-primary: #23351d;
+  --color-web-primary: #23351e;
   --color-web-secondary-1: #f2c75c;
   --color-web-secondary-2: #fef6c7;
   --color-web-secondary-3: #6b0000;
