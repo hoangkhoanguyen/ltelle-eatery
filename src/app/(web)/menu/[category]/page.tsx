@@ -14,8 +14,6 @@ const page = async ({ params }: { params: Promise<{ category: string }> }) => {
 
   const dbConfigs = await getUIConfigsByKey("menu_page");
 
-  console.log("configsssssssssss", category, dbConfigs);
-
   const configs = dbConfigs?.value as any;
 
   return (
