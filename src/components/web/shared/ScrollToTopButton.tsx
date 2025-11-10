@@ -4,7 +4,7 @@ import React from "react";
 
 const ScrollToTopButton = () => {
   return (
-    <div className="fixed bottom-5 end-5 z-30">
+    <div className="fixed bottom-24 end-5 z-30">
       <button
         onClick={() => {
           window.scrollTo({ top: 0, behavior: "smooth" });
