@@ -10,6 +10,7 @@ import Icon from "@/components/common/Icon";
 import { getUIConfigsByKey } from "@/services/configs";
 import { FullscreenLoading } from "@/components/web/ui/loading";
 import QuickCartModal from "@/components/web/shared/quick-cart/QuickCartModal";
+import ScrollToTopButton from "@/components/web/shared/ScrollToTopButton";
 
 const popinsSans = Poppins({
   variable: "--font-poppins-sans",
@@ -38,6 +39,7 @@ const Layout: FC<PropsWithChildren> = async ({ children }) => {
         </AnimationHeaderScroll>
         <main className="pt-[149px] lg:pt-[146px]">{children}</main>
         <Footer configs={configs?.value.footer || {}} />
+        <ScrollToTopButton />
         <Toaster
           visibleToasts={3}
           position="top-right"
