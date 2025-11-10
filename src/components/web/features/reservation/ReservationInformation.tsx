@@ -15,11 +15,11 @@ const ReservationInformation: FC<{ configs: any }> = ({ configs }) => {
             Reservation Information
           </h3>
         </div>
-        <ul>
+        <ul className="flex flex-col gap-5">
           {configs.reservation_info.map((info: any, index: number) => (
             <li key={index}>
               <div className="flex flex-row items-start gap-2">
-                <div className="rounded-full w-9 aspect-square bg-web-secondary-2 text-web-content-1 flex justify-center items-center">
+                <div className="rounded-full shrink-0 w-9 aspect-square bg-web-secondary-2 text-web-content-1 flex justify-center items-center">
                   <Icon icon={info.icon} className="text-lg" />
                 </div>
                 <div className="flex flex-col gap-2.5 pt-1">
