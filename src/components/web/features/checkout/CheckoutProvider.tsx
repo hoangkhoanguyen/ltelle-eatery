@@ -18,6 +18,7 @@ import React, {
 import { Control, useForm, useWatch } from "react-hook-form";
 import EmptyCart from "../cart/EmptyCart";
 import Checking from "../../shared/Checking";
+import { flushSync } from "react-dom";
 
 const mockOrder: CreateOrderResponse = {
   order: {
@@ -196,8 +197,15 @@ const CheckoutProvider: FC<
       {
         onSuccess: (data) => {
           if (data.success && data.data) {
-            setSuccessOrder(data.data);
-            clearCart();
+            flushSync(() => {
+              setSuccessOrder(data.data);
+              clearCart();
+            });
+
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth",
+            });
           }
         },
       },
