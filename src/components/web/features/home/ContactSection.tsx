@@ -72,7 +72,7 @@ export const ContactSection: FC<{ configs: any }> = ({ configs }) => {
                       className="rotate-90 text-lg"
                     />
                   }
-                  className="text-web-label-mobile lg:text-web-label"
+                  className="text-web-label-mobile lg:text-web-label hover:bg-web-secondary-1"
                 >
                   Get Directions
                 </Button>
@@ -112,7 +112,7 @@ export const ContactSection: FC<{ configs: any }> = ({ configs }) => {
                   rel="noreferrer"
                   variant="white"
                   startIcon={<Icon icon="ph:chat-circle" className="text-lg" />}
-                  className="text-web-label-mobile lg:text-web-label"
+                  className="text-web-label-mobile lg:text-web-label hover:bg-web-secondary-1"
                 >
                   WhatsApp
                 </Button>
