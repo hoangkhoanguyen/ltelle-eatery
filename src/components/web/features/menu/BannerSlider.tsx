@@ -18,6 +18,7 @@ const BannerSlider: FC<{ children: ReactNode[]; autoplay: boolean }> = ({
       loop
       modules={[Pagination, Autoplay]}
       className="my-slider"
+      wrapperClass="!pb-0"
     >
       {children.map((child, index) => (
         <SwiperSlide key={index}>{child}</SwiperSlide>

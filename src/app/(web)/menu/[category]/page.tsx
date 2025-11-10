@@ -22,7 +22,12 @@ const page = async ({ params }: { params: Promise<{ category: string }> }) => {
         <BannerSlider autoplay={configs?.hero.autoplay}>
           {configs?.hero.images.map((item: any, index: number) => (
             <div className="relative w-full aspect-[21/9]" key={index}>
-              <Image src={item.url} fill alt={item.alt} />
+              <Image
+                src={item.url}
+                fill
+                alt={item.alt}
+                className="object-cover"
+              />
             </div>
           ))}
         </BannerSlider>
@@ -39,7 +44,7 @@ const page = async ({ params }: { params: Promise<{ category: string }> }) => {
           </h1>
         </div>
       </section>
-      <AboutMenu configs={configs?.introduction} />
+      {/* <AboutMenu configs={configs?.introduction} /> */}
       <FoodCategories
         configs={configs?.food_categories}
         activeCategoryKey={category}
