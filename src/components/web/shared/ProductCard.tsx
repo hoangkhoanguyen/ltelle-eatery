@@ -16,7 +16,12 @@ const ProductCard: FC<{ product: WebProduct; categoryLabel?: string }> = ({
       className="flex flex-col rounded-xl overflow-hidden border border-web-content-3 @container hover:shadow-lg duration-200 cursor-pointer"
     >
       <div className="w-full aspect-square bg-gray-300 relative">
-        <Image src={product.imageUrl} alt={product.title} fill />
+        <Image
+          src={product.imageUrl}
+          alt={product.title}
+          fill
+          className="object-cover object-center"
+        />
       </div>
       <div className="flex-1 bg-web-secondary-2 py-5 px-3 flex flex-col justify-between gap-5">
         <div>
