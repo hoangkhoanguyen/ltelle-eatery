@@ -6,6 +6,11 @@ import { AUTH_COOKIE_KEYS } from "@/constants/auth";
 export async function middleware(request: NextRequest) {
   const { pathname, searchParams } = request.nextUrl;
 
+  console.log("middleware pathname:", pathname);
+
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("x-next-pathname", pathname);
+
   // Special case: Check if user is accessing login page while already authenticated
   if (pathname === adminRoutes.login()) {
     const accessToken = request.cookies.get(
@@ -28,7 +33,11 @@ export async function middleware(request: NextRequest) {
       }
     }
     // If no token, allow access to login page
-    return NextResponse.next();
+    return NextResponse.next({
+      request: {
+        headers: requestHeaders,
+      },
+    });
   }
 
   // Check if the path is an admin route (excluding auth routes)
@@ -60,9 +69,32 @@ export async function middleware(request: NextRequest) {
     }
 
     // Token exists, allow the request to proceed
-    return NextResponse.next();
+    return NextResponse.next({
+      request: {
+        headers: requestHeaders,
+      },
+    });
   }
 
   // For non-admin routes, proceed normally
-  return NextResponse.next();
+  return NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  });
 }
+
+export const config = {
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - assets (public assets folder)
+     * - images, fonts (static resources)
+     * - files with extensions: svg, png, jpg, jpeg, gif, webp, ico, woff, woff2, ttf, otf
+     */
+    "/((?!_next/static|_next/image|favicon.ico|assets|images|fonts|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|woff|woff2|ttf|otf)$).*)",
+  ],
+};

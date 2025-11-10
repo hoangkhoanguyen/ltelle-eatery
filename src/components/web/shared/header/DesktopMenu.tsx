@@ -2,6 +2,8 @@ import Link from "next/link";
 import React, { FC } from "react";
 import CartButton from "./CartButton";
 import MobileMenuButton from "./MobileMenuButton";
+import { headers } from "next/headers";
+import { cn } from "@/lib/utils";
 
 interface IMenuItem {
   href: string;
@@ -9,16 +11,25 @@ interface IMenuItem {
   title: string;
 }
 
-const DesktopMenu: FC<{ menus: IMenuItem[] }> = ({ menus }) => {
+const DesktopMenu: FC<{ menus: IMenuItem[] }> = async ({ menus }) => {
+  const headersList = await headers();
+  const pathname = headersList.get("x-next-pathname") || "/";
+  console.log("pathname", pathname);
   return (
     <div className="flex items-center gap-2 lg:gap-10">
       <nav aria-label="Site navigation" className="hidden lg:block">
         <ul className="flex items-center gap-10">
-          {menus.map((menu) => (
-            <li key={menu.label}>
-              <MenuItem {...menu} />
-            </li>
-          ))}
+          {menus.map((menu) => {
+            // Check if current path matches or starts with the menu href
+            const isActive =
+              pathname === menu.href ||
+              (menu.href !== "/" && pathname.startsWith(menu.href));
+            return (
+              <li key={menu.label}>
+                <MenuItem {...menu} isActive={isActive} />
+              </li>
+            );
+          })}
         </ul>
       </nav>
       <MobileMenuButton />
@@ -29,12 +40,24 @@ const DesktopMenu: FC<{ menus: IMenuItem[] }> = ({ menus }) => {
 
 export default DesktopMenu;
 
-function MenuItem({ href, label, title }: IMenuItem) {
+function MenuItem({
+  href,
+  label,
+  title,
+  isActive,
+}: IMenuItem & {
+  isActive?: boolean;
+}) {
   return (
     <Link
       href={href}
       title={title}
-      className="text-web-subtitle text-web-content-1 hover:text-web-secondary-1 duration-200"
+      className={cn(
+        "text-web-subtitle text-web-content-1 hover:text-web-secondary-1 duration-200",
+        {
+          "text-web-secondary-1": isActive,
+        },
+      )}
     >
       {label}
     </Link>
