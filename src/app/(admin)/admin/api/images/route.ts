@@ -1,38 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
-import sharp from "sharp";
 import crypto from "crypto";
 import { withError } from "@/providers/withError";
 import { withAuth } from "@/providers/withAuth";
 import { createInvalidInputs, createResponse } from "@/lib/api/response";
 import { AccessTokenPayload } from "@/lib/auth";
 
-const MAX_SIZE = 700 * 1024; // 500KB
 const UPLOAD_PATH = "/uploads/img";
 const UPLOAD_DIR = path.join(process.cwd(), "uploads", "img");
 const IMAGE_URL_PREFIX = "https://ltelle-upload.erosnguyen.com/uploads/img";
-const compressFile = async (file: File) => {
-  const buffer = Buffer.from(await file.arrayBuffer());
-
-  let compressed: Buffer;
-  let quality = 80;
-
-  while (true) {
-    compressed = await sharp(buffer)
-      .resize({ width: 1200, withoutEnlargement: true })
-      .jpeg({ quality, mozjpeg: true }) // nén JPG
-      .toBuffer();
-
-    if (compressed.length <= MAX_SIZE || quality <= 30) {
-      break;
-    }
-
-    quality -= 10;
-  }
-
-  return compressed;
-};
 
 function getUniqueFileName(originalName: string): string {
   const ext = path.extname(originalName); // ".jpg"
@@ -58,6 +35,8 @@ async function uploadImage(payload: AccessTokenPayload, req: NextRequest) {
   const formData = await req.formData();
   const file = formData.get("file") as File;
 
+  console.log(file);
+
   if (!file) {
     throw createInvalidInputs("No file uploaded");
   }
@@ -65,15 +44,14 @@ async function uploadImage(payload: AccessTokenPayload, req: NextRequest) {
   const fileName = getUniqueFileName(file.name);
   const filePath = path.join(UPLOAD_DIR, fileName);
 
-  const compressed = await compressFile(file);
-
-  // Lưu file
-  fs.writeFileSync(filePath, compressed);
+  // Lưu file nguyên bản không nén
+  const buffer = Buffer.from(await file.arrayBuffer());
+  fs.writeFileSync(filePath, buffer);
 
   return NextResponse.json({
     message: "Upload thành công",
     url: `${IMAGE_URL_PREFIX}/${fileName}`,
-    size: compressed.length,
+    size: buffer.length,
   });
 }
 
