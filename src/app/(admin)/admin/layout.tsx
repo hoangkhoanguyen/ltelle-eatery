@@ -4,6 +4,16 @@ import { Toaster } from "sonner";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { Inter } from "next/font/google";
 import { FullscreenLoading } from "@/components/admin/ui/loading";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Admin Dashboard | LTelle Eatery",
+  description: "Manage your restaurant with LTelle Eatery admin dashboard.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 const interSans = Inter({
   variable: "--font-inter-sans",

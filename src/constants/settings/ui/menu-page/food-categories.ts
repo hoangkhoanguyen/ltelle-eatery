@@ -22,6 +22,7 @@ export const foodCategoriesInitValue: ConfigValue = {
     {
       key: "",
       label: "",
+      page_title: "",
     },
   ],
 };
@@ -108,11 +109,21 @@ export const foodCategoriesMeta: MetaValue = {
             isRequired: true,
             placeholder: "Nhập nhãn",
           },
+          {
+            key: "page_title",
+            type: "text",
+            label: "Page Title",
+            description:
+              "Tiêu đề trang cho category này (hiển thị trên tab trình duyệt)",
+            isRequired: false,
+            placeholder: "Ví dụ: Main Course - LTelle Eatery",
+          },
         ],
       },
       newItem: {
         key: "",
         label: "",
+        page_title: "",
       },
     },
   ],

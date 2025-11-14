@@ -1,12 +1,13 @@
 import { MetadataRoute } from "next";
 import { getAllProducts } from "@/services/products";
 import { getUIConfigsByKey } from "@/services/configs";
+import { APP_URL } from "@/constants/app";
 
 // Force dynamic để không chạy lúc build (vì cần DB connection)
 export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://ltelleeatery.com";
+  const baseUrl = APP_URL;
 
   // Lấy tất cả sản phẩm để tạo dynamic URLs
   const products = await getAllProducts();

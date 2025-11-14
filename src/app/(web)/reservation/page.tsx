@@ -2,10 +2,55 @@ import Content from "@/components/web/features/reservation/Content";
 import DefaultBookingSection from "@/components/web/features/reservation/DefaultBookingSection";
 import ReservationProvider from "@/components/web/features/reservation/ReservationProvider";
 import { getAppConfigsByKey, getUIConfigsByKey } from "@/services/configs";
+import { APP_URL } from "@/constants/app";
+import { Metadata } from "next";
 import Image from "next/image";
 import React from "react";
 
 // export const dynamic = "force-dynamic";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const reservationConfig = await getUIConfigsByKey("reservation_page");
+  const seo = (reservationConfig?.value as any)?.seo;
+
+  const title = seo?.title || "Reservation | LTelle Eatery";
+  const description =
+    seo?.description ||
+    "Reserve your table at LTelle Eatery. Experience fine dining with fresh ingredients and authentic flavors in a warm atmosphere.";
+  const url = `${APP_URL}/reservation`;
+  const keywords = seo?.keywords?.map((k: any) => k.keyword) || [];
+  const ogTitle = seo?.og_title || title;
+  const ogDescription = seo?.og_description || description;
+  const ogImage =
+    seo?.og_image?.url || `${APP_URL}/assets/static/reservation-og-image.jpg`;
+  const ogImageAlt =
+    seo?.og_image?.alt || "Reserve Your Table at LTelle Eatery";
+
+  return {
+    title,
+    description,
+    keywords,
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title: ogTitle,
+      description: ogDescription,
+      url,
+      siteName: "LTelle Eatery",
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: ogImageAlt,
+        },
+      ],
+      locale: "en_US",
+      type: "website",
+    },
+  };
+}
 
 const page = async () => {
   const configsDb = await getUIConfigsByKey("reservation_page");

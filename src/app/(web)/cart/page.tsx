@@ -1,9 +1,14 @@
-"use client";
 import CartIntro from "@/components/web/features/cart/CartIntro";
 import CartItems from "@/components/web/features/cart/CartItems";
 import CartProvider from "@/components/web/features/cart/CartProvider";
 import CartSummary from "@/components/web/features/cart/CartSummary";
+import { Metadata } from "next";
 import React from "react";
+
+export const metadata: Metadata = {
+  title: "Shopping Cart | LTelle Eatery",
+  description: "Review your order items before checkout at LTelle Eatery.",
+};
 
 const CartPage = () => {
   return (

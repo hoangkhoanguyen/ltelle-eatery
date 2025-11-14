@@ -4,10 +4,81 @@ import FoodCategories from "@/components/web/features/menu/FoodCategories";
 import NewFood from "@/components/web/features/menu/NewFood";
 import { WhyChooseUsSection } from "@/components/web/shared/WhyChooseUsSection";
 import { getUIConfigsByKey } from "@/services/configs";
+import { APP_URL } from "@/constants/app";
+import { Metadata } from "next";
 import Image from "next/image";
 import React from "react";
 
 // export const dynamic = "force-dynamic";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ category: string }>;
+}): Promise<Metadata> {
+  const { category } = await params;
+
+  // Lấy config để tìm label của category
+  const menuConfig = await getUIConfigsByKey("menu_page");
+  const categories =
+    (menuConfig?.value as any)?.food_categories?.categories_to_show || [];
+  const seo = (menuConfig?.value as any)?.seo;
+
+  // Thêm "all" category vào đầu
+  const allCategories = [
+    { key: "all", label: "All", page_title: "All Menu | LTelle Eatery" },
+    ...categories,
+  ];
+
+  // Tìm category từ config dựa vào key
+  const categoryData = allCategories.find((cat: any) => cat.key === category);
+  const categoryLabel = categoryData?.label || category;
+  const categoryPageTitle = categoryData?.page_title;
+
+  // Fallback values từ SEO config
+  const defaultTitle = seo?.title
+    ? `${categoryLabel} - ${seo.title}`
+    : `Menu - ${categoryLabel} | LTelle Eatery`;
+
+  // Sử dụng page_title từ category config nếu có, nếu không dùng default
+  const title = categoryPageTitle || defaultTitle;
+  const description =
+    seo?.description ||
+    `Explore our delicious ${categoryLabel.toLowerCase()} menu at LTelle Eatery. Fresh ingredients, authentic flavors.`;
+  const url = `${APP_URL}/menu/${category}`;
+  const keywords = seo?.keywords?.map((k: any) => k.keyword) || [];
+  const ogTitle = seo?.og_title || title;
+  const ogDescription = seo?.og_description || description;
+  const ogImage =
+    seo?.og_image?.url || `${APP_URL}/assets/static/menu-og-image.jpg`;
+  const ogImageAlt =
+    seo?.og_image?.alt || `${categoryLabel} Menu - LTelle Eatery`;
+
+  return {
+    title,
+    description,
+    keywords,
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title: ogTitle,
+      description: ogDescription,
+      url,
+      siteName: "LTelle Eatery",
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: ogImageAlt,
+        },
+      ],
+      locale: "en_US",
+      type: "website",
+    },
+  };
+}
 
 const page = async ({ params }: { params: Promise<{ category: string }> }) => {
   const { category } = await params;

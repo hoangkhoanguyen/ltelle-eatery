@@ -5,24 +5,56 @@ import { OurStorySection } from "@/components/web/features/home/OurStorySection"
 import { ReviewsSection } from "@/components/web/features/home/ReviewsSection";
 import { WhyChooseUsSection } from "@/components/web/shared/WhyChooseUsSection";
 import { getUIConfigsByKey } from "@/services/configs";
+import { APP_URL } from "@/constants/app";
 import { Metadata } from "next";
 import React from "react";
 
 // export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "LTelle Eatery - Home",
-  description:
-    "Welcome to LTelle Eatery, where culinary excellence meets a warm and inviting atmosphere. Discover our diverse menu, crafted with the freshest ingredients to tantalize your taste buds. Join us for an unforgettable dining experience that celebrates flavor, creativity, and community.",
-  keywords: [
+export async function generateMetadata(): Promise<Metadata> {
+  const homeConfig = await getUIConfigsByKey("homepage");
+  const seo = homeConfig?.value?.seo as any;
+
+  // Fallback values
+  const title = seo?.title || "LTelle Eatery - Home";
+  const description =
+    seo?.description ||
+    "Welcome to LTelle Eatery, where culinary excellence meets a warm and inviting atmosphere.";
+  const keywords = seo?.keywords?.map((k: any) => k.keyword) || [
     "LTelle Eatery",
     "restaurant",
     "dining",
-    "culinary",
-    "food",
-    "Ha Giang",
-  ],
-};
+  ];
+  const ogTitle = seo?.og_title || title;
+  const ogDescription = seo?.og_description || description;
+  const ogImage = seo?.og_image?.url || `${APP_URL}/assets/static/og-image.jpg`;
+  const ogImageAlt = seo?.og_image?.alt || "LTelle Eatery";
+
+  return {
+    title,
+    description,
+    keywords,
+    alternates: {
+      canonical: APP_URL,
+    },
+    openGraph: {
+      title: ogTitle,
+      description: ogDescription,
+      url: APP_URL,
+      siteName: "LTelle Eatery",
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: ogImageAlt,
+        },
+      ],
+      locale: "en_US",
+      type: "website",
+    },
+  };
+}
 
 const HomePage = async () => {
   const homeConfig = await getUIConfigsByKey("homepage");

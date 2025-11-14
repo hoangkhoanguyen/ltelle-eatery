@@ -6,8 +6,10 @@ import { whyChooseUsInitialValue, whyChooseUsMeta } from "./why-choose-us";
 import { galleryInitValue, galleryMeta } from "./gallery";
 import { reviewsInitValue, reviewsMeta } from "./reviews";
 import { contactInitValue, contactMeta } from "./contact";
+import { seoInitialValue, seoMeta } from "./seo";
 
 export const homepageMeta: MetaValue[] = [
+  seoMeta,
   heroMeta,
   ourStoryMeta,
   whyChooseUsMeta,
@@ -22,6 +24,7 @@ export const initialHomepageConfig: NewConfigDB = {
   config_type: "ui",
   description: "Cấu hình các phần giao diện của trang chủ",
   value: {
+    seo: seoInitialValue,
     hero: heroInitialValue,
     our_story: ourStoryInitialValue,
     why_choose_us: whyChooseUsInitialValue,

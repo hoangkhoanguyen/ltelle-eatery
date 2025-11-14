@@ -1,7 +1,13 @@
 import CheckoutProvider from "@/components/web/features/checkout/CheckoutProvider";
 import CheckoutRender from "@/components/web/features/checkout/CheckoutRender";
 import { getAppConfigsByKey } from "@/services/configs";
+import { Metadata } from "next";
 import React from "react";
+
+export const metadata: Metadata = {
+  title: "Checkout | LTelle Eatery",
+  description: "Complete your order at LTelle Eatery. Secure checkout process.",
+};
 
 const page = async () => {
   const orderConfigs = await getAppConfigsByKey("order");

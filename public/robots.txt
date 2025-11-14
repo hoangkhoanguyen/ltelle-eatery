@@ -14,4 +14,4 @@ Disallow: /checkout/
 Disallow: /cart/
 
 # Sitemap
-Sitemap: https://ltelle-eatery.com/sitemap.xml
+Sitemap: https://ltelleeatery.com/sitemap.xml
