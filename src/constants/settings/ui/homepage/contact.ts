@@ -35,7 +35,7 @@ const fields: FieldType[] = [
     isRequired: true,
     itemType: {
       type: "object",
-      needBox: true,
+      needBox: false,
       fields: [
         {
           key: "text",
@@ -65,6 +65,7 @@ const fields: FieldType[] = [
     label: "Vị trí",
     description: "Thông tin vị trí cửa hàng",
     isRequired: false,
+    needBox: true,
     fields: [
       {
         key: "address",
@@ -90,6 +91,7 @@ const fields: FieldType[] = [
     label: "Thông tin liên hệ",
     description: "Thông tin liên hệ của cửa hàng",
     isRequired: false,
+    needBox: true,
     fields: [
       {
         key: "phone",

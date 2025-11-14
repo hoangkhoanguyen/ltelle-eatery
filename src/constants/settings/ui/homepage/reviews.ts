@@ -117,6 +117,7 @@ const fields: FieldType[] = [
     label: "Phần bên dưới danh sách Reviews",
     description: "Cấu hình phần box bên dưới danh sách Reviews",
     isRequired: false,
+    needBox: true,
     fields: [
       {
         key: "title",

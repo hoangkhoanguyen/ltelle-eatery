@@ -38,7 +38,6 @@ export const foodCategoriesMeta: MetaValue = {
       description: "Tiêu đề chính hiển thị trên phần Danh mục món ăn",
       isEditableList: true,
       isRequired: true,
-      needBox: true,
       itemType: {
         type: "object",
         fields: [
@@ -63,7 +62,6 @@ export const foodCategoriesMeta: MetaValue = {
       description: "Tiêu đề phụ hiển thị trên phần Danh mục món ăn",
       isEditableList: true,
       isRequired: true,
-      needBox: true,
       itemType: {
         type: "object",
         fields: [
@@ -91,6 +89,7 @@ export const foodCategoriesMeta: MetaValue = {
       needBox: true,
       itemType: {
         type: "object",
+        needBox: true,
         fields: [
           {
             key: "key",

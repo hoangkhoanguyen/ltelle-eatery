@@ -53,7 +53,6 @@ export const bookingMeta: MetaValue = {
       description: "Tiêu đề chính hiển thị trên phần đặt bàn",
       isEditableList: true,
       isRequired: true,
-      needBox: true,
       itemType: {
         type: "object",
         fields: [
@@ -78,7 +77,6 @@ export const bookingMeta: MetaValue = {
       description: "Tiêu đề phụ hiển thị trên phần đặt bàn",
       isEditableList: true,
       isRequired: true,
-      needBox: true,
       itemType: {
         type: "object",
         fields: [
@@ -114,12 +112,14 @@ export const bookingMeta: MetaValue = {
       needBox: true,
       itemType: {
         type: "object",
+        needBox: true,
         fields: [
           {
             key: "icon",
             type: "text",
             label: "Icon",
-            description: "Icon hiển thị trên phần đặt bàn",
+            description:
+              "Vào link https://icon-sets.iconify.design để lấy tên icon",
             isRequired: true,
             placeholder: "Nhập icon",
           },
@@ -138,7 +138,6 @@ export const bookingMeta: MetaValue = {
             description: "Danh sách thông tin hiển thị trên phần đặt bàn",
             isEditableList: true,
             isRequired: true,
-            needBox: true,
             itemType: {
               type: "object",
               fields: [
@@ -174,6 +173,7 @@ export const bookingMeta: MetaValue = {
       label: "Thông tin liên hệ",
       description: "Thông tin liên hệ hiển thị trên phần đặt bàn",
       isRequired: true,
+      needBox: true,
       fields: [
         {
           key: "phone",

@@ -28,7 +28,6 @@ export const heroMeta: MetaValue = {
       description: "Tiêu đề chính hiển thị trên phần Hero",
       isEditableList: true,
       isRequired: true,
-      needBox: true,
       itemType: {
         type: "object",
         fields: [

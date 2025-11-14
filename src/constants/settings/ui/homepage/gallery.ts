@@ -59,6 +59,7 @@ const fields: FieldType[] = [
     isRequired: true,
     itemType: {
       type: "object",
+      needBox: true,
       fields: [
         {
           key: "image",

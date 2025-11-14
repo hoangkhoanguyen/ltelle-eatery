@@ -1,4 +1,4 @@
-import { Config, ConfigValue } from "./configs";
+import { Config } from "./configs";
 
 export interface CommonField {
   key: string;
@@ -12,16 +12,19 @@ export interface CommonField {
 export interface TextField {
   type: "text";
   placeholder?: string;
+  withLabel?: boolean;
 }
 
 export interface TextareaField {
   type: "textarea";
   placeholder?: string;
+  withLabel?: boolean;
 }
 
 export interface NumberField {
   type: "number";
   placeholder?: string;
+  withLabel?: boolean;
 }
 
 export interface BooleanField {
@@ -30,6 +33,7 @@ export interface BooleanField {
 
 export interface ImageField {
   type: "image";
+  withLabel?: boolean;
 }
 
 export interface ObjectField {

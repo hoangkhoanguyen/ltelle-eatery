@@ -74,13 +74,14 @@ export const footerMeta: MetaValue = {
       needBox: true,
       itemType: {
         type: "object",
+        needBox: true,
         fields: [
           {
             key: "icon",
             label: "Icon",
             type: "text",
             description:
-              "Icon hiển thị cho liên kết mạng xã hội, sử dụng các icon từ thư viện như FontAwesome hoặc Phosphor Icons",
+              "Vào link https://icon-sets.iconify.design để lấy tên icon",
             isRequired: true,
             placeholder: "Nhập tên icon",
           },
@@ -151,13 +152,13 @@ export const footerMeta: MetaValue = {
       description: "Danh sách các dịch vụ hiển thị trong phần footer",
       isEditableList: true,
       isRequired: false,
-      needBox: true,
       itemType: {
         type: "object",
+        needBox: true,
         fields: [
           {
             key: "label",
-            label: "Label",
+            label: "Tên hiển thị",
             type: "text",
             description: "Tên hiển thị của dịch vụ",
             isRequired: true,

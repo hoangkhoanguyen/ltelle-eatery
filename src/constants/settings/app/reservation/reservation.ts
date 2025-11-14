@@ -21,9 +21,9 @@ export const reservationMeta: MetaValue = {
       description: "Tùy chọn số lượng khách cho việc đặt bàn",
       isEditableList: true,
       isRequired: true,
-      needBox: true,
       itemType: {
         type: "object",
+        needBox: true,
         fields: [
           {
             key: "value",

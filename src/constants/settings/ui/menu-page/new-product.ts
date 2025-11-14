@@ -49,7 +49,6 @@ export const newProductMeta: MetaValue = {
       description: "Tiêu đề chính hiển thị trên phần Sản phẩm mới",
       isEditableList: true,
       isRequired: true,
-      needBox: true,
       itemType: {
         type: "object",
         fields: [
@@ -105,7 +104,7 @@ export const newProductMeta: MetaValue = {
       type: "text",
       label: "Slug sản phẩm mới",
       description:
-        "Slug của sản phẩm mới nhất sẽ được hiển thị trên phần Sản phẩm mới",
+        "Slug của sản phẩm mới nhất sẽ được hiển thị trên phần Sản phẩm mới (nếu điền sai slug sẽ không hiển thị được phần này)",
       isRequired: true,
       placeholder: "Nhập slug sản phẩm mới",
     },
