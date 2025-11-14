@@ -5,16 +5,17 @@ import AddonsEditor from "../AddonsEditor";
 import { Button } from "../../ui/button";
 import { WebProductDetails } from "@/types/products";
 import { useCartStore } from "@/hooks/web/cart/store";
+import Image from "next/image";
 
 const QuickCartForm: FC<{
   product: Pick<
     WebProductDetails,
-    "id" | "title" | "price" | "category" | "allergenInfo" | "addons"
+    "id" | "title" | "price" | "category" | "allergenInfo" | "addons" | "images"
   >;
   closeModal: () => void;
 }> = ({ product, closeModal }) => {
   const addToCart = useCartStore((state) => state.actions.addToCart);
-  const { title, price, category, allergenInfo, addons } = product;
+  const { title, price, category, allergenInfo, addons, images } = product;
 
   const [formState, setFormState] = useState({
     quantity: 1,
@@ -56,20 +57,32 @@ const QuickCartForm: FC<{
   return (
     <>
       <div className="flex-1 overflow-auto px-3 pb-3">
-        <h4 className="text-web-label-mobile lg:text-web-label text-web-secondary-3 mb-2.5">
-          {category}
-        </h4>
-        <h3 className="text-web-h3-mobile lg:text-web-h3 text-web-content-1 mb-2.5">
-          {title}
-        </h3>
-        <p className="flex items-center gap-1 mb-5">
-          <span className="text-web-h4-mobile lg:text-web-h4 text-web-content-1">
-            Price:
-          </span>
-          <span className="text-web-h4-mobile lg:text-web-h4 text-web-secondary-1">
-            {formatCurrencyWebsite(price)}
-          </span>
-        </p>
+        <div className="flex gap-2.5 mb-5">
+          <div className="relative w-30 h-30 flex-shrink-0 rounded overflow-hidden hidden md:block">
+            <Image
+              src={images[0].url}
+              alt={images[0].altText}
+              fill
+              className="object-cover object-center"
+            />
+          </div>
+          <div className="flex-1">
+            <h4 className="text-web-label-mobile lg:text-web-label text-web-secondary-3 mb-2.5">
+              {category}
+            </h4>
+            <h3 className="text-web-h3-mobile lg:text-web-h3 text-web-content-1 mb-2.5">
+              {title}
+            </h3>
+            <p className="flex items-center gap-1">
+              <span className="text-web-h4-mobile lg:text-web-h4 text-web-content-1">
+                Price:
+              </span>
+              <span className="text-web-h4-mobile lg:text-web-h4 text-web-secondary-1">
+                {formatCurrencyWebsite(price)}
+              </span>
+            </p>
+          </div>
+        </div>
         <aside className="rounded-lg bg-web-secondary-2 p-3 mb-5">
           <h2 className="text-web-h4-mobile lg:text-web-h4 text-web-content-2 mb-2">
             Food Ingredients

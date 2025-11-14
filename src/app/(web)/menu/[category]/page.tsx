@@ -1,4 +1,3 @@
-import AboutMenu from "@/components/web/features/menu/AboutMenu";
 import BannerSlider from "@/components/web/features/menu/BannerSlider";
 import FoodCategories from "@/components/web/features/menu/FoodCategories";
 import NewFood from "@/components/web/features/menu/NewFood";

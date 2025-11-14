@@ -966,6 +966,13 @@ export async function getProductDetailsForQuickCartById(id: number) {
           name: true,
         },
       },
+      images: {
+        columns: {
+          url: true,
+        },
+        orderBy: [asc(productImages.sortOrder)],
+        limit: 1,
+      },
     },
   });
 

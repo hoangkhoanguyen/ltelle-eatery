@@ -16,7 +16,7 @@ const NewFood: FC<{ configs: any }> = async ({ configs }) => {
   if (!product) return null;
 
   return (
-    <section className="bg-web-secondary-2">
+    <section className="bg-web-background-3">
       <div className="py-10 pb-6 container">
         <h3 className="section-subtitle mb-5 text-center">
           <SectionSubTitleFromConfigs sub_title={configs?.sub_title} />

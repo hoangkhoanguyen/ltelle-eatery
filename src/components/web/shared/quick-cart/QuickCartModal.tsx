@@ -19,7 +19,13 @@ const QuickCartModal = () => {
     queryFn: (): Promise<{
       product: Pick<
         WebProductDetails,
-        "id" | "title" | "price" | "category" | "allergenInfo" | "addons"
+        | "id"
+        | "title"
+        | "price"
+        | "category"
+        | "allergenInfo"
+        | "addons"
+        | "images"
       >;
     }> => webApi.get(webRoutes.productQuickApi(productId!)),
     enabled: Boolean(productId),
@@ -41,14 +47,20 @@ const QuickCartModal = () => {
       <Modal
         isOpen={isOpen}
         onClose={closeModal}
-        className="bg-web-background-1 w-full h-screen flex flex-col items-stretch"
+        className="p-0 lg:p-5 h-screen w-full"
+        // className="bg-web-background-1 w-full h-screen max-w-2xl flex flex-col items-stretch"
       >
-        <div className="flex justify-end mb-3">
-          <button className="text-4xl text-web-content-1" onClick={closeModal}>
-            <Icon icon="ph:x" />
-          </button>
+        <div className="bg-web-background-1 w-full h-full lg:max-w-2xl p-6 flex flex-col mx-auto">
+          <div className="flex justify-end mb-3">
+            <button
+              className="text-4xl text-web-content-1"
+              onClick={closeModal}
+            >
+              <Icon icon="ph:x" />
+            </button>
+          </div>
+          {renderContent()}
         </div>
-        {renderContent()}
       </Modal>
     </>
   );
