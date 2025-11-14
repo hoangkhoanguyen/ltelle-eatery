@@ -15,12 +15,12 @@ const CartPage = () => {
     <CartProvider>
       <div className="container py-10">
         <CartIntro />
-        <p className="text-web-body-mobile lg:text-web-body text-web-content-1 mb-10">
+        {/* <p className="text-web-body-mobile lg:text-web-body text-web-content-1 mb-10">
           Crisp romaine lettuce, parmesan cheese, croutons, and Caesar dressing,
           Fresh mozzarella, Crisp romaine lettuce, parmesan cheese, croutons,
           Crisp romaine lettuce, parmesan cheese, croutons. Description Crisp
           romaine lettuce,
-        </p>
+        </p> */}
         <CartItems />
         <CartSummary />
       </div>

@@ -1,3 +1,4 @@
+"use client";
 import useGetCartProducts from "@/hooks/web/cart/useGetCartProducts";
 import { CartItemDisplay } from "@/types/cart";
 import React, { FC, PropsWithChildren, useMemo } from "react";
