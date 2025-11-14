@@ -42,7 +42,14 @@ export default function ProductTable({
       header: "Hình ảnh",
       cell(props) {
         return (
-          <Image src={props.getValue() || ""} alt="" width={64} height={64} />
+          <div className="relative w-16 aspect-square rounded-xs overflow-hidden">
+            <Image
+              src={props.getValue() || ""}
+              alt=""
+              fill
+              className="object-cover"
+            />
+          </div>
         );
       },
       meta: {

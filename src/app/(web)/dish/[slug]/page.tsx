@@ -84,15 +84,17 @@ const page: FC<{ params: Promise<{ slug: string }> }> = async ({ params }) => {
           subDescription: product.subDescription || "",
         }}
       />
-      <RelatedProducts
-        products={relatedProducts.map((relatedProduct) => ({
-          ...relatedProduct,
-          images: relatedProduct.images || [],
-          imageUrl: relatedProduct.images[0]?.url || "",
-          subDescription: relatedProduct.subDescription || "",
-          category: relatedProduct.category.name,
-        }))}
-      />
+      {relatedProducts.length > 0 && (
+        <RelatedProducts
+          products={relatedProducts.map((relatedProduct) => ({
+            ...relatedProduct,
+            images: relatedProduct.images || [],
+            imageUrl: relatedProduct.images[0]?.url || "",
+            subDescription: relatedProduct.subDescription || "",
+            category: relatedProduct.category.name,
+          }))}
+        />
+      )}
     </div>
   );
 };

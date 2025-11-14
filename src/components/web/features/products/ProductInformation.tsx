@@ -5,7 +5,7 @@ import ProductQuantityEditor from "./ProductQuantityEditor";
 import ProductAddOns from "./ProductAddOns";
 import AddToCartButton from "./AddToCartButton";
 import { WebProductDetails } from "@/types/products";
-import { formatCurrencyWebsite } from "@/lib/utils";
+import { formatCurrencyWebsite, splitTextByNewLine } from "@/lib/utils";
 import ProductEditorProvider from "./ProductEditorProvider";
 
 const ProductInformation: FC<{ product: WebProductDetails }> = ({
@@ -27,18 +27,21 @@ const ProductInformation: FC<{ product: WebProductDetails }> = ({
                       fill
                       src={image.url}
                       alt={product.title}
-                      className="object-cover"
+                      className="object-contain"
                     />
                   </div>
                 ))}
               >
                 {product.images.map((image) => (
-                  <div key={image.id} className="relative w-full aspect-square">
+                  <div
+                    key={image.id}
+                    className="relative w-full aspect-square border border-web-background-3 rounded-xs overflow-hidden"
+                  >
                     <Image
                       fill
                       src={image.url}
                       alt={product.title}
-                      className="object-cover"
+                      className="object-contain"
                     />
                   </div>
                 ))}
@@ -84,10 +87,18 @@ const ProductInformation: FC<{ product: WebProductDetails }> = ({
             <h2 className="text-web-h3-mobile lg:text-web-h3 mb-5 text-web-content-1">
               Description
             </h2>
-            <p className="text-web-body-mobile lg:text-web-body text-web-content-1">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.{" "}
-            </p>
+            <div>
+              {splitTextByNewLine(product.description || "").map(
+                (text: string, index: number) => (
+                  <p
+                    key={index}
+                    className="text-web-body-mobile lg:text-web-body text-web-content-1"
+                  >
+                    {text}
+                  </p>
+                ),
+              )}
+            </div>
           </div>
         </div>
       </section>
