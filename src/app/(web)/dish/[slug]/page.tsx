@@ -1,14 +1,13 @@
 import ProductInformation from "@/components/web/features/products/ProductInformation";
 import RelatedProducts from "@/components/web/features/products/RelatedProducts";
-import { webRoutes } from "@/constants/route";
 import { APP_URL } from "@/constants/app";
 import {
   getMultipleProductsByIds,
   getProductDetailsBySlug,
 } from "@/services/products";
 import { Metadata } from "next";
-import { redirect } from "next/navigation";
 import React, { FC } from "react";
+import NotFound from "@/components/web/shared/NotFound";
 
 export async function generateMetadata({
   params,
@@ -62,7 +61,7 @@ const page: FC<{ params: Promise<{ slug: string }> }> = async ({ params }) => {
   const product = await getProductDetailsBySlug(slug);
 
   if (!product) {
-    return redirect(webRoutes.menu(""));
+    return <NotFound />;
   }
 
   const relatedProducts = await getMultipleProductsByIds(

@@ -31,13 +31,13 @@ const Layout: FC<PropsWithChildren> = async ({ children }) => {
 
   return (
     <body
-      className={`website antialiased ${popinsSans.variable} ${allogist.variable} antialiased font-poppins-sans bg-web-background-1`}
+      className={`website antialiased ${popinsSans.variable} ${allogist.variable} antialiased font-poppins-sans bg-web-background-1 flex flex-col items-stretch min-h-screen`}
     >
       <WebsiteQueryProvider>
         <AnimationHeaderScroll>
           <Header configs={configs?.value.header || {}} />
         </AnimationHeaderScroll>
-        <main className="pt-[149px] lg:pt-[146px]">{children}</main>
+        <main className="pt-[149px] lg:pt-[146px] flex-1">{children}</main>
         <Footer configs={configs?.value.footer || {}} />
         <ScrollToTopButton />
         <Toaster
