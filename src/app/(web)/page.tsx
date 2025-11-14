@@ -5,13 +5,27 @@ import { OurStorySection } from "@/components/web/features/home/OurStorySection"
 import { ReviewsSection } from "@/components/web/features/home/ReviewsSection";
 import { WhyChooseUsSection } from "@/components/web/shared/WhyChooseUsSection";
 import { getUIConfigsByKey } from "@/services/configs";
+import { Metadata } from "next";
 import React from "react";
 
 // export const dynamic = "force-dynamic";
 
+export const metadata: Metadata = {
+  title: "LTelle Eatery - Home",
+  description:
+    "Welcome to LTelle Eatery, where culinary excellence meets a warm and inviting atmosphere. Discover our diverse menu, crafted with the freshest ingredients to tantalize your taste buds. Join us for an unforgettable dining experience that celebrates flavor, creativity, and community.",
+  keywords: [
+    "LTelle Eatery",
+    "restaurant",
+    "dining",
+    "culinary",
+    "food",
+    "Ha Giang",
+  ],
+};
+
 const HomePage = async () => {
   const homeConfig = await getUIConfigsByKey("homepage");
-  console.log("env in server component", process.env.NEXT_PUBLIC_TEST_ENV);
   return (
     <div>
       <HeroSection configs={homeConfig?.value.hero} />

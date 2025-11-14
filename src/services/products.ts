@@ -237,6 +237,7 @@ export async function getAllProducts() {
       id: true,
       title: true,
       isActive: true,
+      updatedAt: true,
     },
     orderBy: [desc(products.priority), desc(products.createdAt)],
   });
