@@ -4,7 +4,7 @@ import { HeroSection } from "@/components/web/features/home/HeroSection";
 import { OurStorySection } from "@/components/web/features/home/OurStorySection";
 import { ReviewsSection } from "@/components/web/features/home/ReviewsSection";
 import { WhyChooseUsSection } from "@/components/web/shared/WhyChooseUsSection";
-import { getUIConfigsByKey } from "@/services/configs";
+import { getUIConfigsByKeyCached } from "@/services/cached";
 import { APP_URL } from "@/constants/app";
 import { Metadata } from "next";
 import React from "react";
@@ -12,7 +12,7 @@ import React from "react";
 // export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const homeConfig = await getUIConfigsByKey("homepage");
+  const homeConfig = await getUIConfigsByKeyCached("homepage");
   const seo = homeConfig?.value?.seo as any;
 
   // Fallback values
@@ -57,7 +57,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const HomePage = async () => {
-  const homeConfig = await getUIConfigsByKey("homepage");
+  const homeConfig = await getUIConfigsByKeyCached("homepage");
   return (
     <div>
       <HeroSection configs={homeConfig?.value.hero} />

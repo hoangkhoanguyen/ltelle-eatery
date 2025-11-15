@@ -5,179 +5,101 @@ import { CACHE_TAGS } from "./tags";
  *
  * Định nghĩa các tags cần được revalidate khi có thay đổi dữ liệu
  * theo từng action cụ thể
+ *
+ * QUY ƯỚC:
+ * - Chỉ revalidate cache phía User (Admin không cache)
+ * - Revalidate theo business logic trong REVALIDATION_IMPACT_ANALYSIS.md
  */
 
 export const REVALIDATION_MAP = {
   // ==================== PRODUCT ACTIONS ====================
+
+  /**
+   * CREATE PRODUCT
+   * Ảnh hưởng:
+   * - Menu category tương ứng
+   * - Menu "All products"
+   */
   PRODUCT_CREATE: [
-    CACHE_TAGS.PRODUCTS.ALL,
-    CACHE_TAGS.PRODUCTS.LIST,
-    CACHE_TAGS.PRODUCTS.ADMIN_LIST,
+    CACHE_TAGS.PRODUCTS.ALL, // Menu all products
+    // Note: BY_CATEGORY sẽ được revalidate động dựa vào categoryId
   ],
 
+  /**
+   * UPDATE PRODUCT (bao gồm cả status change)
+   * Ảnh hưởng:
+   * - Product detail page
+   * - Menu category hiện tại/mới/cũ
+   * - Menu "All products"
+   * - Related products
+   */
   PRODUCT_UPDATE: [
-    CACHE_TAGS.PRODUCTS.ALL,
-    CACHE_TAGS.PRODUCTS.ADMIN_LIST,
-    CACHE_TAGS.PRODUCTS.DETAILS,
-    CACHE_TAGS.PRODUCTS.RELATED,
-    CACHE_TAGS.CATEGORIES.ALL, // Categories might be affected
-    CACHE_TAGS.CATEGORIES.ACTIVE, // Category lists
-    CACHE_TAGS.LAYOUT.WEB, // Layout might show product info
-  ],
-
-  PRODUCT_STATUS_CHANGE: [
-    CACHE_TAGS.PRODUCTS.ALL,
-    CACHE_TAGS.PRODUCTS.LIST,
-    CACHE_TAGS.PRODUCTS.ADMIN_LIST,
+    CACHE_TAGS.PRODUCTS.ALL, // Menu all products
+    // Note: BY_SLUG, BY_CATEGORY, RELATED sẽ được revalidate động
   ],
 
   // ==================== CATEGORY ACTIONS ====================
-  CATEGORY_CREATE: [
-    CACHE_TAGS.CATEGORIES.ALL,
-    CACHE_TAGS.CATEGORIES.ACTIVE,
-    CACHE_TAGS.CATEGORIES.ADMIN_LIST,
-    CACHE_TAGS.LAYOUT.WEB,
-  ],
 
+  /**
+   * UPDATE CATEGORY
+   * Ảnh hưởng:
+   * - Menu category page (nếu có)
+   * - All products trong category
+   * Note: Menu navigation dùng configs, không dùng DB categories
+   */
   CATEGORY_UPDATE: [
-    CACHE_TAGS.CATEGORIES.ALL,
-    CACHE_TAGS.CATEGORIES.ACTIVE,
-    CACHE_TAGS.CATEGORIES.ADMIN_LIST,
-    CACHE_TAGS.CATEGORIES.WITH_PRODUCTS,
-    CACHE_TAGS.PRODUCTS.ALL,
-    CACHE_TAGS.LAYOUT.WEB,
+    CACHE_TAGS.PRODUCTS.ALL, // Products in category might change
+    // Note: BY_CATEGORY sẽ được revalidate động
   ],
 
   // ==================== ORDER ACTIONS ====================
-  ORDER_CREATE: [
-    CACHE_TAGS.ORDERS.ALL,
-    CACHE_TAGS.ORDERS.ADMIN_LIST,
-    CACHE_TAGS.ORDERS.STATISTICS,
-  ],
-
-  ORDER_STATUS_UPDATE: [
-    CACHE_TAGS.ORDERS.ALL,
-    CACHE_TAGS.ORDERS.ADMIN_LIST,
-    CACHE_TAGS.ORDERS.STATISTICS,
-  ],
-
-  ORDER_UPDATE: [CACHE_TAGS.ORDERS.ALL, CACHE_TAGS.ORDERS.ADMIN_LIST],
+  // Orders KHÔNG ảnh hưởng đến user-facing cache
+  // Admin không cache nên không cần revalidate
 
   // ==================== CONFIG ACTIONS ====================
+
+  /**
+   * UPDATE CONFIGS
+   * Ảnh hưởng:
+   * - Config key cụ thể được update
+   * Note: BY_KEY sẽ được revalidate động dựa vào config key
+   */
   CONFIG_UPDATE: [
-    CACHE_TAGS.CONFIGS.ALL,
-    CACHE_TAGS.LAYOUT.WEB,
-    CACHE_TAGS.LAYOUT.ADMIN,
-  ],
-
-  CONFIG_UI_UPDATE: [
-    CACHE_TAGS.CONFIGS.ALL,
-    CACHE_TAGS.CONFIGS.UI,
-    CACHE_TAGS.LAYOUT.WEB,
-  ],
-
-  CONFIG_APP_UPDATE: [
-    CACHE_TAGS.CONFIGS.ALL,
-    CACHE_TAGS.CONFIGS.APP,
-    CACHE_TAGS.LAYOUT.ADMIN,
-  ],
-
-  // ==================== CUSTOMER ACTIONS ====================
-  CUSTOMER_CREATE: [CACHE_TAGS.CUSTOMERS.ALL, CACHE_TAGS.CUSTOMERS.ADMIN_LIST],
-
-  CUSTOMER_UPDATE: [CACHE_TAGS.CUSTOMERS.ALL, CACHE_TAGS.CUSTOMERS.ADMIN_LIST],
-
-  // ==================== RESERVATION ACTIONS ====================
-  RESERVATION_CREATE: [
-    CACHE_TAGS.RESERVATIONS.ALL,
-    CACHE_TAGS.RESERVATIONS.ADMIN_LIST,
-  ],
-
-  RESERVATION_UPDATE: [
-    CACHE_TAGS.RESERVATIONS.ALL,
-    CACHE_TAGS.RESERVATIONS.ADMIN_LIST,
-  ],
-
-  RESERVATION_STATUS_UPDATE: [
-    CACHE_TAGS.RESERVATIONS.ALL,
-    CACHE_TAGS.RESERVATIONS.ADMIN_LIST,
+    // Note: CONFIGS.BY_KEY(key) sẽ được revalidate động
   ],
 
   // ==================== IMAGE ACTIONS ====================
+
+  /**
+   * UPLOAD/DELETE PRODUCT IMAGE
+   * Ảnh hưởng:
+   * - Product detail page
+   * - Menu category của product
+   * - Menu "All products"
+   * - Related products
+   */
   IMAGE_UPLOAD: [
     CACHE_TAGS.PRODUCTS.ALL,
-    CACHE_TAGS.PRODUCTS.LIST,
-    CACHE_TAGS.PRODUCTS.ADMIN_LIST,
-    CACHE_TAGS.PRODUCTS.DETAILS,
+    // Note: BY_SLUG, BY_CATEGORY, RELATED sẽ được revalidate động
   ],
 
   IMAGE_DELETE: [
     CACHE_TAGS.PRODUCTS.ALL,
-    CACHE_TAGS.PRODUCTS.LIST,
-    CACHE_TAGS.PRODUCTS.ADMIN_LIST,
-    CACHE_TAGS.PRODUCTS.DETAILS,
+    // Note: BY_SLUG, BY_CATEGORY, RELATED sẽ được revalidate động
   ],
 
-  // ==================== ADDON ACTIONS ====================
-  ADDON_CREATE: [
-    CACHE_TAGS.PRODUCTS.ALL,
-    CACHE_TAGS.PRODUCTS.LIST,
-    CACHE_TAGS.PRODUCTS.ADMIN_LIST,
-    CACHE_TAGS.PRODUCTS.DETAILS,
-  ],
-
-  ADDON_UPDATE: [
-    CACHE_TAGS.PRODUCTS.ALL,
-    CACHE_TAGS.PRODUCTS.LIST,
-    CACHE_TAGS.PRODUCTS.ADMIN_LIST,
-    CACHE_TAGS.PRODUCTS.DETAILS,
-  ],
-
-  // ==================== CART ACTIONS ====================
-  CART_UPDATE: [
-    CACHE_TAGS.PRODUCTS.ALL, // Cart validation might need product data
-  ],
-
-  // ==================== CATEGORY RELATION ACTIONS ====================
-  CATEGORY_PRODUCT_ADD: [
-    CACHE_TAGS.CATEGORIES.ALL,
-    CACHE_TAGS.CATEGORIES.ACTIVE,
-    CACHE_TAGS.CATEGORIES.WITH_PRODUCTS,
-    CACHE_TAGS.PRODUCTS.ALL,
-    CACHE_TAGS.PRODUCTS.LIST,
-  ],
-
-  CATEGORY_PRODUCT_REMOVE: [
-    CACHE_TAGS.CATEGORIES.ALL,
-    CACHE_TAGS.CATEGORIES.ACTIVE,
-    CACHE_TAGS.CATEGORIES.WITH_PRODUCTS,
-    CACHE_TAGS.PRODUCTS.ALL,
-    CACHE_TAGS.PRODUCTS.LIST,
-  ],
-
-  // ==================== BULK ACTIONS ====================
-  BULK_PRODUCT_UPDATE: [
-    CACHE_TAGS.PRODUCTS.ALL,
-    CACHE_TAGS.PRODUCTS.LIST,
-    CACHE_TAGS.PRODUCTS.ADMIN_LIST,
-  ],
-
-  BULK_ORDER_UPDATE: [
-    CACHE_TAGS.ORDERS.ALL,
-    CACHE_TAGS.ORDERS.ADMIN_LIST,
-    CACHE_TAGS.ORDERS.STATISTICS,
-  ],
+  // ==================== RESERVATION ACTIONS ====================
+  // Reservations KHÔNG ảnh hưởng đến user-facing cache
+  // Admin không cache nên không cần revalidate
 
   // ==================== SPECIAL CASES ====================
+
+  /**
+   * FULL REFRESH - Revalidate tất cả cache
+   */
   FULL_REFRESH: [
     CACHE_TAGS.PRODUCTS.ALL,
-    CACHE_TAGS.CATEGORIES.ALL,
-    CACHE_TAGS.ORDERS.ALL,
-    CACHE_TAGS.CONFIGS.ALL,
-    CACHE_TAGS.CUSTOMERS.ALL,
-    CACHE_TAGS.RESERVATIONS.ALL,
-    CACHE_TAGS.LAYOUT.WEB,
-    CACHE_TAGS.LAYOUT.ADMIN,
+    // Note: Configs sẽ được revalidate theo từng key cụ thể
   ],
 } as const;
 

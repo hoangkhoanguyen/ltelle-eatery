@@ -2,9 +2,9 @@ import ProductInformation from "@/components/web/features/products/ProductInform
 import RelatedProducts from "@/components/web/features/products/RelatedProducts";
 import { APP_URL } from "@/constants/app";
 import {
-  getMultipleProductsByIds,
-  getProductDetailsBySlug,
-} from "@/services/products";
+  getRelatedProductsCached,
+  getProductDetailsBySlugCached,
+} from "@/services/cached";
 import { Metadata } from "next";
 import React, { FC } from "react";
 import NotFound from "@/components/web/shared/NotFound";
@@ -15,7 +15,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const product = await getProductDetailsBySlug(slug);
+  const product = await getProductDetailsBySlugCached(slug);
 
   if (!product) {
     return {
@@ -58,13 +58,13 @@ export async function generateMetadata({
 const page: FC<{ params: Promise<{ slug: string }> }> = async ({ params }) => {
   const { slug } = await params;
 
-  const product = await getProductDetailsBySlug(slug);
+  const product = await getProductDetailsBySlugCached(slug);
 
   if (!product) {
     return <NotFound />;
   }
 
-  const relatedProducts = await getMultipleProductsByIds(
+  const relatedProducts = await getRelatedProductsCached(
     product.relatedProductIds,
   );
 

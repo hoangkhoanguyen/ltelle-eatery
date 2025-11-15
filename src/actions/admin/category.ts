@@ -7,6 +7,7 @@ import {
 } from "@/services/products";
 import { verifyAdminAuthSimple } from "@/services/auth";
 import { NewProductCategoryDB } from "@/types/products";
+import { revalidateCategoryUpdate } from "@/lib/revalidate";
 
 export async function addProductCategoryAction(data: NewProductCategoryDB) {
   try {
@@ -95,6 +96,9 @@ export async function updateProductCategoryAction(
     }
 
     const updatedCategory = await updateProductCategory(id, data);
+
+    // Revalidate cache
+    revalidateCategoryUpdate(id);
 
     return {
       success: true,

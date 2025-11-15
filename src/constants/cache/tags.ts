@@ -7,74 +7,29 @@
  * - products:item:123
  * - products:category:456
  * - configs:ui:layout
+ *
+ * QUY ƯỚC CACHE:
+ * - ✅ Cache: User-facing services (menu, product detail, configs)
+ * - ❌ Không cache: Admin services, cart validation
  */
 
 export const CACHE_TAGS = {
-  // Products
+  // ==================== USER-FACING (CẦN CACHE) ====================
+
+  // Products (User-facing)
   PRODUCTS: {
-    ALL: "products:all",
-    LIST: "products:list",
-    ADMIN_LIST: "products:admin:list",
-    BY_ID: (id: number) => `products:item:${id}`,
-    BY_SLUG: (slug: string) => `products:slug:${slug}`,
-    BY_CATEGORY: (categoryId: number) => `products:category:${categoryId}`,
-    BY_CATEGORY_SLUG: (categorySlug: string) =>
-      `products:category-slug:${categorySlug}`,
-    DETAILS: "products:details",
-    RELATED: "products:related",
+    ALL: "products:all", // getProducts() - Menu all products
+    BY_SLUG: (slug: string) => `products:slug:${slug}`, // getProductBySlug() - Product detail
+    BY_CATEGORY: (categoryId: number) => `products:category:${categoryId}`, // getProductsByCategory() - Menu by category
+    RELATED: (productId: number) => `products:related:${productId}`, // getRelatedProducts() - Related products
   },
 
-  // Categories
-  CATEGORIES: {
-    ALL: "categories:all",
-    ACTIVE: "categories:active",
-    ADMIN_LIST: "categories:admin:list",
-    BY_ID: (id: number) => `categories:item:${id}`,
-    BY_SLUG: (slug: string) => `categories:slug:${slug}`,
-    WITH_PRODUCTS: "categories:with-products",
-  },
-
-  // Orders
-  ORDERS: {
-    ALL: "orders:all",
-    ADMIN_LIST: "orders:admin:list",
-    BY_ID: (id: number) => `orders:item:${id}`,
-    BY_STATUS: (status: string) => `orders:status:${status}`,
-    BY_CUSTOMER: (phone: string) => `orders:customer:${phone}`,
-    STATISTICS: "orders:statistics",
-  },
-
-  // Configs
+  // Configs (User-facing)
   CONFIGS: {
-    ALL: "configs:all",
-    UI: "configs:ui",
-    APP: "configs:app",
-    BY_KEY: (key: string, type: string) => `configs:${type}:${key}`,
-    BY_TYPE: (type: string) => `configs:type:${type}`,
+    BY_KEY: (key: string) => `configs:${key}`, // getConfig(key) - Specific config by key
   },
 
-  // Customers
-  CUSTOMERS: {
-    ALL: "customers:all",
-    ADMIN_LIST: "customers:admin:list",
-    BY_ID: (id: number) => `customers:item:${id}`,
-    BY_PHONE: (phone: string) => `customers:phone:${phone}`,
-  },
-
-  // Reservations
-  RESERVATIONS: {
-    ALL: "reservations:all",
-    ADMIN_LIST: "reservations:admin:list",
-    BY_ID: (id: number) => `reservations:item:${id}`,
-    BY_UUID: (uuid: string) => `reservations:uuid:${uuid}`,
-    BY_DATE: (date: string) => `reservations:date:${date}`,
-    BY_STATUS: (status: string) => `reservations:status:${status}`,
-  },
-
-  // Global/Layout
-  LAYOUT: {
-    WEB: "layout:web",
-    ADMIN: "layout:admin",
-    NAVIGATION: "layout:navigation",
-  },
+  // ==================== KHÔNG CACHE ====================
+  // Admin services không cache - luôn fetch real-time
+  // Cart validation không cache - luôn check real-time
 } as const;

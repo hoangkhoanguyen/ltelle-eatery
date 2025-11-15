@@ -1,6 +1,6 @@
 import CheckoutProvider from "@/components/web/features/checkout/CheckoutProvider";
 import CheckoutRender from "@/components/web/features/checkout/CheckoutRender";
-import { getAppConfigsByKey } from "@/services/configs";
+import { getAppConfigsByKeyCached } from "@/services/cached";
 import { Metadata } from "next";
 import React from "react";
 
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 const page = async () => {
-  const orderConfigs = await getAppConfigsByKey("order");
+  const orderConfigs = await getAppConfigsByKeyCached("order");
 
   return (
     <CheckoutProvider

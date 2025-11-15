@@ -1,7 +1,10 @@
 import Content from "@/components/web/features/reservation/Content";
 import DefaultBookingSection from "@/components/web/features/reservation/DefaultBookingSection";
 import ReservationProvider from "@/components/web/features/reservation/ReservationProvider";
-import { getAppConfigsByKey, getUIConfigsByKey } from "@/services/configs";
+import {
+  getAppConfigsByKeyCached,
+  getUIConfigsByKeyCached,
+} from "@/services/cached";
 import { APP_URL } from "@/constants/app";
 import { Metadata } from "next";
 import Image from "next/image";
@@ -10,7 +13,7 @@ import React from "react";
 // export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const reservationConfig = await getUIConfigsByKey("reservation_page");
+  const reservationConfig = await getUIConfigsByKeyCached("reservation_page");
   const seo = (reservationConfig?.value as any)?.seo;
 
   const title = seo?.title || "Reservation | LTelle Eatery";
@@ -53,9 +56,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const page = async () => {
-  const configsDb = await getUIConfigsByKey("reservation_page");
+  const configsDb = await getUIConfigsByKeyCached("reservation_page");
 
-  const reservationConfigs = await getAppConfigsByKey("reservation");
+  const reservationConfigs = await getAppConfigsByKeyCached("reservation");
 
   const configs = configsDb?.value || ({} as any);
 

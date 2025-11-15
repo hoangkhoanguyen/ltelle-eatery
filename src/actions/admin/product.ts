@@ -1,16 +1,21 @@
 "use server";
 import { adminRoutes } from "@/constants/route";
 import {
-  checkProductExists,
   createProduct,
   deleteProductImages,
   isExistingSlug,
   updateProductById,
   updateProductStatus,
+  getAdminProductById,
 } from "@/services/products";
 import { verifyAdminAuthSimple } from "@/services/auth";
 import { AdminEditProductForm, NewProductDB } from "@/types/products";
 import { revalidatePath } from "next/cache";
+import {
+  revalidateProductCreate,
+  revalidateProductUpdate,
+  revalidateImageChange,
+} from "@/lib/revalidate";
 
 export async function createProductAction(data: NewProductDB) {
   try {
@@ -36,6 +41,9 @@ export async function createProductAction(data: NewProductDB) {
 
     const newProduct = await createProduct(data);
 
+    // Revalidate cache
+    revalidateProductCreate(newProduct.categoryId);
+
     return {
       success: true,
       data: { newProduct },
@@ -49,7 +57,10 @@ export async function createProductAction(data: NewProductDB) {
   }
 }
 
-export async function deleteProductImagesAction(ids: number[]) {
+export async function deleteProductImagesAction(
+  ids: number[],
+  productId: number,
+) {
   try {
     // Xác thực token trước khi thực hiện action
     const authResult = await verifyAdminAuthSimple("/admin/products");
@@ -61,7 +72,24 @@ export async function deleteProductImagesAction(ids: number[]) {
       };
     }
 
+    // Lấy thông tin product để revalidate
+    const product = await getAdminProductById(productId);
+    if (!product) {
+      return {
+        success: false,
+        error: "Sản phẩm không tồn tại",
+        code: "PRODUCT_NOT_FOUND",
+      };
+    }
+
     await deleteProductImages(ids);
+
+    // Revalidate cache (xóa image cũng làm thay đổi product)
+    revalidateImageChange({
+      slug: product.slug,
+      productId: productId,
+      categoryId: product.categoryId,
+    });
 
     return {
       success: true,
@@ -93,6 +121,9 @@ export async function updateProductAction({
         code: "UNAUTHORIZED",
       };
     }
+
+    // Lấy thông tin product cũ để revalidate
+    const oldProduct = await getAdminProductById(id);
 
     const imagesWithOrder = images.map((item, index) => ({
       ...item,
@@ -141,6 +172,14 @@ export async function updateProductAction({
 
     revalidatePath(adminRoutes.product(id));
 
+    // Revalidate cache
+    revalidateProductUpdate({
+      slug: rest.slug,
+      productId: id,
+      categoryId: rest.categoryId,
+      oldCategoryId: oldProduct?.categoryId,
+    });
+
     return {
       success: true,
       data: { id, message: "Cập nhật sản phẩm thành công" },
@@ -166,9 +205,9 @@ export async function updateProductStatusAction(id: number, isActive: boolean) {
       };
     }
 
-    // Validate product exists
-    const productExists = await checkProductExists(id);
-    if (!productExists) {
+    // Lấy thông tin product trước khi update
+    const product = await getAdminProductById(id);
+    if (!product) {
       return {
         success: false,
         error: "Sản phẩm không tồn tại",
@@ -178,6 +217,13 @@ export async function updateProductStatusAction(id: number, isActive: boolean) {
 
     // Update product status
     const updatedProduct = await updateProductStatus(id, isActive);
+
+    // Revalidate cache (status change cũng là update product)
+    revalidateProductUpdate({
+      slug: product.slug,
+      productId: id,
+      categoryId: product.categoryId,
+    });
 
     return {
       success: true,

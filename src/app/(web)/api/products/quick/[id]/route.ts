@@ -1,5 +1,5 @@
 import { withError } from "@/providers/withError";
-import { getProductDetailsForQuickCartById } from "@/services/products";
+import { getProductDetailsForQuickCartByIdCached } from "@/services/cached";
 import { NextRequest, NextResponse } from "next/server";
 
 const getProductQuickCart = async (
@@ -8,7 +8,7 @@ const getProductQuickCart = async (
 ) => {
   const { id } = await params;
 
-  const product = await getProductDetailsForQuickCartById(Number(id));
+  const product = await getProductDetailsForQuickCartByIdCached(Number(id));
 
   return NextResponse.json({
     product: product

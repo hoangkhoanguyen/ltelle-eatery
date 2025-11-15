@@ -2,29 +2,70 @@
 
 > Phân tích những nơi sẽ bị ảnh hưởng với từng action thay đổi dữ liệu dựa vào logic business
 
+---
+
+## 🗄️ **SERVICES CẦN CACHE**
+
+> **Quy ước:** Chỉ cache những services phục vụ hiển thị dữ liệu phía **User**. Phía **Admin** luôn fetch real-time, **không cache**.
+
+### **✅ Services CẦN cache (User-facing):**
+
+1. **Product Services:**
+
+   - ✅ `getProducts()` - Danh sách products cho menu
+   - ✅ `getProductBySlug()` - Chi tiết product
+   - ✅ `getProductsByCategory()` - Products theo category
+   - ✅ `getRelatedProducts()` - Sản phẩm liên quan
+
+2. **Config Services:**
+   - ✅ `getConfigs()` - Cấu hình website (menu navigation, theme, etc.)
+
+### **❌ Services KHÔNG cache:**
+
+1. **Cart Validation:**
+
+   - ❌ `validateCartProducts()` - **Luôn gọi real-time** để đảm bảo dữ liệu chính xác
+
+2. **Admin Services:**
+
+   - ❌ `getAllProducts()` - Admin product list
+   - ❌ `getAllOrders()` - Admin order list
+   - ❌ `getAllReservations()` - Admin reservation list
+   - ❌ `getOrderById()` - Admin order detail
+   - ❌ `getReservationById()` - Admin reservation detail
+   - ❌ Tất cả admin CRUD operations
+
+3. **User Actions:**
+   - ❌ `createOrder()` - Create order
+   - ❌ `createReservation()` - Create reservation
+
+---
+
 ## 📋 **PRODUCT ACTIONS**
 
 ### **1. CREATE PRODUCT**
 
 **Nơi bị ảnh hưởng:**
 
-- ✅ **Admin product list** - Hiển thị product mới
+<!-- - ✅ **Admin product list** - Hiển thị product mới -->
+
 - ✅ **Menu category tương ứng** - Product xuất hiện trong category của nó
 - ✅ **Menu "All products"** - Product xuất hiện trong danh sách tất cả
-- ✅ **Product selection dropdowns** - Admin forms có thể chọn product mới
+<!-- - ✅ **Product selection dropdowns** - Admin forms có thể chọn product mới -->
 
 ### **2. UPDATE PRODUCT**
 
 **Nơi bị ảnh hưởng:**
 
-- ✅ **Admin product list** - Thông tin product thay đổi
+<!-- - ✅ **Admin product list** - Thông tin product thay đổi -->
+
 - ✅ **Product detail page** - Thông tin chi tiết thay đổi
 - ✅ **Menu category hiện tại** - Nếu thay đổi thông tin hiển thị
 - ✅ **Menu category mới** - Nếu chuyển sang category khác
 - ✅ **Menu category cũ** - Nếu chuyển khỏi category này
 - ✅ **Menu "All products"** - Thông tin product thay đổi
 - ✅ **Related products** - Nếu product này là related của sản phẩm khác
-- ✅ **Cart items** - Nếu product đang trong cart của users
+<!-- - ✅ **Cart items** - Nếu product đang trong cart của users -->
 
 ### **3. CHANGE PRODUCT STATUS (Active/Inactive)**
 

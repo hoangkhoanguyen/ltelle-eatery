@@ -4,6 +4,7 @@ import { initConfig, updateConfigByKey } from "@/services/configs";
 import { adminRoutes } from "@/constants/route";
 import { revalidatePath } from "next/cache";
 import { verifyAdminAuthSimple } from "@/services/auth";
+import { revalidateConfigUpdate } from "@/lib/revalidate";
 
 export async function initConfigsAction(data: NewConfigDB) {
   try {
@@ -59,6 +60,9 @@ export async function updateConfigsAction({
 
     // Revalidate the admin settings page
     revalidatePath(adminRoutes.settings(config_type, key));
+
+    // Revalidate cache
+    revalidateConfigUpdate(key);
 
     return {
       success: true,

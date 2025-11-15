@@ -18,7 +18,7 @@ const ImagesEditor = () => {
 
   const { openLibrary } = useImgLibraryContext();
 
-  const { control } = useProductDetailsContext();
+  const { control, id: productId } = useProductDetailsContext();
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -58,17 +58,20 @@ const ImagesEditor = () => {
       return;
     }
 
-    deleteImages(savedIds, {
-      onSuccess(data) {
-        if (data.success) {
-          onDeleteSuccess();
-          return;
-        }
+    deleteImages(
+      { ids: savedIds, productId },
+      {
+        onSuccess(data) {
+          if (data.success) {
+            onDeleteSuccess();
+            return;
+          }
 
-        setSelectedImages((p) => p.filter((item) => fields[item].id));
-        remove(selectedImages.filter((item) => !fields[item].id));
+          setSelectedImages((p) => p.filter((item) => fields[item].id));
+          remove(selectedImages.filter((item) => !fields[item].id));
+        },
       },
-    });
+    );
   };
 
   const onClickImage = (index: number) => {

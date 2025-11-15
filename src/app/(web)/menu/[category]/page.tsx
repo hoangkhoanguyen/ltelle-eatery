@@ -2,7 +2,7 @@ import BannerSlider from "@/components/web/features/menu/BannerSlider";
 import FoodCategories from "@/components/web/features/menu/FoodCategories";
 import NewFood from "@/components/web/features/menu/NewFood";
 import { WhyChooseUsSection } from "@/components/web/shared/WhyChooseUsSection";
-import { getUIConfigsByKey } from "@/services/configs";
+import { getUIConfigsByKeyCached } from "@/services/cached";
 import { APP_URL } from "@/constants/app";
 import { Metadata } from "next";
 import Image from "next/image";
@@ -18,7 +18,7 @@ export async function generateMetadata({
   const { category } = await params;
 
   // Lấy config để tìm label của category
-  const menuConfig = await getUIConfigsByKey("menu_page");
+  const menuConfig = await getUIConfigsByKeyCached("menu_page");
   const categories =
     (menuConfig?.value as any)?.food_categories?.categories_to_show || [];
   const seo = (menuConfig?.value as any)?.seo;
@@ -82,7 +82,7 @@ export async function generateMetadata({
 const page = async ({ params }: { params: Promise<{ category: string }> }) => {
   const { category } = await params;
 
-  const dbConfigs = await getUIConfigsByKey("menu_page");
+  const dbConfigs = await getUIConfigsByKeyCached("menu_page");
 
   const configs = dbConfigs?.value as any;
 
