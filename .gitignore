@@ -40,3 +40,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 ._*
+
+# compiled server from TypeScript
+/server.js
+docker-compose.yml

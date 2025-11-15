@@ -5,6 +5,7 @@ import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { Inter } from "next/font/google";
 import { FullscreenLoading } from "@/components/admin/ui/loading";
 import { Metadata } from "next";
+import SocketProvider from "@/providers/socket";
 
 export const metadata: Metadata = {
   title: "Admin Dashboard | LTelle Eatery",
@@ -28,11 +29,13 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
       className={`admin antialiased ${interSans.variable} font-inter-sans`}
       data-theme="light"
     >
-      <AdminQueryProvider>
-        <NuqsAdapter>
-          <Suspense>{children}</Suspense>
-        </NuqsAdapter>
-      </AdminQueryProvider>
+      <SocketProvider>
+        <AdminQueryProvider>
+          <NuqsAdapter>
+            <Suspense>{children}</Suspense>
+          </NuqsAdapter>
+        </AdminQueryProvider>
+      </SocketProvider>
       <Toaster
         visibleToasts={3}
         position="bottom-center"
