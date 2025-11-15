@@ -48,6 +48,10 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 # Copy compiled server.js from TypeScript
 COPY --from=builder --chown=nextjs:nodejs /app/server.js ./server.js
 
+# Copy toàn bộ node_modules vì custom server cần socket.io
+# (Next.js standalone không trace dependencies của server.ts)
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
+
 
 
 # Copy lại thư mục public từ builder
