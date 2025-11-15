@@ -26,9 +26,6 @@ COPY . .
 # Run build with environment variables explicitly passed
 RUN npm run build
 
-# Compile TypeScript server to JavaScript
-RUN npx tsc server.ts --outDir . --module commonjs --target es2020 --esModuleInterop --resolveJsonModule --skipLibCheck --moduleResolution node
-
 # Production image, copy all the files and run next
 FROM base AS runner
 WORKDIR /app
@@ -45,9 +42,6 @@ RUN addgroup --system --gid 1001 nodejs \
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-# Copy compiled server.js from TypeScript
-COPY --from=builder --chown=nextjs:nodejs /app/server.js ./server.js
-
 
 
 # Copy lại thư mục public từ builder
@@ -62,6 +56,7 @@ EXPOSE 3000
 
 ENV PORT=3000
 
-# Run compiled server.js (từ server.ts)
+# server.js is created by next build from the standalone output
+# https://nextjs.org/docs/pages/api-reference/config/next-config-js/output
 ENV HOSTNAME="0.0.0.0"
 CMD ["node", "server.js"]
