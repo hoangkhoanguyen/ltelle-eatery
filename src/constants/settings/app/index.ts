@@ -6,7 +6,7 @@ import { reservationConfigMeta, reservationInitConfig } from "./reservation";
 export const APPItems = [
   {
     key: "order",
-    title: "Cấu hình đơn hàng",
+    title: "Cấu hình đặt hàng",
   },
   {
     key: "reservation",
