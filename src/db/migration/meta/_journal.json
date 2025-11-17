@@ -43,6 +43,13 @@
       "when": 1761025454942,
       "tag": "0005_cultured_the_hand",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1763381841956,
+      "tag": "0006_light_miracleman",
+      "breakpoints": true
     }
   ]
 }

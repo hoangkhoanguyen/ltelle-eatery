@@ -14,7 +14,7 @@ export default defineConfig({
     ssl: false,
   },
   migrations: {
-    schema: "dev",
+    schema: "prod",
   },
   verbose: true,
   strict: true,
