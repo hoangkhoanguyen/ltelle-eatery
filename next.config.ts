@@ -6,17 +6,12 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "photo.znews.vn",
-        port: "",
-      },
-      {
-        protocol: "https",
-        hostname: "hoanghamobile.com",
-        port: "",
-      },
-      {
-        protocol: "https",
         hostname: "ltelle-upload.erosnguyen.com",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "upload.ltelleeatery.com",
         port: "",
       },
     ],

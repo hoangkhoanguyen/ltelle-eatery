@@ -9,7 +9,7 @@ import { AccessTokenPayload } from "@/lib/auth";
 
 const UPLOAD_PATH = "/uploads/img";
 const UPLOAD_DIR = path.join(process.cwd(), "uploads", "img");
-const IMAGE_URL_PREFIX = "https://ltelle-upload.erosnguyen.com/uploads/img";
+const IMAGE_URL_PREFIX = "https://upload.ltelleeatery.com/uploads/img";
 
 function getUniqueFileName(originalName: string): string {
   const ext = path.extname(originalName); // ".jpg"
